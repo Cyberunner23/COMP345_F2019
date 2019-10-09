@@ -60,26 +60,6 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 
 
 #------------------------------------------------------------------------------
-# Source files
-#------------------------------------------------------------------------------
-
-set(SRCS
-    src/main.cpp
-)
-
-set(LIBS
-    Boost::boost
-    Boost::filesystem
-    Boost::graph
-    Boost::serialization
-#   ${GRAPHVIZ_CGRAPH_LIBRARY}
-#   ${GRAPHVIZ_GVC_LIBRARY}
-#   ${GRAPHVIZ_CDT_LIBRARY}
-    Boost::system # Needs to be last
-)
-
-
-#------------------------------------------------------------------------------
 # Doxygen
 #------------------------------------------------------------------------------
 
@@ -113,9 +93,44 @@ set(LIBS
 
 
 #------------------------------------------------------------------------------
-# Executables
+# Binaries
+# Every part will be a library that we link to the executable,
+# Makes things cleaner.
 #------------------------------------------------------------------------------
 
-add_executable(${PROJECT_NAME} ${SRCS} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+# Map
+add_library(Map
+    src/Utils/SerializationUtils.hpp
+    src/Map/Map.h
+    src/Map/Map.cpp
+)
+target_include_directories(Map PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Map
+    Boost::boost
+    Boost::filesystem
+    Boost::graph
+    Boost::serialization
+    Boost::system # Needs to be last
+)
 
+# Map Driver
+add_executable(MapGenerator
+    src/Map/MapDriver.cpp
+)
+target_include_directories(MapGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapGenerator Map)
+
+# Map Loader
+add_library(MapLoader
+    src/Map/MapLoader.h
+    src/Map/MapLoader.cpp
+)
+target_include_directories(MapLoader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapLoader Map)
+
+# Map Loader Driver
+add_executable(MapLoaderDriver
+    src/Map/MapLoaderDriver.cpp
+)
+target_include_directories(MapLoaderDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapLoaderDriver MapLoader)
