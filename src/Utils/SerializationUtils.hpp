@@ -6,6 +6,7 @@
 #include "boost/serialization/string.hpp"
 #include <boost/serialization/vector.hpp>
 #include "boost/serialization/nvp.hpp"
+#include "boost/serialization/map.hpp"
 
 #define SERIALIZE(var, code) friend class boost::serialization::access; template <class Archive> void serialize(Archive& var, const unsigned int version) code
 #define SERIALIZE_CLEANUP(type) BOOST_CLASS_IMPLEMENTATION(type, boost::serialization::object_serializable ) \

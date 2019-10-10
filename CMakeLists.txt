@@ -114,11 +114,11 @@ target_link_libraries(Map
 )
 
 # Map Driver
-add_executable(MapGenerator
+add_executable(MapTest
     src/Map/MapDriver.cpp
 )
-target_include_directories(MapGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(MapGenerator Map)
+target_include_directories(MapTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapTest Map)
 
 # Map Loader
 add_library(MapLoader
