@@ -1,37 +1,38 @@
 #include "Map.h"
 
-
-SGraph& Map::createSubGraph()
+CountryNode::CountryNode()
 {
-    return _mainGraph.create_subgraph();
+    OwnedBy = new std::string();
+    Armies = new std::vector<std::string>();
 }
 
-SGraph& Map::createSubGraph(SGraph &subGraph)
+SGraph& Map::createContinent()
 {
-    return subGraph.create_subgraph();
+    return _mainGraph->create_subgraph();
 }
 
-Vertex Map::addRegion(const CountryNode& region)
+std::pair<ContinentIterator, ContinentIterator> Map::getContinentIterators()
 {
-    Vertex v = boost::add_vertex(_mainGraph);
+    return _mainGraph->children();
+}
 
-    VertexDataPropertyMap dataMap = boost::get(vertex_data, _mainGraph);
-    VertexDisplaytxtPropertyMap displayMap = boost::get(vertex_displaytxt, _mainGraph);
-
-    displayMap[v] = region._name;
+Vertex Map::addCountry(const CountryNode& region)
+{
+    Vertex v = boost::add_vertex(*_mainGraph);
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
     dataMap[v] = region;
 
     return v;
 }
 
-Vertex Map::addRegion(const Vertex& regionVertex, SGraph& subGraph)
+Vertex Map::addCountry(const Vertex& regionVertex, SGraph& subGraph)
 {
     return boost::add_vertex(regionVertex, subGraph);
 }
 
 Edge Map::connectRegion(const Vertex& v1, const Vertex& v2)
 {
-    return connectRegion(v1, v2, _mainGraph);
+    return connectRegion(v1, v2, *_mainGraph);
 }
 
 Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, SGraph& subGraph)
@@ -39,9 +40,11 @@ Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, SGraph& subGraph)
     return boost::add_edge(v1, v2, subGraph).first;
 }
 
+
+
 bool Map::isConnected()
 {
-    return isConnected(_mainGraph);
+    return isConnected(*_mainGraph);
 }
 
 bool Map::isConnected(SGraph &graph)
@@ -49,3 +52,43 @@ bool Map::isConnected(SGraph &graph)
     std::vector<int> component(boost::num_vertices(graph));
     return boost::connected_components(graph, &component[0]) == 1;
 }
+
+int Map::validate()
+{
+    // Validate Graph is connected
+    if (!isConnected())
+    {
+        return -1;
+    }
+
+    // Validate sub-graphs are connected
+    auto iterators = getContinentIterators();
+    for (auto it = iterators.first; it != iterators.second; it++)
+    {
+        if (!isConnected(*it))
+        {
+            return -2;
+        }
+    }
+
+    // Validate that no country is in more than one continent
+    iterators = getContinentIterators();
+    if (iterators.first != iterators.second)
+    {
+        unsigned int totalCountries = boost::num_vertices(*_mainGraph);
+        unsigned int runningTotal = 0;
+
+        for (auto it = iterators.first; it != iterators.second; it++)
+        {
+            runningTotal += boost::num_vertices(*it);
+        }
+
+        if (totalCountries != runningTotal)
+        {
+            return -3;
+        }
+    }
+
+    return 0;
+}
+

@@ -22,8 +22,10 @@
 struct CountryNode
 {
 
+    CountryNode();
+
     std::string* OwnedBy; // Player
-    std::vector<std::string> Armies;
+    std::vector<std::string>* Armies;
 
     SERIALIZE(archive,
     {
@@ -69,9 +71,11 @@ typedef boost::subgraph<
                 boost::vecS,
                 boost::vecS,
                 boost::undirectedS,
+
                 boost::property<boost::vertex_index_t, int,
                 boost::property<vertex_data_t, CountryNode,
                 boost::property<vertex_displayTxt_t, std::string>>>,
+
                 boost::property<boost::edge_index_t, int>
         >> SGraph;
 
@@ -82,6 +86,7 @@ typedef typename boost::graph_traits<SGraph>::edge_descriptor Edge;
 
 // Type for the vertex iterator, used to go through the list of vertices
 typedef typename boost::graph_traits<SGraph>::vertex_iterator VertexIterator;
+typedef typename SGraph::children_iterator ContinentIterator;
 
 // Type for the PropertyMap of the vertex data.
 // Used to extract the node data.
@@ -92,7 +97,11 @@ typedef typename boost::property_map<SGraph, vertex_displayTxt_t>::type VertexDi
 class Map
 {
 
-    Map() = default;
+public:
+    Map()
+    {
+        _mainGraph = new SGraph;
+    }
 
     SGraph* getGraph()
     {
@@ -105,16 +114,15 @@ class Map
     }
 
     // Creates a sub-graph from the main graph.
-    SGraph& createSubGraph();
+    SGraph& createContinent();
 
-    // Creates a sub-graph from the the provided sub-graph.
-    SGraph& createSubGraph(SGraph& subGraph);
+    std::pair<ContinentIterator, ContinentIterator> getContinentIterators();
 
     // Adds a RegionNode to the main graph.
-    Vertex addRegion(const CountryNode& region);
+    Vertex addCountry(const CountryNode& region);
 
     // Adds a RegionNode to the provided sub-graph.
-    Vertex addRegion(const Vertex& regionVertex, SGraph& subGraph);
+    Vertex addCountry(const Vertex& regionVertex, SGraph& subGraph);
 
     // Creates an edge between the provided region vertices from the main graph.
     // Used when generating maps from code.
@@ -124,11 +132,15 @@ class Map
     // Used when generating maps from code.
     Edge connectRegion(const Vertex& v1, const Vertex& v2, SGraph& subGraph);
 
+
+
     // Verifies whether the main graph is connected or not
     bool isConnected();
 
     // Verifies whether the provided subgraph is connected or not.
     bool isConnected(SGraph& subGraph);
+
+    int validate();
 
 private:
 
