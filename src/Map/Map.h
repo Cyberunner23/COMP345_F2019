@@ -108,11 +108,6 @@ public:
         return _mainGraph;
     }
 
-    void setGraph(SGraph* graph)
-    {
-        _mainGraph = graph;
-    }
-
     // Creates a sub-graph from the main graph.
     SGraph& createContinent();
 

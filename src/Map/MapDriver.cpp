@@ -128,7 +128,7 @@ int main(int argc, char** argv)
         map.connectRegion(b, c);
         map.connectRegion(c, d);
 
-        std::cout << "TEST 2: Check if a country in 2 continents passes check, should FAIL, is " << (map.validate() == 0 ? "PASS" : "FAIL") << std::endl;
+        std::cout << "TEST 6: Check if a country in 2 continents passes check, should FAIL, is " << (map.validate() == 0 ? "PASS" : "FAIL") << std::endl;
     }
 
     return 0;
