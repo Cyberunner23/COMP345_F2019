@@ -25,8 +25,8 @@ struct SerializedMap
     {
         archive & NameValuePair("Continents", *Continents);
         archive & NameValuePair("Countries", *Countries);
-        archive & NameValuePair("Countries", *CountryContinentMapping);
-        archive & NameValuePair("Countries", *CountryConnections);
+        archive & NameValuePair("CountryContinentMapping", *CountryContinentMapping);
+        archive & NameValuePair("CountryConnections", *CountryConnections);
     })
 };
 SERIALIZE_IMPLEMENT_STREAM(SerializedMap);

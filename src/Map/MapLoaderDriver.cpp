@@ -10,7 +10,16 @@ int main(int argc, char** argv)
 
     if (argc == 1)
     {
-
+        runTests();
+    }
+    else if (argc == 2)
+    {
+        generateMaps();
+    }
+    else
+    {
+        std::cout << "invalid arguments!" << std::endl;
+        return -1;
     }
 
 
@@ -126,5 +135,7 @@ void generateMaps()
         sm.CountryConnections->emplace_back("7", "18");
         sm.CountryConnections->emplace_back("9", "15");
         sm.CountryConnections->emplace_back("14", "19");
+
+        ml.saveMap("map1.map", sm);
     }
 }
