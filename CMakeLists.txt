@@ -50,13 +50,13 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 # check it out here: https://graphviz.gitlab.io/download/
 
 # GraphViz
-#include("cmake/FindGraphViz.cmake")
-#
-#if (NOT GRAPHVIZ_FOUND)
-#    message(FATAL_ERROR "GraphViz must be installed on the system!!")
-#endif()
-#
-#include_directories(${GRAPHVIZ_INCLUDE_DIRS})
+include("cmake/FindGraphViz.cmake")
+
+if (NOT GRAPHVIZ_FOUND)
+    message(FATAL_ERROR "GraphViz must be installed on the system!!")
+endif()
+
+include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 
 
 #------------------------------------------------------------------------------

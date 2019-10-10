@@ -108,6 +108,16 @@ public:
         return _mainGraph;
     }
 
+    void exportMapGraphViz(std::string fileName)
+    {
+        std::ofstream out(fileName);
+        boost::dynamic_properties dp;
+        dp.property("node_id", boost::get(boost::vertex_index, *_mainGraph));
+        dp.property("label", boost::get(boost::vertex_index, *_mainGraph));
+
+        boost::write_graphviz_dp(out, *_mainGraph, dp);
+    }
+
     // Creates a sub-graph from the main graph.
     SGraph& createContinent();
 

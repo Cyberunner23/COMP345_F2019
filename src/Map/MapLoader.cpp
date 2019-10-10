@@ -4,7 +4,7 @@ Map* MapLoader::loadMap(std::string const& filePath)
 {
     std::ifstream f(filePath);
 
-    if (!f.good())
+    if (f.fail())
     {
         return nullptr;
     }
@@ -14,10 +14,10 @@ Map* MapLoader::loadMap(std::string const& filePath)
 
     Map* map = new Map();
 
-    std::map<std::string, SGraph> continents;
+    std::map<std::string, SGraph*> continents;
     for (std::string& continent : *serializedMap.Continents)
     {
-        continents.emplace(continent, map->createContinent());
+        continents.emplace(continent, &map->createContinent());
     }
 
     std::map<std::string, Vertex> countries;
@@ -30,8 +30,8 @@ Map* MapLoader::loadMap(std::string const& filePath)
     for (auto& mapping : *serializedMap.CountryContinentMapping)
     {
         Vertex country = countries[mapping.first];
-        SGraph continent = continents[mapping.second];
-        map->addCountry(country, continent);
+        SGraph* continent = continents[mapping.second];
+        map->addCountry(country, *continent);
     }
 
     for (auto& connection : *serializedMap.CountryConnections)
