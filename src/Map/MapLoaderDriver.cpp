@@ -103,26 +103,28 @@ void generateMaps()
         sm.CountryConnections->emplace_back("11", "14");
         sm.CountryConnections->emplace_back("12", "13");
         sm.CountryConnections->emplace_back("13", "14");
-
         sm.CountryConnections->emplace_back("15", "16");
         sm.CountryConnections->emplace_back("15", "16");
-
         sm.CountryConnections->emplace_back("16", "17");
         sm.CountryConnections->emplace_back("16", "19");
         sm.CountryConnections->emplace_back("16", "20");
-
         sm.CountryConnections->emplace_back("17", "18");
         sm.CountryConnections->emplace_back("17", "20");
         sm.CountryConnections->emplace_back("17", "23");
-
         sm.CountryConnections->emplace_back("19", "20");
         sm.CountryConnections->emplace_back("19", "21");
-
         sm.CountryConnections->emplace_back("20", "21");
         sm.CountryConnections->emplace_back("20", "22");
         sm.CountryConnections->emplace_back("20", "23");
-
         sm.CountryConnections->emplace_back("21", "22");
         sm.CountryConnections->emplace_back("22", "23");
+
+        sm.CountryConnections->emplace_back("1", "8");
+        sm.CountryConnections->emplace_back("2", "3");
+        sm.CountryConnections->emplace_back("4", "5");
+        sm.CountryConnections->emplace_back("4", "15");
+        sm.CountryConnections->emplace_back("7", "18");
+        sm.CountryConnections->emplace_back("9", "15");
+        sm.CountryConnections->emplace_back("14", "19");
     }
 }
