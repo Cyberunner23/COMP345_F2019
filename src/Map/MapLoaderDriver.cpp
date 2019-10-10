@@ -29,24 +29,27 @@ int main(int argc, char** argv)
 void runTests()
 {
 
-    MapLoader ml;
 
-    if (!ml.loadMap("map1.map"))
+
+    // Test 1, Loads valid map, PASS
     {
-        std::cout << "error!" << std::endl;
-    }
-    else
-    {
-        std::cout << "success!" << std::endl;
+        MapLoader ml;
+        Map* m = ml.loadMap("data/map1.map");
+        std::cout << "Test 1: Check that loader can load a map, should PASS, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
     }
 
-    if (!ml.loadMap("map2.map"))
+    // Test 2, Refuses to load invalid map, corrupted xml, FAIL
     {
-        std::cout << "error!" << std::endl;
+        MapLoader ml;
+        Map* m = ml.loadMap("data/map_invalid1.map");
+        std::cout << "Test 2: Check that loader can load a corrupted map, should FAIL, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
     }
-    else
+
+    // Test 3, Refuses to load invalid map, invalid graph structure, FAIL
     {
-        std::cout << "success!" << std::endl;
+        MapLoader ml;
+        Map* m = ml.loadMap("data/map_invalid2.map");
+        std::cout << "Test 2: Check that loader can load a badly structured map, should FAIL, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
     }
 }
 

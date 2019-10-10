@@ -91,6 +91,14 @@ include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 #    message("Doxygen must be installed in order to generate the documentation")
 #endif(DOXYGEN_FOUND)
 
+#------------------------------------------------------------------------------
+# Resource files
+#------------------------------------------------------------------------------
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map1.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map2.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid1.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid2.map COPYONLY)
 
 #------------------------------------------------------------------------------
 # Binaries

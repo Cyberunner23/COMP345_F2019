@@ -10,7 +10,15 @@ Map* MapLoader::loadMap(std::string const& filePath)
     }
 
     SerializedMap serializedMap;
-    f >> serializedMap;
+
+    try
+    {
+        f >> serializedMap;
+    } catch (std::exception& e)
+    {
+        return nullptr;
+    }
+
 
     Map* map = new Map();
 
