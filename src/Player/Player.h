@@ -1,20 +1,25 @@
 #pragma once
 
-#include <Player/BidingFacility.h>
 #include <string>
+#include "BidingFacility.h"
 
 class Player {
 
 public:
-	Player(int age, int coins);
+	Player();
+	Player(std::string playerName, int playerAge, int playerCoins);
 	//countries
 	//armies
 	//cards
-	BidingFacility bf;
+	BidingFacility* bidingFacility;
 	std::string name;
 	int age;
 	int coins;
-	void PayCoin(int coins);
+	static int findHighestBid(std::vector<Player*> players);
+	static Player* bidingWinner(std::vector<Player*> players);
+	static Player* youngestPlayer(std::vector<Player*> players);
+	static void revealBids(std::vector<Player*> players);
+	void PayCoin();
 	void PlaceNewArmies();
 	void MoveArmies();
 	void MoveOverLand();
