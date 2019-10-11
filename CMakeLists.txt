@@ -50,13 +50,13 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 # check it out here: https://graphviz.gitlab.io/download/
 
 # GraphViz
-#include("cmake/FindGraphViz.cmake")
-#
-#if (NOT GRAPHVIZ_FOUND)
-#    message(FATAL_ERROR "GraphViz must be installed on the system!!")
-#endif()
-#
-#include_directories(${GRAPHVIZ_INCLUDE_DIRS})
+include("cmake/FindGraphViz.cmake")
+
+if (NOT GRAPHVIZ_FOUND)
+    message(FATAL_ERROR "GraphViz must be installed on the system!!")
+endif()
+
+include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 
 
 #------------------------------------------------------------------------------
@@ -91,6 +91,14 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 #    message("Doxygen must be installed in order to generate the documentation")
 #endif(DOXYGEN_FOUND)
 
+#------------------------------------------------------------------------------
+# Resource files
+#------------------------------------------------------------------------------
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map1.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map2.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid1.map COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid2.map COPYONLY)
 
 #------------------------------------------------------------------------------
 # Binaries
@@ -114,11 +122,11 @@ target_link_libraries(Map
 )
 
 # Map Driver
-add_executable(MapGenerator
+add_executable(MapTest
     src/Map/MapDriver.cpp
 )
-target_include_directories(MapGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(MapGenerator Map)
+target_include_directories(MapTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapTest Map)
 
 # Map Loader
 add_library(MapLoader
