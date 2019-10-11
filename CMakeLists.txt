@@ -50,13 +50,13 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 # check it out here: https://graphviz.gitlab.io/download/
 
 # GraphViz
-include("cmake/FindGraphViz.cmake")
-
-if (NOT GRAPHVIZ_FOUND)
-    message(FATAL_ERROR "GraphViz must be installed on the system!!")
-endif()
-
-include_directories(${GRAPHVIZ_INCLUDE_DIRS})
+#include("cmake/FindGraphViz.cmake")
+#
+#if (NOT GRAPHVIZ_FOUND)
+#    message(FATAL_ERROR "GraphViz must be installed on the system!!")
+#endif()
+#
+#include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 
 
 #------------------------------------------------------------------------------
@@ -91,14 +91,6 @@ include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 #    message("Doxygen must be installed in order to generate the documentation")
 #endif(DOXYGEN_FOUND)
 
-#------------------------------------------------------------------------------
-# Resource files
-#------------------------------------------------------------------------------
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map1.map COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map2.map COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid1.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid1.map COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/map_invalid2.map ${CMAKE_CURRENT_BINARY_DIR}/data/map_invalid2.map COPYONLY)
 
 #------------------------------------------------------------------------------
 # Binaries
@@ -122,11 +114,11 @@ target_link_libraries(Map
 )
 
 # Map Driver
-add_executable(MapTest
+add_executable(MapGenerator
     src/Map/MapDriver.cpp
 )
-target_include_directories(MapTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(MapTest Map)
+target_include_directories(MapGenerator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(MapGenerator Map)
 
 # Map Loader
 add_library(MapLoader
@@ -142,3 +134,14 @@ add_executable(MapLoaderDriver
 )
 target_include_directories(MapLoaderDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(MapLoaderDriver MapLoader)
+
+# Deck
+add_library(Deck
+    src/Deck/Deck.h
+    src/Deck/Deck.cpp
+)
+target_include_directories(MapLoader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_executable(DeckDriver
+    src/Deck/DeckDriver.cpp
+)
+target_include_directories(Deck PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
