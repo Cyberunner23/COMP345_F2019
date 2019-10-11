@@ -154,4 +154,4 @@ add_executable(BidingFacilityDriver
     src/Player/BidingFacilityDriver.cpp
 )
 target_include_directories(BidingFacilityDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(BidingFacilityDriver BidingFacility)
+target_link_libraries(BidingFacilityDriver BidingFacility Player)
