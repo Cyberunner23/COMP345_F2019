@@ -20,12 +20,12 @@ Player::Player(std::string playerName, int playerAge, int playerCoins)
 
 Player* Player::youngestPlayer(std::vector<Player*> players)
 {
-	Player* youngestPlayer = new Player();
+	Player* youngestPlayer;
 	int youngestAge = players.at(0)->age;
-	for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
-		if ((*it)->age < youngestAge) {
-			youngestAge = (*it)->age;
-			youngestPlayer = *it;
+	for (auto& player : players) {
+		if (player->age < youngestAge) {
+			youngestAge = player->age;
+			youngestPlayer = player;
 		}
 	}
 
@@ -35,13 +35,13 @@ Player* Player::youngestPlayer(std::vector<Player*> players)
 
 Player* Player::bidingWinner(std::vector<Player*> players)
 {
-	Player* bidingWinner = new Player();
+	Player* bidingWinner;
 	std::vector<Player*> tiedPlayers; //keep a list of players who tied their bid
 	int highestBid = findHighestBid(players);
 
-	for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
-		if ((*it)->bidingFacility->bid == highestBid)
-			tiedPlayers.push_back(*it);
+	for (auto& player : players) {
+		if (player->bidingFacility->bid == highestBid)
+			tiedPlayers.push_back(player);
 	}
 
 	//If more than 2 tiedPlayers than we check for youngest
@@ -57,13 +57,13 @@ Player* Player::bidingWinner(std::vector<Player*> players)
 
 int Player::findHighestBid(std::vector<Player*> players)
 {
-	Player* bidingWinner = new Player();
+	Player* bidingWinner;
 	std::vector<Player*> tiedPlayers; //keep a list of players who tied their bid
 	int highestBid = players.at(0)->bidingFacility->bid;
 
-	for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
-		if ((*it)->bidingFacility->bid > highestBid)
-			highestBid = (*it)->bidingFacility->bid;
+	for (auto& player : players) {
+		if (player->bidingFacility->bid > highestBid)
+			highestBid = player->bidingFacility->bid;
 	}
 
 	return highestBid;
@@ -71,8 +71,8 @@ int Player::findHighestBid(std::vector<Player*> players)
 
 void Player::revealBids(std::vector<Player*> players)
 {
-	for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
-		std::cout << (*it)->name << " has bid " << (*it)->bidingFacility->bid << " coins." << std::endl;
+	for (auto& player : players) {
+		std::cout << player->name << " has bid " << player->bidingFacility->bid << " coins." << std::endl;
 	}
 }
 

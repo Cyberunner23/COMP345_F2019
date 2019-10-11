@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 	Player::revealBids(playersList);
 
 	//Dertermining who won the bid
-	Player* bidingWinner = new Player();
+	Player* bidingWinner;
 	bidingWinner = Player::bidingWinner(playersList);
 
 	//Winner puts the coins he bid in supply
