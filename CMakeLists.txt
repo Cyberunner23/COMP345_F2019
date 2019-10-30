@@ -8,7 +8,6 @@ if(POLICY CMP0054)
     cmake_policy(SET CMP0054 NEW)
 endif()
 
-
 #------------------------------------------------------------------------------
 # Hunter & Project
 #
@@ -19,7 +18,6 @@ endif()
 #------------------------------------------------------------------------------
 
 include("cmake/HunterGate.cmake")
-
 HunterGate(
     URL "https://github.com/cpp-pm/hunter/archive/v0.23.218.tar.gz"
     SHA1 "9a3594a61227967fb92159339ba326701b287b19"
@@ -31,7 +29,6 @@ project(EightMinuteEmpire)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-
 #------------------------------------------------------------------------------
 # Hunter Packages
 #------------------------------------------------------------------------------
@@ -40,7 +37,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 hunter_add_package(Boost COMPONENTS filesystem graph serialization system)
 find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 
-
 #------------------------------------------------------------------------------
 # Other dependencies
 #------------------------------------------------------------------------------
@@ -48,16 +44,12 @@ find_package(Boost CONFIG REQUIRED filesystem graph serialization system)
 # In case we use graphviz.
 # NOTE: this dependency is not handled by hunter and needs to be installed manually on your computer
 # check it out here: https://graphviz.gitlab.io/download/
-
 # GraphViz
-include("cmake/FindGraphViz.cmake")
-
-if (NOT GRAPHVIZ_FOUND)
-    message(FATAL_ERROR "GraphViz must be installed on the system!!")
-endif()
-
-include_directories(${GRAPHVIZ_INCLUDE_DIRS})
-
+#include("cmake/FindGraphViz.cmake")
+#if (NOT GRAPHVIZ_FOUND)
+#message(FATAL_ERROR "GraphViz must be installed on the system!!")
+#endif()
+#include_directories(${GRAPHVIZ_INCLUDE_DIRS})
 
 #------------------------------------------------------------------------------
 # Doxygen
@@ -111,7 +103,7 @@ add_library(Map
     src/Utils/SerializationUtils.hpp
     src/Map/Map.h
     src/Map/Map.cpp
-)
+    )
 target_include_directories(Map PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(Map
     Boost::boost
@@ -119,12 +111,12 @@ target_link_libraries(Map
     Boost::graph
     Boost::serialization
     Boost::system # Needs to be last
-)
+    )
 
 # Map Driver
 add_executable(MapTest
     src/Map/MapDriver.cpp
-)
+    )
 target_include_directories(MapTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(MapTest Map)
 
@@ -132,47 +124,46 @@ target_link_libraries(MapTest Map)
 add_library(MapLoader
     src/Map/MapLoader.h
     src/Map/MapLoader.cpp
-)
+    )
 target_include_directories(MapLoader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(MapLoader Map)
 
 # Map Loader Driver
 add_executable(MapLoaderDriver
     src/Map/MapLoaderDriver.cpp
-)
+    )
 target_include_directories(MapLoaderDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(MapLoaderDriver MapLoader)
-
 
 # Deck
 add_library(Deck
     src/Deck/Deck.h
     src/Deck/Deck.cpp
-)
-target_include_directories(MapLoader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    )
+target_include_directories(Deck PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_executable(DeckDriver
     src/Deck/DeckDriver.cpp
-)
+    )
 target_include_directories(Deck PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(DeckDriver Deck)
 
 # Player
 add_library(Player
     src/Player/Player.h
     src/Player/Player.cpp
-)
+    )
 target_include_directories(Player PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # BidingFacility
 add_library(BidingFacility
     src/Player/BidingFacility.h
     src/Player/BidingFacility.cpp
-)
+    )
 target_include_directories(BidingFacility PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # BidingFacility Driver
 add_executable(BidingFacilityDriver
     src/Player/BidingFacilityDriver.cpp
-)
+    )
 target_include_directories(BidingFacilityDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(BidingFacilityDriver BidingFacility Player)
-
