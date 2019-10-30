@@ -31,6 +31,14 @@ public:
     Cards draw();
 
     std::map<Cards, std::string>* DeckMap;
-    std::vector<Cards>* Hand;
     std::vector<Cards>* CardList; // List of cards in the deck
+};
+
+class Hand
+{
+public:
+  Hand();
+  ~Hand();
+  std::vector<Cards>* HandList; //List of cards in your hand
+  void exchange();
 };

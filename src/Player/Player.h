@@ -2,6 +2,7 @@
 
 #include <string>
 #include "BidingFacility.h"
+#include "../Deck/Deck.h"
 
 class Player {
 
@@ -13,6 +14,7 @@ public:
 	//cards
 	BidingFacility* bidingFacility;
 	std::string name;
+	Hand* hand;
 	int age;
 	int coins;
 	static int findHighestBid(std::vector<Player*> players);

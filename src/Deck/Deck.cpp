@@ -5,7 +5,6 @@
 
 Deck::Deck()
 {
-    Hand = new std::vector<Cards>();
     CardList = new std::vector<Cards> {
             f1,f2,f3,f4,f5,f6,f7,f8,
             c1, c2, c3 ,c4, c5, c6, c7, c8, c9 ,c10,
@@ -78,7 +77,6 @@ Deck::Deck()
 
 Deck::~Deck()
 {
-    delete Hand;
     delete CardList;
     delete DeckMap;
 }
@@ -93,4 +91,19 @@ Cards Deck::draw()
     }
 
     return c;
+}
+
+
+Hand::Hand()
+{
+  HandList = new std::vector<Cards>();
+}
+
+Hand::~Hand()
+{
+}
+
+void Hand::exchange()
+{
+
 }
