@@ -101,6 +101,7 @@ Hand::Hand()
 
 Hand::~Hand()
 {
+    delete HandList;
 }
 
 void Hand::exchange()
