@@ -76,6 +76,30 @@ void Player::revealBids(std::vector<Player*> players)
 	}
 }
 
+int Player::assignCoinsToPlayers(std::vector<Player*> players, int coins)
+{
+	for (auto& player : players) {
+		player->coins = coins;
+	}
+
+	return coins;
+}
+
+//Assigns number of coins to each player depending on their number
+int Player::assignCoinsToPlayers(std::vector<Player*> players)
+{
+	switch (players.size) {
+	case 2:
+		return assignCoinsToPlayers(players, 14);
+	case 3:
+		return assignCoinsToPlayers(players, 11);
+	case 4:
+		return assignCoinsToPlayers(players, 9);
+	case 5:
+		return assignCoinsToPlayers(players, 8);
+	}
+}
+
 //When Player wins a bid he has to pay coins and pu
 void Player::PayCoin()
 {

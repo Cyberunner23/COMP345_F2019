@@ -19,6 +19,8 @@ public:
 	static Player* bidingWinner(std::vector<Player*> players);
 	static Player* youngestPlayer(std::vector<Player*> players);
 	static void revealBids(std::vector<Player*> players);
+	static int assignCoinsToPlayers(std::vector<Player*> players, int coins);
+	static int assignCoinsToPlayers(std::vector<Player*> players);
 	void PayCoin();
 	void PlaceNewArmies();
 	void MoveArmies();
