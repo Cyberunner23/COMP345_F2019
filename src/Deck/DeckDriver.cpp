@@ -24,7 +24,7 @@ int main() {
         std::cin >> response;
     }
 
-    std::cout << "Your hand is: " << std::endl;
+    std::cout << "Your _hand is: " << std::endl;
     for(int i = 0; i < hand.HandList->size(); i++)
     {
         std::cout << deck.DeckMap->at(hand.HandList->at(i)) << ", Cost: "<< hand.HandList->at(i) << std::endl;

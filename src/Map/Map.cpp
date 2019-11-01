@@ -1,9 +1,22 @@
+#include <Deck/Deck.h>
 #include "Map.h"
 
-CountryNode::CountryNode()
+CountryNode::CountryNode(unsigned int countryID)
 {
-    OwnedBy = new std::string();
-    Armies = new std::vector<std::string>();
+    CountryID = new unsigned int(countryID);
+    CitiesInCountry = new std::vector<Cities>();
+    ArmiesInCountry = new std::vector<Armies>();
+}
+
+bool CountryNode::canDestroyArmy(Armies playerArmyColor)
+{
+    return ArmiesInCountry->empty() || (ArmiesInCountry->size() == 1 && ArmiesInCountry->at(0) == playerArmyColor);
+}
+
+void CountryNode::destroyArmy(Armies armyToDestroy)
+{
+    auto it = std::find(ArmiesInCountry->begin(), ArmiesInCountry->end(), armyToDestroy);
+    ArmiesInCountry->erase(it);
 }
 
 SGraph& Map::createContinent()
@@ -16,6 +29,29 @@ std::pair<ContinentIterator, ContinentIterator> Map::getContinentIterators()
     return _mainGraph->children();
 }
 
+std::pair<VertexIterator, VertexIterator> Map::getVertexIterators()
+{
+    return boost::vertices(*_mainGraph);
+}
+
+unsigned int Map::getNumCountries()
+{
+    unsigned int count = 0;
+
+    auto iterators = getContinentIterators();
+    for (auto it = iterators.first; it != iterators.second; it++)
+    {
+        auto continent = *it;
+        auto childIterators = continent.children();
+        for (auto it2 = childIterators.first; it2 != childIterators.second; it2++)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 Vertex Map::addCountry(const CountryNode& region)
 {
     Vertex v = boost::add_vertex(*_mainGraph);
@@ -25,6 +61,34 @@ Vertex Map::addCountry(const CountryNode& region)
     return v;
 }
 
+CountryNode* Map::getCountryNode(Vertex& regionVertex)
+{
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+    return &dataMap[regionVertex];
+}
+
+void Map::setCountryNode(Vertex& regionVertex, CountryNode& country)
+{
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+    dataMap[regionVertex] = country;
+}
+
+CountryNode* Map::findCountryByID(unsigned int ID)
+{
+    auto iterPair = getVertexIterators();
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+    for(; iterPair.first != iterPair.second; ++iterPair.first)
+    {
+        if (*dataMap[*iterPair.first].CountryID == ID)
+        {
+            return &dataMap[*iterPair.first];
+        }
+    }
+
+    return nullptr;
+}
+
+
 Vertex Map::addCountry(const Vertex& regionVertex, SGraph& subGraph)
 {
     return boost::add_vertex(regionVertex, subGraph);
@@ -32,15 +96,27 @@ Vertex Map::addCountry(const Vertex& regionVertex, SGraph& subGraph)
 
 Edge Map::connectRegion(const Vertex& v1, const Vertex& v2)
 {
-    return connectRegion(v1, v2, *_mainGraph);
+    return connectRegion(v1, v2, false);
+}
+
+Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, bool isWaterConnection)
+{
+    return connectRegion(v1, v2, isWaterConnection, *_mainGraph);
 }
 
 Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, SGraph& subGraph)
 {
-    return boost::add_edge(v1, v2, subGraph).first;
+    return connectRegion(v1, v2, false, subGraph);
 }
 
+Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, bool isWaterConnection, SGraph& subGraph)
+{
+    Edge e = boost::add_edge(v1, v2, subGraph).first;
+    EdgeDataPropertyMap dataMap = boost::get(edge_data, subGraph);
+    dataMap[e] = isWaterConnection;
 
+    return boost::add_edge(v1, v2, subGraph).first;
+}
 
 bool Map::isConnected()
 {

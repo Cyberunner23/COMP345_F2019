@@ -73,6 +73,23 @@ Deck::Deck()
             {cr5, "Add 2 Armies"},
     };
 
+    CitiesMap = new std::map<Cities, std::string>
+    {
+        {Cities::RED, "RED"},
+        {Cities::WHITE, "WHITE"},
+        {Cities::BLUE, "BLUE"},
+        {Cities::YELLOW, "YELLOW"},
+        {Cities::GREEN, "GREEN"}
+    };
+
+    ArmiesMap = new std::map<Armies, std::string>
+    {
+        {Armies::RED, "RED"},
+        {Armies::WHITE, "WHITE"},
+        {Armies::BLUE, "BLUE"},
+        {Armies::YELLOW, "YELLOW"},
+        {Armies::GREEN, "GREEN"}
+    };
 }
 
 Deck::~Deck()
