@@ -19,13 +19,13 @@ Player::Player(std::string playerName, int playerAge, int playerCoins, Cities ci
     _startingRegionID = new unsigned int(0);
 }
 
-Player* Player::youngestPlayer(std::vector<Player*> players)
+Player Player::youngestPlayer(std::vector<Player>* players)
 {
-    Player* youngestPlayer;
-    int youngestAge = *players.at(0)->_age;
-    for (auto& player : players) {
-    	if (*player->_age < youngestAge) {
-    		youngestAge = *player->_age;
+    Player youngestPlayer;
+    int* youngestAge = players->at(0)._age;
+    for (auto& player : *players) {
+    	if (player._age < youngestAge) {
+    		youngestAge = player._age;
     		youngestPlayer = player;
     	}
     }
@@ -34,58 +34,54 @@ Player* Player::youngestPlayer(std::vector<Player*> players)
 }
 
 
-Player* Player::bidingWinner(std::vector<Player*> players)
+Player Player::bidingWinner(std::vector<Player>* players)
 {
-	Player* bidingWinner;
-	std::vector<Player*> tiedPlayers; //keep a list of players who tied their bid
+	Player bidingWinner;
+	std::vector<Player>* tiedPlayers; //keep a list of players who tied their bid
 	int highestBid = findHighestBid(players);
 
-	for (auto& player : players) {
-		if (player->_bidingFacility->bid == highestBid)
-			tiedPlayers.push_back(player);
+	for (auto& player : *players) {
+		if (player._bidingFacility->bid == highestBid)
+			tiedPlayers->push_back(player);
 	}
 
 	//If more than 2 tiedPlayers than we check for youngest
-	if (tiedPlayers.size() > 1)
+	if (tiedPlayers->size() > 1)
 		return bidingWinner = youngestPlayer(tiedPlayers);
 
 	//highestBid = 0 means all players bid 0
 	if (highestBid == 0)
 		return bidingWinner = youngestPlayer(players);
 
-	return bidingWinner = tiedPlayers.at(0);
+	return bidingWinner = tiedPlayers->at(0);
 }
 
-int Player::findHighestBid(std::vector<Player*> players)
+int Player::findHighestBid(std::vector<Player>* players)
 {
 	Player* bidingWinner;
 	std::vector<Player*> tiedPlayers; //keep a list of players who tied their bid
-	int highestBid = players.at(0)->_bidingFacility->bid;
+	int highestBid = players->at(0)._bidingFacility->bid;
 
-	for (auto& player : players) {
-		if (player->_bidingFacility->bid > highestBid)
-			highestBid = player->_bidingFacility->bid;
+	for (auto& player : *players) {
+		if (player._bidingFacility->bid > highestBid)
+			highestBid = player._bidingFacility->bid;
 	}
 
 	return highestBid;
 }
 
-void Player::revealBids(std::vector<Player*> players)
+void Player::revealBids(std::vector<Player>* players)
 {
-	for (auto& player : players) {
-		std::cout << player->_name << " has bid " << player->_bidingFacility->bid << " _coins." << std::endl;
+	for (auto& player : *players) {
+		std::cout << player._name << " has bid " << player._bidingFacility->bid << " coins." << std::endl;
 	}
 }
 
 
 int Player::assignCoinsToPlayers(std::vector<Player>* players, int coins)
 {
-	for (Player& player : players) {
-		*player->getCoins() = coins;
-	}
-
-	for (auto it = std::begin(players); it != std::end(players); ++it) {
-		std::cout << *it << "\n";
+	for (Player& player : *players) {
+		*player.getCoins() = coins;
 	}
 
 	return coins;

@@ -49,10 +49,18 @@ int main(int argc, char** argv)
 	p1.setArmyColor(Armies::BLUE);
 	state.Players->push_back(p1);
 
-	Player p2 = new Player("Player 2", 21, 0, Cities::GREEN, Armies::GREEN);
+	Player p2;
+	p2.setName(nameP2);
+	p2.setage(ageP2);
+	p2.setCityColor(Cities::GREEN);
+	p2.setArmyColor(Armies::GREEN);
 	state.Players->push_back(p2);
 
-	Player p3 = new Player("Player 3", 22, 0, Cities::RED, Armies::RED);
+	Player p3;
+	p3.setName(nameP2);
+	p3.setage(ageP2);
+	p3.setCityColor(Cities::RED);
+	p3.setArmyColor(Armies::RED);
 	state.Players->push_back(p3);
 
 	//Each player places 3 armies on the starting region on the board.If playing with 2 players, each player
@@ -63,22 +71,22 @@ int main(int argc, char** argv)
 	int maxCoins = Player::assignCoinsToPlayers(state.Players);
 
 	//Players bid
-	for (auto& player : state.Players) {
-		player->getBidingFacility()->startBiding(maxCoins);
+	for (auto& player : *state.Players) {
+		player.getBidingFacility()->startBiding(maxCoins);
 	}
 
 	Player::revealBids(state.Players);
 
 	//Dertermining who won the bid
-	Player* bidingWinner;
+	Player bidingWinner;
 	bidingWinner = Player::bidingWinner(state.Players);
 
-	std::cout << "\n" << *bidingWinner->getName() << " has won the bid. " << bidingWinner->getBidingFacility()->bid << " coins are now going to the supply.";
-	std::cout << "\n" << *bidingWinner->getName() << " has now " << *bidingWinner->getCoins() << " coins.";
+	std::cout << "\n" << bidingWinner.getName() << " has won the bid. " << bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
+	bidingWinner.setCoins(bidingWinner.getCoins() - bidingWinner.getBidingFacility()->bid);
+	std::cout << "\n" << bidingWinner.getName() << " has now " << bidingWinner.getCoins() << " coins.";
 
 	//Putting the coins in supply
-	state.supply += bidingWinner->getBidingFacility()->bid;
-	*bidingWinner->getCoins() -= bidingWinner->getBidingFacility()->bid;
+	state.supply += bidingWinner.getBidingFacility()->bid;
 	std::cout << "\nThe supply contains now: " << state.supply << " coins." << std::endl;
 
 	//Retrieve player in state.Players to determine who will be the next to play 
