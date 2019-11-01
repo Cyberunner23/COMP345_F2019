@@ -183,4 +183,4 @@ add_executable(ActionsDriver
     src/Action/ActionsDriver.cpp
 )
 target_include_directories(ActionsDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(ActionsDriver Actions Map)
+target_link_libraries(ActionsDriver Actions Map MapLoader)
