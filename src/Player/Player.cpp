@@ -88,7 +88,7 @@ int Player::assignCoinsToPlayers(std::vector<Player*> players, int coins)
 //Assigns number of coins to each player depending on their number
 int Player::assignCoinsToPlayers(std::vector<Player*> players)
 {
-	switch (players.size) {
+	switch (players.size()) {
 	case 2:
 		return assignCoinsToPlayers(players, 14);
 	case 3:
