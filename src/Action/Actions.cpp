@@ -10,7 +10,7 @@ Actions::Actions(GameState* state, Player* player)
 bool Actions::PlaceNewArmies()
 {
     // Check if player has armies to place
-    if (_player->getNumHandArmies() == 0)
+    if (*_player->getNumHandArmies() == 0)
     {
         std::cout << "You cannot place any new armies! All of your armies are deployed!" << std::endl;
         return false;
