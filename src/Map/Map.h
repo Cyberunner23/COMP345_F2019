@@ -113,7 +113,7 @@ public:
         return _mainGraph;
     }
 
-    void exportMapGraphViz(std::string fileName)
+    /*void exportMapGraphViz(std::string fileName)
     {
         std::ofstream out(fileName);
         boost::dynamic_properties dp;
@@ -121,7 +121,7 @@ public:
         dp.property("label", boost::get(boost::vertex_index, *_mainGraph));
 
         boost::write_graphviz_dp(out, *_mainGraph, dp);
-    }
+    }*/
 
     // Creates a sub-graph from the main graph.
     SGraph& createContinent();
@@ -139,7 +139,10 @@ public:
     CountryNode* getCountryNode(Vertex& regionVertex);
     void setCountryNode(Vertex& regionVertex, CountryNode& country);
 
+    bool findVertexByCountryID(unsigned int ID, Vertex& v);
     CountryNode* findCountryByID(unsigned int ID);
+    bool areCountriesConnectedByWater(unsigned int id1, unsigned int id2);
+    bool areCountriesConnected(unsigned int id1, unsigned int id2);
 
     // Creates an edge between the provided region vertices from the main graph.
     // Used when generating maps from code.

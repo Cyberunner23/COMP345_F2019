@@ -52,6 +52,8 @@ unsigned int Map::getNumCountries()
     return count;
 }
 
+
+
 Vertex Map::addCountry(const CountryNode& region)
 {
     Vertex v = boost::add_vertex(*_mainGraph);
@@ -73,7 +75,7 @@ void Map::setCountryNode(Vertex& regionVertex, CountryNode& country)
     dataMap[regionVertex] = country;
 }
 
-CountryNode* Map::findCountryByID(unsigned int ID)
+bool Map::findVertexByCountryID(unsigned int ID, Vertex& v)
 {
     auto iterPair = getVertexIterators();
     VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
@@ -81,13 +83,70 @@ CountryNode* Map::findCountryByID(unsigned int ID)
     {
         if (*dataMap[*iterPair.first].CountryID == ID)
         {
-            return &dataMap[*iterPair.first];
+            v = *iterPair.first;
+            return true;
         }
+    }
+
+    return false;
+}
+
+CountryNode* Map::findCountryByID(unsigned int ID)
+{
+    Vertex v;
+    if (findVertexByCountryID(ID, v))
+    {
+        VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+        return &dataMap[v];
     }
 
     return nullptr;
 }
 
+bool Map::areCountriesConnectedByWater(unsigned int id1, unsigned int id2)
+{
+
+    Vertex v1;
+    Vertex v2;
+
+    if (!findVertexByCountryID(id1, v1))
+    {
+        throw std::runtime_error("Cant find country ID: " + std::to_string(id1));
+    }
+
+    if (!findVertexByCountryID(id2, v2))
+    {
+        throw std::runtime_error("Cant find country ID: " + std::to_string(id2));
+    }
+
+    auto result = boost::edge(v1, v2, *_mainGraph);
+    if (result.second)
+    {
+        EdgeDataPropertyMap dataMap = boost::get(edge_data, *_mainGraph);
+        return dataMap[result.first]; // Is water connection
+    }
+
+    return false;
+}
+
+bool Map::areCountriesConnected(unsigned int id1, unsigned int id2)
+{
+    Vertex v1;
+    Vertex v2;
+
+    if (!findVertexByCountryID(id1, v1))
+    {
+        throw std::runtime_error("Cant find country ID: " + std::to_string(id1));
+    }
+
+    if (!findVertexByCountryID(id2, v2))
+    {
+        throw std::runtime_error("Cant find country ID: " + std::to_string(id2));
+    }
+
+    auto result = boost::edge(v1, v2, *_mainGraph);
+    return result.second;
+}
 
 Vertex Map::addCountry(const Vertex& regionVertex, SGraph& subGraph)
 {
@@ -115,7 +174,7 @@ Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, bool isWaterConnecti
     EdgeDataPropertyMap dataMap = boost::get(edge_data, subGraph);
     dataMap[e] = isWaterConnection;
 
-    return boost::add_edge(v1, v2, subGraph).first;
+    return e;
 }
 
 bool Map::isConnected()
