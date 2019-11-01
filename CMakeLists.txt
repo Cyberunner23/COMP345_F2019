@@ -184,3 +184,18 @@ add_executable(ActionsDriver
 )
 target_include_directories(ActionsDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(ActionsDriver Actions Map MapLoader)
+
+#GameStart
+add_library(GameStart
+    src/GameStart/GameStart.h
+    src/GameStart/GameStart.cpp
+)
+target_include_directories(GameStart PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameStart Deck Player Map MapLoader)
+
+# Game Start Driver
+add_executable(GameStartDriver
+    src/GameStart/GameStartDriver.cpp
+)
+target_include_directories(GameStartDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameStartDriver GameStart Deck Player Map MapLoader)
