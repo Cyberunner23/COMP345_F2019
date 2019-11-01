@@ -29,8 +29,6 @@ int main(int argc, char** argv)
 void runTests()
 {
 
-
-
     // Test 1, Loads valid map, PASS
     {
         MapLoader ml;
@@ -117,43 +115,44 @@ void generateMaps()
         sm.CountryContinentMapping->emplace("22", "C5");
         sm.CountryContinentMapping->emplace("23", "C5");
 
-        sm.CountryConnections->emplace_back("1", "2");
-        sm.CountryConnections->emplace_back("3", "4");
-        sm.CountryConnections->emplace_back("5", "6");
-        sm.CountryConnections->emplace_back("6", "7");
-        sm.CountryConnections->emplace_back("8", "9");
-        sm.CountryConnections->emplace_back("8", "10");
-        sm.CountryConnections->emplace_back("8", "11");
-        sm.CountryConnections->emplace_back("9", "11");
-        sm.CountryConnections->emplace_back("10", "11");
-        sm.CountryConnections->emplace_back("10", "12");
-        sm.CountryConnections->emplace_back("10", "13");
-        sm.CountryConnections->emplace_back("11", "13");
-        sm.CountryConnections->emplace_back("11", "14");
-        sm.CountryConnections->emplace_back("12", "13");
-        sm.CountryConnections->emplace_back("13", "14");
-        sm.CountryConnections->emplace_back("15", "16");
-        sm.CountryConnections->emplace_back("16", "17");
-        sm.CountryConnections->emplace_back("16", "19");
-        sm.CountryConnections->emplace_back("16", "20");
-        sm.CountryConnections->emplace_back("17", "18");
-        sm.CountryConnections->emplace_back("17", "20");
-        sm.CountryConnections->emplace_back("17", "23");
-        sm.CountryConnections->emplace_back("19", "20");
-        sm.CountryConnections->emplace_back("19", "21");
-        sm.CountryConnections->emplace_back("20", "21");
-        sm.CountryConnections->emplace_back("20", "22");
-        sm.CountryConnections->emplace_back("20", "23");
-        sm.CountryConnections->emplace_back("21", "22");
-        sm.CountryConnections->emplace_back("22", "23");
+        sm.CountryConnections->emplace_back("1", "2", false);
+        sm.CountryConnections->emplace_back("3", "4", false);
+        sm.CountryConnections->emplace_back("5", "6", false);
+        sm.CountryConnections->emplace_back("6", "7", false);
+        sm.CountryConnections->emplace_back("8", "9", false);
+        sm.CountryConnections->emplace_back("8", "10", false);
+        sm.CountryConnections->emplace_back("8", "11", false);
+        sm.CountryConnections->emplace_back("9", "11", false);
+        sm.CountryConnections->emplace_back("10", "11", false);
+        sm.CountryConnections->emplace_back("10", "12", false);
+        sm.CountryConnections->emplace_back("10", "13", false);
+        sm.CountryConnections->emplace_back("11", "13", false);
+        sm.CountryConnections->emplace_back("11", "14", false);
+        sm.CountryConnections->emplace_back("12", "13", false);
+        sm.CountryConnections->emplace_back("13", "14", false);
+        sm.CountryConnections->emplace_back("15", "16", false);
+        sm.CountryConnections->emplace_back("16", "17", false);
+        sm.CountryConnections->emplace_back("16", "19", false);
+        sm.CountryConnections->emplace_back("16", "20", false);
+        sm.CountryConnections->emplace_back("17", "18", false);
+        sm.CountryConnections->emplace_back("17", "20", false);
+        sm.CountryConnections->emplace_back("17", "23", false);
+        sm.CountryConnections->emplace_back("19", "20", false);
+        sm.CountryConnections->emplace_back("19", "21", false);
+        sm.CountryConnections->emplace_back("20", "21", false);
+        sm.CountryConnections->emplace_back("20", "22", false);
+        sm.CountryConnections->emplace_back("20", "23", false);
+        sm.CountryConnections->emplace_back("21", "22", false);
+        sm.CountryConnections->emplace_back("22", "23", false);
 
-        sm.CountryConnections->emplace_back("1", "8");
-        sm.CountryConnections->emplace_back("2", "3");
-        sm.CountryConnections->emplace_back("4", "5");
-        sm.CountryConnections->emplace_back("4", "15");
-        sm.CountryConnections->emplace_back("7", "18");
-        sm.CountryConnections->emplace_back("9", "15");
-        sm.CountryConnections->emplace_back("14", "19");
+        // Water connections
+        sm.CountryConnections->emplace_back("1", "8", true);
+        sm.CountryConnections->emplace_back("2", "3", true);
+        sm.CountryConnections->emplace_back("4", "5", true);
+        sm.CountryConnections->emplace_back("4", "15", true);
+        sm.CountryConnections->emplace_back("7", "18", true);
+        sm.CountryConnections->emplace_back("9", "15", true);
+        sm.CountryConnections->emplace_back("14", "19", true);
 
         ml.saveMap("map1.map", sm);
     }
@@ -219,44 +218,45 @@ void generateMaps()
         sm.CountryContinentMapping->emplace("24", "C4");
         sm.CountryContinentMapping->emplace("25", "C4");
 
-        sm.CountryConnections->emplace_back("1", "2");
-        sm.CountryConnections->emplace_back("1", "3");
-        sm.CountryConnections->emplace_back("1", "4");
-        sm.CountryConnections->emplace_back("2", "4");
-        sm.CountryConnections->emplace_back("3", "4");
-        sm.CountryConnections->emplace_back("3", "5");
-        sm.CountryConnections->emplace_back("3", "6");
-        sm.CountryConnections->emplace_back("4", "6");
-        sm.CountryConnections->emplace_back("5", "7");
-        sm.CountryConnections->emplace_back("8", "9");
-        sm.CountryConnections->emplace_back("10", "11");
-        sm.CountryConnections->emplace_back("11", "13");
-        sm.CountryConnections->emplace_back("11", "14");
-        sm.CountryConnections->emplace_back("12", "13");
-        sm.CountryConnections->emplace_back("12", "19");
-        sm.CountryConnections->emplace_back("13", "14");
-        sm.CountryConnections->emplace_back("13", "15");
-        sm.CountryConnections->emplace_back("13", "19");
-        sm.CountryConnections->emplace_back("13", "20");
-        sm.CountryConnections->emplace_back("14", "15");
-        sm.CountryConnections->emplace_back("15", "16");
-        sm.CountryConnections->emplace_back("15", "20");
-        sm.CountryConnections->emplace_back("16", "17");
-        sm.CountryConnections->emplace_back("17", "18");
-        sm.CountryConnections->emplace_back("19", "20");
-        sm.CountryConnections->emplace_back("19", "21");
-        sm.CountryConnections->emplace_back("20", "21");
-        sm.CountryConnections->emplace_back("20", "22");
-        sm.CountryConnections->emplace_back("23", "24");
-        sm.CountryConnections->emplace_back("24", "25");
+        sm.CountryConnections->emplace_back("1", "2", false);
+        sm.CountryConnections->emplace_back("1", "3", false);
+        sm.CountryConnections->emplace_back("1", "4", false);
+        sm.CountryConnections->emplace_back("2", "4", false);
+        sm.CountryConnections->emplace_back("3", "4", false);
+        sm.CountryConnections->emplace_back("3", "5", false);
+        sm.CountryConnections->emplace_back("3", "6", false);
+        sm.CountryConnections->emplace_back("4", "6", false);
+        sm.CountryConnections->emplace_back("5", "7", false);
+        sm.CountryConnections->emplace_back("8", "9", false);
+        sm.CountryConnections->emplace_back("10", "11", false);
+        sm.CountryConnections->emplace_back("11", "13", false);
+        sm.CountryConnections->emplace_back("11", "14", false);
+        sm.CountryConnections->emplace_back("12", "13", false);
+        sm.CountryConnections->emplace_back("12", "19", false);
+        sm.CountryConnections->emplace_back("13", "14", false);
+        sm.CountryConnections->emplace_back("13", "15", false);
+        sm.CountryConnections->emplace_back("13", "19", false);
+        sm.CountryConnections->emplace_back("13", "20", false);
+        sm.CountryConnections->emplace_back("14", "15", false);
+        sm.CountryConnections->emplace_back("15", "16", false);
+        sm.CountryConnections->emplace_back("15", "20", false);
+        sm.CountryConnections->emplace_back("16", "17", false);
+        sm.CountryConnections->emplace_back("17", "18", false);
+        sm.CountryConnections->emplace_back("19", "20", false);
+        sm.CountryConnections->emplace_back("19", "21", false);
+        sm.CountryConnections->emplace_back("20", "21", false);
+        sm.CountryConnections->emplace_back("20", "22", false);
+        sm.CountryConnections->emplace_back("23", "24", false);
+        sm.CountryConnections->emplace_back("24", "25", false);
 
-        sm.CountryConnections->emplace_back("2", "10");
-        sm.CountryConnections->emplace_back("6", "12");
-        sm.CountryConnections->emplace_back("7", "8");
-        sm.CountryConnections->emplace_back("9", "19");
-        sm.CountryConnections->emplace_back("10", "18");
-        sm.CountryConnections->emplace_back("16", "25");
-        sm.CountryConnections->emplace_back("21", "23");
+        // Water Connections
+        sm.CountryConnections->emplace_back("2", "10", true);
+        sm.CountryConnections->emplace_back("6", "12", true);
+        sm.CountryConnections->emplace_back("7", "8", true);
+        sm.CountryConnections->emplace_back("9", "19", true);
+        sm.CountryConnections->emplace_back("10", "18", true);
+        sm.CountryConnections->emplace_back("16", "25", true);
+        sm.CountryConnections->emplace_back("21", "23", true);
 
         ml.saveMap("map2.map", sm);
     }

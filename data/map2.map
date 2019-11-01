@@ -1,5 +1,5 @@
 <SerializedMap class_id="0" tracking_level="0" version="0">
-	<Continents>
+	<Continents class_id="1" tracking_level="0" version="0">
 		<count>4</count>
 		<item_version>0</item_version>
 		<item>C1</item>
@@ -36,10 +36,10 @@
 		<item>24</item>
 		<item>25</item>
 	</Countries>
-	<CountryContinentMapping class_id="1" tracking_level="0" version="0">
+	<CountryContinentMapping class_id="2" tracking_level="0" version="0">
 		<count>25</count>
 		<item_version>0</item_version>
-		<item class_id="2" tracking_level="0" version="0">
+		<item class_id="3" tracking_level="0" version="0">
 			<first>1</first>
 			<second>C1</second>
 		</item>
@@ -140,156 +140,193 @@
 			<second>C2</second>
 		</item>
 	</CountryContinentMapping>
-	<CountryConnections class_id="3" tracking_level="0" version="0">
+	<CountryConnections class_id="4" tracking_level="0" version="0">
 		<count>37</count>
 		<item_version>0</item_version>
-		<item class_id="4" tracking_level="0" version="0">
-			<first>1</first>
-			<second>2</second>
+		<item class_id="5" tracking_level="0" version="0">
+			<C1>1</C1>
+			<C2>2</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>1</first>
-			<second>3</second>
+			<C1>1</C1>
+			<C2>3</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>1</first>
-			<second>4</second>
+			<C1>1</C1>
+			<C2>4</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>2</first>
-			<second>4</second>
+			<C1>2</C1>
+			<C2>4</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>3</first>
-			<second>4</second>
+			<C1>3</C1>
+			<C2>4</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>3</first>
-			<second>5</second>
+			<C1>3</C1>
+			<C2>5</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>3</first>
-			<second>6</second>
+			<C1>3</C1>
+			<C2>6</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>4</first>
-			<second>6</second>
+			<C1>4</C1>
+			<C2>6</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>5</first>
-			<second>7</second>
+			<C1>5</C1>
+			<C2>7</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>8</first>
-			<second>9</second>
+			<C1>8</C1>
+			<C2>9</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>10</first>
-			<second>11</second>
+			<C1>10</C1>
+			<C2>11</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>11</first>
-			<second>13</second>
+			<C1>11</C1>
+			<C2>13</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>11</first>
-			<second>14</second>
+			<C1>11</C1>
+			<C2>14</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>12</first>
-			<second>13</second>
+			<C1>12</C1>
+			<C2>13</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>12</first>
-			<second>19</second>
+			<C1>12</C1>
+			<C2>19</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>13</first>
-			<second>14</second>
+			<C1>13</C1>
+			<C2>14</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>13</first>
-			<second>15</second>
+			<C1>13</C1>
+			<C2>15</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>13</first>
-			<second>19</second>
+			<C1>13</C1>
+			<C2>19</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>13</first>
-			<second>20</second>
+			<C1>13</C1>
+			<C2>20</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>14</first>
-			<second>15</second>
+			<C1>14</C1>
+			<C2>15</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>15</first>
-			<second>16</second>
+			<C1>15</C1>
+			<C2>16</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>15</first>
-			<second>20</second>
+			<C1>15</C1>
+			<C2>20</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>16</first>
-			<second>17</second>
+			<C1>16</C1>
+			<C2>17</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>17</first>
-			<second>18</second>
+			<C1>17</C1>
+			<C2>18</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>19</first>
-			<second>20</second>
+			<C1>19</C1>
+			<C2>20</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>19</first>
-			<second>21</second>
+			<C1>19</C1>
+			<C2>21</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>20</first>
-			<second>21</second>
+			<C1>20</C1>
+			<C2>21</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>20</first>
-			<second>22</second>
+			<C1>20</C1>
+			<C2>22</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>23</first>
-			<second>24</second>
+			<C1>23</C1>
+			<C2>24</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>24</first>
-			<second>25</second>
+			<C1>24</C1>
+			<C2>25</C2>
+			<IsWaterConnection>0</IsWaterConnection>
 		</item>
 		<item>
-			<first>2</first>
-			<second>10</second>
+			<C1>2</C1>
+			<C2>10</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>6</first>
-			<second>12</second>
+			<C1>6</C1>
+			<C2>12</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>7</first>
-			<second>8</second>
+			<C1>7</C1>
+			<C2>8</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>9</first>
-			<second>19</second>
+			<C1>9</C1>
+			<C2>19</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>10</first>
-			<second>18</second>
+			<C1>10</C1>
+			<C2>18</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>16</first>
-			<second>25</second>
+			<C1>16</C1>
+			<C2>25</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 		<item>
-			<first>21</first>
-			<second>23</second>
+			<C1>21</C1>
+			<C2>23</C2>
+			<IsWaterConnection>1</IsWaterConnection>
 		</item>
 	</CountryConnections>
 </SerializedMap>

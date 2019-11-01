@@ -31,7 +31,7 @@ Map* MapLoader::loadMap(std::string const& filePath)
     std::map<std::string, Vertex> countries;
     for (std::string& country : *serializedMap.Countries)
     {
-        CountryNode c;
+        CountryNode c((unsigned int)std::stoi(country));
         countries.emplace(country, map->addCountry(c));
     }
 
@@ -44,9 +44,9 @@ Map* MapLoader::loadMap(std::string const& filePath)
 
     for (auto& connection : *serializedMap.CountryConnections)
     {
-        Vertex c1 = countries[connection.first];
-        Vertex c2 = countries[connection.second];
-        map->connectRegion(c1, c2);
+        Vertex c1 = countries[*connection.C1];
+        Vertex c2 = countries[*connection.C2];
+        map->connectRegion(c1, c2, *connection.IsWaterConnection);
     }
 
     if (map->validate())

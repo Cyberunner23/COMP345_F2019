@@ -21,6 +21,24 @@ enum Cards
     cr1,cr2,cr3,cr4,cr5
 };
 
+enum class Cities
+{
+    RED,
+    WHITE,
+    BLUE,
+    YELLOW,
+    GREEN
+};
+
+enum class Armies
+{
+    RED,
+    WHITE,
+    BLUE,
+    YELLOW,
+    GREEN
+};
+
 class Deck
 {
 public:
@@ -31,6 +49,19 @@ public:
     Cards draw();
 
     std::map<Cards, std::string>* DeckMap;
-    std::vector<Cards>* Hand;
     std::vector<Cards>* CardList; // List of cards in the deck
+
+    std::map<Cities, std::string>* CitiesMap;
+    std::map<Armies, std::string>* ArmiesMap;
+};
+
+class Hand
+{
+public:
+
+  Hand();
+  ~Hand();
+  std::vector<Cards>* HandList; //List of cards in your _hand
+
+  void exchange();
 };

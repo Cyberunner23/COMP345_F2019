@@ -153,6 +153,7 @@ add_library(Player
     src/Player/Player.cpp
     )
 target_include_directories(Player PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Player Deck)
 
 # BidingFacility
 add_library(BidingFacility
@@ -167,3 +168,19 @@ add_executable(BidingFacilityDriver
     )
 target_include_directories(BidingFacilityDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(BidingFacilityDriver BidingFacility Player)
+
+# Actions
+add_library(Actions
+    src/Action/Actions.hpp
+    src/Action/Actions.cpp
+    src/Utils/MapUtil.hpp
+)
+target_include_directories(Actions PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Actions Player)
+
+# Actions Driver
+add_executable(ActionsDriver
+    src/Action/ActionsDriver.cpp
+)
+target_include_directories(ActionsDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(ActionsDriver Actions Map MapLoader)

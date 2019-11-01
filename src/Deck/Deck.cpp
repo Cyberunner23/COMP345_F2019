@@ -5,7 +5,6 @@
 
 Deck::Deck()
 {
-    Hand = new std::vector<Cards>();
     CardList = new std::vector<Cards> {
             f1,f2,f3,f4,f5,f6,f7,f8,
             c1, c2, c3 ,c4, c5, c6, c7, c8, c9 ,c10,
@@ -74,11 +73,27 @@ Deck::Deck()
             {cr5, "Add 2 Armies"},
     };
 
+    CitiesMap = new std::map<Cities, std::string>
+    {
+        {Cities::RED, "RED"},
+        {Cities::WHITE, "WHITE"},
+        {Cities::BLUE, "BLUE"},
+        {Cities::YELLOW, "YELLOW"},
+        {Cities::GREEN, "GREEN"}
+    };
+
+    ArmiesMap = new std::map<Armies, std::string>
+    {
+        {Armies::RED, "RED"},
+        {Armies::WHITE, "WHITE"},
+        {Armies::BLUE, "BLUE"},
+        {Armies::YELLOW, "YELLOW"},
+        {Armies::GREEN, "GREEN"}
+    };
 }
 
 Deck::~Deck()
 {
-    delete Hand;
     delete CardList;
     delete DeckMap;
 }
@@ -93,4 +108,20 @@ Cards Deck::draw()
     }
 
     return c;
+}
+
+
+Hand::Hand()
+{
+  HandList = new std::vector<Cards>();
+}
+
+Hand::~Hand()
+{
+    delete HandList;
+}
+
+void Hand::exchange()
+{
+
 }

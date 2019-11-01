@@ -2,34 +2,35 @@
 #include <vector>
 #include <iostream>
 
-Player::Player()
-{
-	name = "";
-	age = 0;
-	coins = 0;
-	bidingFacility = new BidingFacility();
-}
+Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE) {}
 
-Player::Player(std::string playerName, int playerAge, int playerCoins)
+Player::Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor)
 {
-	name = playerName;
-	age = playerAge;
-	coins = playerCoins;
-	bidingFacility = new BidingFacility();
+    _name = new std::string(playerName);
+    _age = new int(playerAge);
+    _coins = new int(playerCoins);
+    _bidingFacility = new BidingFacility();
+    _hand = new Hand();
+    _ownedRegions = new std::vector<Vertex>();
+    _numHandCities = new unsigned int(0);
+    _numHandArmies = new unsigned int(0);
+    _cityColor = new Cities(cityColor);
+    _armyColor = new Armies(armyColor);
+    _startingRegionID = new unsigned int(0);
 }
 
 Player* Player::youngestPlayer(std::vector<Player*> players)
 {
-	Player* youngestPlayer;
-	int youngestAge = players.at(0)->age;
-	for (auto& player : players) {
-		if (player->age < youngestAge) {
-			youngestAge = player->age;
-			youngestPlayer = player;
-		}
-	}
+    Player* youngestPlayer;
+    int youngestAge = *players.at(0)->_age;
+    for (auto& player : players) {
+    	if (*player->_age < youngestAge) {
+    		youngestAge = *player->_age;
+    		youngestPlayer = player;
+    	}
+    }
 
-	return youngestPlayer;
+    return youngestPlayer;
 }
 
 
@@ -40,7 +41,7 @@ Player* Player::bidingWinner(std::vector<Player*> players)
 	int highestBid = findHighestBid(players);
 
 	for (auto& player : players) {
-		if (player->bidingFacility->bid == highestBid)
+		if (player->_bidingFacility->bid == highestBid)
 			tiedPlayers.push_back(player);
 	}
 
@@ -59,11 +60,11 @@ int Player::findHighestBid(std::vector<Player*> players)
 {
 	Player* bidingWinner;
 	std::vector<Player*> tiedPlayers; //keep a list of players who tied their bid
-	int highestBid = players.at(0)->bidingFacility->bid;
+	int highestBid = players.at(0)->_bidingFacility->bid;
 
 	for (auto& player : players) {
-		if (player->bidingFacility->bid > highestBid)
-			highestBid = player->bidingFacility->bid;
+		if (player->_bidingFacility->bid > highestBid)
+			highestBid = player->_bidingFacility->bid;
 	}
 
 	return highestBid;
@@ -72,14 +73,15 @@ int Player::findHighestBid(std::vector<Player*> players)
 void Player::revealBids(std::vector<Player*> players)
 {
 	for (auto& player : players) {
-		std::cout << player->name << " has bid " << player->bidingFacility->bid << " coins." << std::endl;
+		std::cout << player->_name << " has bid " << player->_bidingFacility->bid << " _coins." << std::endl;
 	}
 }
+
 
 int Player::assignCoinsToPlayers(std::vector<Player*> players, int coins)
 {
 	for (auto& player : players) {
-		player->coins = coins;
+		*player->getCoins() = coins;
 	}
 
 	return coins;
@@ -100,29 +102,9 @@ int Player::assignCoinsToPlayers(std::vector<Player*> players)
 	}
 }
 
-//When Player wins a bid he has to pay coins and pu
+//When Player wins a bid he has to pay coins and 
 void Player::PayCoin()
 {
-	bidingFacility->supply += bidingFacility->bid;
-	coins -= bidingFacility->bid;
-}
-
-void Player::PlaceNewArmies()
-{
-}
-
-void Player::MoveArmies()
-{
-}
-
-void Player::MoveOverLand()
-{
-}
-
-void Player::BuildCity()
-{
-}
-
-void Player::DestroyArmy()
-{
+    _bidingFacility->supply += _bidingFacility->bid;
+    _coins -= _bidingFacility->bid;
 }
