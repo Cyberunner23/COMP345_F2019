@@ -12,4 +12,5 @@ struct GameState
     Deck* GameDeck;
     std::vector<Cards>* ShownCards;
     std::vector<Player>* Players;
+	int supply;
 };

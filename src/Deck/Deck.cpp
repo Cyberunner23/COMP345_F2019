@@ -1,5 +1,9 @@
 #include "Deck.h"
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
+#include <random>
+#include <chrono>
 
 
 
@@ -108,6 +112,12 @@ Cards Deck::draw()
     }
 
     return c;
+}
+
+void Deck::shuffleDeck()
+{
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(CardList->begin(), CardList->end(), std::default_random_engine(seed));
 }
 
 

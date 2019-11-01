@@ -6,8 +6,7 @@ int main() {
     Hand hand;
     std::string response;
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::shuffle(deck.CardList->begin(), deck.CardList->end(), std::default_random_engine(seed));
+	deck.shuffleDeck();
 
     Cards c = deck.draw();
     hand.HandList->push_back(c);

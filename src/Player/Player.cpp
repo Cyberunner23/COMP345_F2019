@@ -78,19 +78,23 @@ void Player::revealBids(std::vector<Player*> players)
 }
 
 
-int Player::assignCoinsToPlayers(std::vector<Player*> players, int coins)
+int Player::assignCoinsToPlayers(std::vector<Player>* players, int coins)
 {
-	for (auto& player : players) {
+	for (Player& player : players) {
 		*player->getCoins() = coins;
+	}
+
+	for (auto it = std::begin(players); it != std::end(players); ++it) {
+		std::cout << *it << "\n";
 	}
 
 	return coins;
 }
 
 //Assigns number of coins to each player depending on their number
-int Player::assignCoinsToPlayers(std::vector<Player*> players)
+int Player::assignCoinsToPlayers(std::vector<Player>* players)
 {
-	switch (players.size()) {
+	switch (players->size()) {
 	case 2:
 		return assignCoinsToPlayers(players, 14);
 	case 3:

@@ -33,8 +33,8 @@ int main(int argc, char** argv)
 	//Winner puts the _coins he bid in supply
 	bidingWinner->PayCoin();
 
-	std::cout << "\n" << *bidingWinner->getName() << " has won the bid. " << bidingWinner->getBidingFacility()->bid << " _coins are now going to the supply.";
-	std::cout << "\nThe supply contains now: " << BidingFacility::supply << " _coins." << std::endl;
+	std::cout << "\n" << *bidingWinner->getName() << " has won the bid. " << bidingWinner->getBidingFacility()->bid << " coins are now going to the supply.";
+	std::cout << "\nThe supply contains now: " << BidingFacility::supply << " coins." << std::endl;
 
 
 	//TEST 1: Player who bid the most _coins wins

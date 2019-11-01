@@ -3,10 +3,6 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <algorithm>
-#include <cstdlib>
-#include <random>
-#include <chrono>
 
 
 //A * in the enum indicates this card is for a 5+ player game. Maybe not be implemented
@@ -47,6 +43,7 @@ public:
     ~Deck();
 
     Cards draw();
+	void shuffleDeck();
 
     std::map<Cards, std::string>* DeckMap;
     std::vector<Cards>* CardList; // List of cards in the deck

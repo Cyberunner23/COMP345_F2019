@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "GameState/GameState.hpp"
+#include "Game/GameState.hpp"
 #include "Utils/MapUtil.hpp"
 
 // Set of actions the player has, one instance per player
