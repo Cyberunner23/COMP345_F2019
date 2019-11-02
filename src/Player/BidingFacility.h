@@ -6,7 +6,7 @@ class BidingFacility {
 
 public:
 	BidingFacility();
-	int bid;
+	int* bid;
 	static int supply;
-	void startBiding(int maxBid);
+	void startBiding(int* maxBid);
 };

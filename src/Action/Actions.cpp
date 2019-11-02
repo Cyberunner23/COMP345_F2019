@@ -89,6 +89,8 @@ bool Actions::RunAction(Cards card)
         case cr5:
             break;
     }
+
+	return false;
 }
 
 // Place 1 army

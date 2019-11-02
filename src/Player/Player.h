@@ -59,11 +59,11 @@ public:
     Armies getArmyColor() {return *_armyColor;}
     void setArmyColor(Armies color) {*_armyColor = color;}
 
-    static int findHighestBid(std::vector<Player>* players);
+    static int* findHighestBid(std::vector<Player>* players);
     static Player bidingWinner(std::vector<Player>* players);
     static Player youngestPlayer(std::vector<Player>* players);
     static void revealBids(std::vector<Player>* players);
-	static int assignCoinsToPlayers(std::vector<Player>* players, int coins);
-	static int assignCoinsToPlayers(std::vector<Player>* players);
+	static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
+	static int* assignCoinsToPlayers(std::vector<Player>* players);
     void PayCoin();
 };

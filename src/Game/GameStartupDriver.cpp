@@ -1,7 +1,9 @@
+#include <vector>
 
 #include "Map/MapLoader.h"
 #include "Game/GameState.hpp"
 #include "Deck/Deck.h"
+#include "Player/BidingFacility.h"
 
 int main(int argc, char** argv)
 {
@@ -26,6 +28,7 @@ int main(int argc, char** argv)
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
+	state.ShownCards = new std::vector<Cards>();
 	for (int i = 0; i < 6; i++) {
 		Cards c = state.GameDeck->draw();
 		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
@@ -34,6 +37,8 @@ int main(int argc, char** argv)
 
 	
 	//Initialize Players 
+	state.Players = new std::vector<Player>();
+
 	std::string* nameP1 = new std::string("Player 1");
 	std::string* nameP2 = new std::string("Player 2");
 	std::string* nameP3 = new std::string("Player 3");
@@ -57,8 +62,8 @@ int main(int argc, char** argv)
 	state.Players->push_back(p2);
 
 	Player p3;
-	p3.setName(nameP2);
-	p3.setage(ageP2);
+	p3.setName(nameP3);
+	p3.setage(ageP3);
 	p3.setCityColor(Cities::RED);
 	p3.setArmyColor(Armies::RED);
 	state.Players->push_back(p3);
@@ -68,9 +73,8 @@ int main(int argc, char** argv)
 	//board until ten armies have been placed.
 
 	//Assign coins to each players
-	int maxCoins = Player::assignCoinsToPlayers(state.Players);
+	int* maxCoins = Player::assignCoinsToPlayers(state.Players);
 
-	//Players bid
 	for (auto& player : *state.Players) {
 		player.getBidingFacility()->startBiding(maxCoins);
 	}
@@ -80,16 +84,28 @@ int main(int argc, char** argv)
 	//Dertermining who won the bid
 	Player bidingWinner;
 	bidingWinner = Player::bidingWinner(state.Players);
-
-	std::cout << "\n" << bidingWinner.getName() << " has won the bid. " << bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
-	bidingWinner.setCoins(bidingWinner.getCoins() - bidingWinner.getBidingFacility()->bid);
-	std::cout << "\n" << bidingWinner.getName() << " has now " << bidingWinner.getCoins() << " coins.";
+	std::cout << "\n" << *bidingWinner.getName() << " has won the bid. " << *bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
+	
+	//Computing remaining coins of winner
+	int* remainingCoins = new int(); 
+	*remainingCoins = *bidingWinner.getCoins() - *bidingWinner.getBidingFacility()->bid;
+	bidingWinner.setCoins(remainingCoins);
+	std::cout << "\n" << *bidingWinner.getName() << " has now " << *bidingWinner.getCoins() << " coins.";
 
 	//Putting the coins in supply
-	state.supply += bidingWinner.getBidingFacility()->bid;
-	std::cout << "\nThe supply contains now: " << state.supply << " coins." << std::endl;
+	state.supply = new int();
+	*state.supply += *bidingWinner.getBidingFacility()->bid;
+	std::cout << "\nThe supply contains now: " << *state.supply << " coins." << std::endl;
 
 	//Retrieve player in state.Players to determine who will be the next to play 
+	int playerIndex = 0;
+	for (Player& player : *state.Players) {
+		if (*bidingWinner.getName() == *player.getName()) {
+			break;
+		}
+		playerIndex++;
+	}
+	std::cout << "The next player to play will be: " << *state.Players->at(++playerIndex%3).getName() << std::endl;
 
 	return 0;
 }
