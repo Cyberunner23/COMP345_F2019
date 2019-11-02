@@ -1,5 +1,6 @@
-#include "GameStart.h"
+#include "Map/MapLoader.h"
 #include "Deck/Deck.h"
+#include <Game\GameState.hpp>
 
 int main(int argc, char** argv)
 {
