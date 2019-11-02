@@ -3,8 +3,6 @@
 
 int main(int argc, char** argv)
 {
-  GameStart game;
-  GameState state;
   Deck deck;
   int playerNum;
   int mapSelection;
@@ -37,15 +35,17 @@ int main(int argc, char** argv)
   }
 
 
-  std::cout<<"Generating the game..."
-  game.GameStart(3, mapPath);
-  state = game.StartGame();
+  std::cout<<"Generating the game..."<<std::endl;
+  GameStart* game = new GameStart(3, mapPath);
+  GameState* state = game->StartGame();
 
-  std::cout << "Number of players: " << state.Game->Players->size()<<std::endl;
-  std::cout << "Starting Cards:"
-  for(int i = 0; i < state.Game->ShownCards->size(); i++)
+  std::cout << "Number of players: " << state->Players->size()<<std::endl;
+  std::cout << "Starting Cards: " << std::endl;
+  
+
+  for(int i = 0; i < state->ShownCards->size(); i++)
   {
-      std::cout<<deck.DeckMap->at(state.Game->shownCards->at(i)) <<std::endl; //Outputs the cards showing on the table
+      std::cout<<deck.DeckMap->at(state->ShownCards->at(i)) <<std::endl; //Outputs the cards showing on the table
   }
 
   return 0;

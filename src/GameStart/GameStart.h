@@ -10,13 +10,11 @@
 class GameStart
 {
   public:
-    GameStart();
+
     GameStart(int PlayerNum, std::string mapPath);
-    ~GameStart();
-    GameState StartGame();
+    GameState* StartGame();
 
     MapLoader* loader;
-    unsigned* seed;
     GameState* Game;
 
-}
+};
