@@ -1,5 +1,5 @@
 #pragma once
-#include "GameState/GameState.hpp"
+#include "Game/GameState.hpp"
 #include "Deck/Deck.h"
 #include <chrono>
 #include <random>
