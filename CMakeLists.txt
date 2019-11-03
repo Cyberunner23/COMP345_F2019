@@ -153,7 +153,7 @@ add_library(Player
     src/Player/Player.cpp
     )
 target_include_directories(Player PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Player Deck)
+target_link_libraries(Player Deck BidingFacility)
 
 # BidingFacility
 add_library(BidingFacility
@@ -190,7 +190,7 @@ add_executable(GameStartDriver
     src/Game/GameStartDriver.cpp
 )
 target_include_directories(GameStartDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(GameStartDriver Deck Player Map MapLoader BidingFacility)
+target_link_libraries(GameStartDriver Deck Player Map MapLoader BidingFacility Game)
 
 # Game State
 add_library(GameState
@@ -206,3 +206,11 @@ add_executable(GameStartupDriver
 )
 target_include_directories(GameStartupDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(GameStartupDriver BidingFacility GameState Deck Map MapLoader)
+
+# Game
+add_library(Game
+    src/Game/Game.h
+    src/Game/Game.cpp
+)
+target_include_directories(Game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Game GameState)
