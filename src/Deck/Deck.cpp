@@ -1,5 +1,9 @@
 #include "Deck.h"
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
+#include <random>
+#include <chrono>
 
 
 
@@ -73,6 +77,23 @@ Deck::Deck()
             {cr5, "Add 2 Armies"},
     };
 
+    CitiesMap = new std::map<Cities, std::string>
+    {
+        {Cities::RED, "RED"},
+        {Cities::WHITE, "WHITE"},
+        {Cities::BLUE, "BLUE"},
+        {Cities::YELLOW, "YELLOW"},
+        {Cities::GREEN, "GREEN"}
+    };
+
+    ArmiesMap = new std::map<Armies, std::string>
+    {
+        {Armies::RED, "RED"},
+        {Armies::WHITE, "WHITE"},
+        {Armies::BLUE, "BLUE"},
+        {Armies::YELLOW, "YELLOW"},
+        {Armies::GREEN, "GREEN"}
+    };
 }
 
 Deck::~Deck()
@@ -91,6 +112,12 @@ Cards Deck::draw()
     }
 
     return c;
+}
+
+void Deck::shuffleDeck()
+{
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(CardList->begin(), CardList->end(), std::default_random_engine(seed));
 }
 
 

@@ -6,8 +6,7 @@ int main() {
     Hand hand;
     std::string response;
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::shuffle(deck.CardList->begin(), deck.CardList->end(), std::default_random_engine(seed));
+	deck.shuffleDeck();
 
     Cards c = deck.draw();
     hand.HandList->push_back(c);
@@ -24,7 +23,7 @@ int main() {
         std::cin >> response;
     }
 
-    std::cout << "Your hand is: " << std::endl;
+    std::cout << "Your _hand is: " << std::endl;
     for(int i = 0; i < hand.HandList->size(); i++)
     {
         std::cout << deck.DeckMap->at(hand.HandList->at(i)) << ", Cost: "<< hand.HandList->at(i) << std::endl;
