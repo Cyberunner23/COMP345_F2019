@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 	*state.supply += *bidingWinner.getBidingFacility()->bid;
 	std::cout << "\nThe supply contains now: " << *state.supply << " coins." << std::endl;
 
-	//Retrieve player in state.Players to determine who will be the next to play 
+	//Retrieve winning player in state.Players to determine who will be the next to play 
 	int playerIndex = 0;
 	for (Player& player : *state.Players) {
 		if (*bidingWinner.getName() == *player.getName()) {
@@ -105,7 +105,14 @@ int main(int argc, char** argv)
 		}
 		playerIndex++;
 	}
+	state.Players->at(playerIndex) = bidingWinner; 
 	std::cout << "The next player to play will be: " << *state.Players->at(++playerIndex%3).getName() << std::endl;
+
+	Player::displayPlayers(state.Players);
+
+	delete map;
+	delete maxCoins;
+	delete remainingCoins;
 
 	return 0;
 }

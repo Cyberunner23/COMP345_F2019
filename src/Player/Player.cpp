@@ -102,6 +102,19 @@ int* Player::assignCoinsToPlayers(std::vector<Player>* players)
 	}
 }
 
+void Player::displayPlayers(std::vector<Player>* players)
+{
+	std::cout << "\n------- Displaying players information -------" << std::endl;
+	for (auto& player : *players) {
+		std::cout << "Name: " << *player.getName() << std::endl;
+		std::cout << "Age: " <<  *player.getage() << std::endl;
+		std::cout << "Coins: " << *player.getCoins() << std::endl;
+		std::cout << "Cards in hand: " << player.getHand()->HandList->size() << " cards" << std::endl;
+		//std::cout << "Color (Army & City): " <<  << "\n" << std::endl;
+		std::cout << "-----------------------------" << std::endl;
+	}
+}
+
 //When Player wins a bid he has to pay coins and 
 void Player::PayCoin()
 {

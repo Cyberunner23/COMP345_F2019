@@ -65,5 +65,6 @@ public:
     static void revealBids(std::vector<Player>* players);
 	static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
 	static int* assignCoinsToPlayers(std::vector<Player>* players);
+	static void displayPlayers(std::vector<Player>* players);
     void PayCoin();
 };
