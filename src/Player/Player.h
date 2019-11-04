@@ -48,10 +48,10 @@ public:
     void setOwnedRegions(std::vector<Vertex>* ownedRegions) {_ownedRegions = ownedRegions;}
 
     unsigned int getNumHandCities() {return *_numHandCities;}
-    void setHandCities(unsigned int handCities) {*_numHandCities = handCities;}
+    void setNumHandCities(unsigned int handCities) {*_numHandCities = handCities;}
 
     unsigned int getNumHandArmies() {return *_numHandArmies;}
-    void setHandArmies(unsigned int handArmies) {*_numHandArmies = handArmies;}
+    void setNumHandArmies(unsigned int handArmies) {*_numHandArmies = handArmies;}
 
     Cities getCityColor() {return *_cityColor;}
     void setCityColor(Cities color) {*_cityColor = color;}

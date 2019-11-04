@@ -39,8 +39,8 @@ int main(int argc, char** argv)
     p1.setage(ageP1);
     p1.setCityColor(Cities::BLUE);
     p1.setArmyColor(Armies::BLUE);
-    p1.setHandArmies(14);
-    p1.setHandCities(3);
+    p1.setNumHandArmies(14);
+    p1.setNumHandCities(3);
     state.Players->push_back(p1);
 
     Player p2;
@@ -48,8 +48,8 @@ int main(int argc, char** argv)
     p2.setage(ageP2);
     p2.setCityColor(Cities::GREEN);
     p2.setArmyColor(Armies::GREEN);
-    p2.setHandArmies(14);
-    p2.setHandCities(3);
+    p2.setNumHandArmies(14);
+    p2.setNumHandCities(3);
     state.Players->push_back(p2);
 
     Player p3;
@@ -57,8 +57,8 @@ int main(int argc, char** argv)
     p3.setage(ageP3);
     p3.setCityColor(Cities::RED);
     p3.setArmyColor(Armies::RED);
-    p3.setHandArmies(14);
-    p3.setHandCities(3);
+    p3.setNumHandArmies(14);
+    p3.setNumHandCities(3);
     state.Players->push_back(p3);
 
     //Give cards to players

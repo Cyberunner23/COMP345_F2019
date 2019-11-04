@@ -202,7 +202,7 @@ bool Actions::RunAction(Cards card)
 bool Actions::PlaceNewArmies()
 {
     // Check if player has armies to place
-    if (*_player->getNumHandArmies() == 0)
+    if (_player->getNumHandArmies() == 0)
     {
         std::cout << "You cannot place any new armies! All of your armies are deployed!" << std::endl;
         return false;
@@ -217,7 +217,7 @@ bool Actions::PlaceNewArmies()
             return false;
         }
 
-        auto isStartingCountry = [this](unsigned int countryID) { return countryID == *_player->getStartingRegionID(); };
+        auto isStartingCountry = [this](unsigned int countryID) { return countryID == _player->getStartingRegionID(); };
         auto playerHasCityInCountry = [this](CountryNode* node)
             { return std::find(node->CitiesInCountry->begin(), node->CitiesInCountry->end(), _player->getCityColor()) != node->CitiesInCountry->end(); };
         //auto playerAlreadyHasArmyInCountry = [this](CountryNode* node)
@@ -230,7 +230,9 @@ bool Actions::PlaceNewArmies()
             /*&& !playerAlreadyHasArmyInCountry(node)*/)
         {
             // decrement num armies in hand
-            (*_player->getNumHandArmies())--;
+            int numArmies = _player->getNumHandArmies();
+            numArmies--;
+            _player->setNumHandArmies(numArmies);
             // Add army to country node
             node->ArmiesInCountry->push_back(_player->getArmyColor());
 
@@ -347,7 +349,7 @@ bool Actions::MoveOverLandOrWater()
 bool Actions::BuildCity()
 {
     // Check if player has cities to place
-    if (*_player->getNumHandCities() == 0)
+    if (_player->getNumHandCities() == 0)
     {
         std::cout << "You cannot place any new cities! All of your cities are placed!" << std::endl;
         return false;
@@ -370,7 +372,10 @@ bool Actions::BuildCity()
         if (playerHasArmyInCountry(node))
         {
             // decrement num cities in hand
-            (*_player->getNumHandCities())--;
+            int numCities = _player->getNumHandCities();
+            numCities--;
+            _player->setNumHandCities(numCities);
+
             // Add city to country node
             node->CitiesInCountry->push_back(_player->getCityColor());
 

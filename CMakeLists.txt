@@ -221,3 +221,10 @@ add_executable(AfterActionDriver
 )
 target_include_directories(AfterActionDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(AfterActionDriver Actions Map MapLoader Game)
+
+#GameLoop Driver
+add_executable(GameLoopDriver
+  src/Game/GameLoopDriver.cpp
+)
+target_include_directories(GameLoopDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameLoopDriver Deck GameState Player Map BidingFacility)
