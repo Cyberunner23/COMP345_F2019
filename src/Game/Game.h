@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Player/Player.h"
-#include <Game\GameState.hpp>
+#include <Game/GameState.hpp>
 
 class Game {
 

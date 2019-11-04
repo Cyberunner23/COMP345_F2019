@@ -36,20 +36,7 @@ std::pair<VertexIterator, VertexIterator> Map::getVertexIterators()
 
 unsigned int Map::getNumCountries()
 {
-    unsigned int count = 0;
-
-    auto iterators = getContinentIterators();
-    for (auto it = iterators.first; it != iterators.second; it++)
-    {
-        auto continent = *it;
-        auto childIterators = continent.children();
-        for (auto it2 = childIterators.first; it2 != childIterators.second; it2++)
-        {
-            count++;
-        }
-    }
-
-    return count;
+    return boost::num_vertices(*_mainGraph);
 }
 
 
