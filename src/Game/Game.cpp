@@ -71,3 +71,30 @@ void Game::displayFaceUpCards(GameState state)
 		position++;
 	}
 }
+
+void Game::PlaceArmiesInCountryStartup(GameState& state)
+{
+    unsigned int startingCountryID = state.GameMap->getStartingCountryID();
+    CountryNode* startingCountry = state.GameMap->findCountryByID(startingCountryID);
+
+    if (state.Players->size() == 2)
+    {
+        // 2 player logic here
+
+    }
+    else
+    {
+        // normal thing
+        for (auto& player : *state.Players)
+        {
+            unsigned int numArmies = player.getNumHandArmies();
+            numArmies -= 3;
+            player.setNumHandArmies(numArmies);
+
+            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+        }
+
+    }
+}
