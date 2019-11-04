@@ -1,6 +1,6 @@
 #include "Map/MapLoader.h"
 #include "Deck/Deck.h"
-#include <Game\GameState.hpp>
+#include <Game/GameState.hpp>
 
 int main(int argc, char** argv)
 {
