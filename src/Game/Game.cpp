@@ -61,3 +61,13 @@ std::vector<Player>* Game::createPlayers()
 
 	return players;
 }
+
+void Game::displayFaceUpCards(GameState state)
+{
+	int position = 1;
+	std::cout << "------- Displaying Cards -------" << std::endl;
+	for (auto& card : *state.ShownCards) {
+		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card) << std::endl;
+		position++;
+	}
+}
