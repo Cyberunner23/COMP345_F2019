@@ -19,6 +19,38 @@ void CountryNode::destroyArmy(Armies armyToDestroy)
     ArmiesInCountry->erase(it);
 }
 
+void Map::dump()
+{
+    auto iterators = getVertexIterators();
+    VertexDataPropertyMap map = boost::get(vertex_data, *_mainGraph);
+    Deck d;
+
+    for (auto it = iterators.first; it != iterators.second; ++it)
+    {
+        CountryNode* node = &map[*it];
+        std::cout << "----------------------------------------" << std::endl;
+        std::cout << "Country ID: " << *node->CountryID << std::endl;
+        std::cout << "Cities in country:" << std::endl;
+        for (auto city : *node->CitiesInCountry)
+        {
+            std::cout << d.CitiesMap->at(city) << std::endl;
+        }
+        std::cout << "Armies in country:" << std::endl;
+        for (auto army : *node->ArmiesInCountry)
+        {
+            std::cout << d.ArmiesMap->at(army) << std::endl;
+        }
+
+        std::cout << "Countries connected to this one:" << std::endl;
+        auto adjacent_vertices = boost::adjacent_vertices(*it, *_mainGraph);
+        for (auto it2 = adjacent_vertices.first; it2 != adjacent_vertices.second; ++it2)
+        {
+            CountryNode* adjacentNode = &map[*it2];
+            std::cout << *adjacentNode->CountryID << std::endl;
+        }
+    }
+}
+
 SGraph& Map::createContinent()
 {
     return _mainGraph->create_subgraph();
