@@ -34,7 +34,7 @@ struct SerializedMap
 {
     SerializedMap()
     {
-		StartingCountryID = new unsigned int(0);
+        StartingCountryID = new unsigned int(0);
         Continents = new std::vector<std::string>();
         Countries = new std::vector<std::string>();
         CountryContinentMapping = new std::map<std::string, std::string>();

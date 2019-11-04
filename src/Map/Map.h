@@ -1,5 +1,4 @@
 #pragma once
-#define BOOST_ALL_NO_LIB //To remove later 
 
 #include <fstream>
 #include <memory>
@@ -131,6 +130,8 @@ public:
 
         boost::write_graphviz_dp(out, *_mainGraph, dp);
     }*/
+
+    void dump();
 
     // Creates a sub-graph from the main graph.
     SGraph& createContinent();

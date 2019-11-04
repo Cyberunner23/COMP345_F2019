@@ -106,6 +106,7 @@ add_library(Map
     )
 target_include_directories(Map PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(Map
+    Deck
     Boost::boost
     Boost::filesystem
     Boost::graph
