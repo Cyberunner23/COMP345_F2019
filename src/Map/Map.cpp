@@ -164,6 +164,17 @@ Edge Map::connectRegion(const Vertex& v1, const Vertex& v2, bool isWaterConnecti
     return e;
 }
 
+
+unsigned int Map::getStartingCountryID()
+{
+    return boost::get_property(*_mainGraph, graph_data);
+}
+
+void Map::setStartingCountryID(unsigned int ID)
+{
+    boost::get_property(*_mainGraph, graph_data) = ID;
+}
+
 bool Map::isConnected()
 {
     return isConnected(*_mainGraph);

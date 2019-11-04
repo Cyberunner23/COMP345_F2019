@@ -22,6 +22,8 @@ Map* MapLoader::loadMap(std::string const& filePath)
 
     Map* map = new Map();
 
+    map->setStartingCountryID(*serializedMap.StartingCountryID);
+
     std::map<std::string, SGraph*> continents;
     for (std::string& continent : *serializedMap.Continents)
     {

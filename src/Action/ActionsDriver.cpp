@@ -35,6 +35,7 @@ int main(int argc, char** argv)
     int* ageP3 = new int(22);
 
     Player p1;
+    p1.setStartingRegionID(map->getStartingCountryID());
     p1.setName(nameP1);
     p1.setage(ageP1);
     p1.setCityColor(Cities::BLUE);
@@ -44,6 +45,7 @@ int main(int argc, char** argv)
     state.Players->push_back(p1);
 
     Player p2;
+    p2.setStartingRegionID(map->getStartingCountryID());
     p2.setName(nameP2);
     p2.setage(ageP2);
     p2.setCityColor(Cities::GREEN);
@@ -53,6 +55,7 @@ int main(int argc, char** argv)
     state.Players->push_back(p2);
 
     Player p3;
+    p3.setStartingRegionID(map->getStartingCountryID());
     p3.setName(nameP3);
     p3.setage(ageP3);
     p3.setCityColor(Cities::RED);

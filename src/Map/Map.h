@@ -58,12 +58,18 @@ enum edge_data_t
     edge_data
 };
 
+enum graph_data_t
+{
+    graph_data
+};
+
 // Registering the new properties
 namespace boost
 {
     BOOST_INSTALL_PROPERTY(vertex, data);
     BOOST_INSTALL_PROPERTY(vertex, displayTxt);
     BOOST_INSTALL_PROPERTY(edge, data);
+    BOOST_INSTALL_PROPERTY(graph, data);
 }
 
 // The graph. Uses Boost::graph.
@@ -80,7 +86,9 @@ typedef boost::subgraph<
                 boost::property<vertex_displayTxt_t, std::string>>>,
 
                 boost::property<boost::edge_index_t, int,
-                        boost::property<edge_data_t, bool>>
+                        boost::property<edge_data_t, bool>>,
+
+                boost::property<graph_data_t, unsigned int>
         >> SGraph;
 
 // Type for the vertices
@@ -130,6 +138,9 @@ public:
     std::pair<ContinentIterator, ContinentIterator> getContinentIterators();
     std::pair<VertexIterator, VertexIterator> getVertexIterators();
     unsigned int getNumCountries();
+
+    unsigned int getStartingCountryID();
+    void setStartingCountryID(unsigned int ID);
 
     // Adds a RegionNode to the main graph.
     Vertex addCountry(const CountryNode& region);

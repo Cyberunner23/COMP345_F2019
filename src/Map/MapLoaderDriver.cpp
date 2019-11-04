@@ -61,6 +61,8 @@ void generateMaps()
     {
         SerializedMap sm;
 
+        sm.StartingCountryID = new unsigned int(15);
+
         sm.Continents->emplace_back("C1");
         sm.Continents->emplace_back("C2");
         sm.Continents->emplace_back("C3");
@@ -160,6 +162,8 @@ void generateMaps()
     // Map 2
     {
         SerializedMap sm;
+
+        sm.StartingCountryID = new unsigned int(13);
 
         sm.Continents->emplace_back("C1");
         sm.Continents->emplace_back("C2");

@@ -48,6 +48,7 @@ struct SerializedMap
         delete CountryConnections;
     }
 
+    unsigned int* StartingCountryID;
     std::vector<std::string>* Continents;
     std::vector<std::string>* Countries;
     std::map<std::string, std::string>* CountryContinentMapping;
@@ -55,6 +56,7 @@ struct SerializedMap
 
     SERIALIZE(archive,
     {
+        archive & NameValuePair("StartingCountryID", *StartingCountryID);
         archive & NameValuePair("Continents", *Continents);
         archive & NameValuePair("Countries", *Countries);
         archive & NameValuePair("CountryContinentMapping", *CountryContinentMapping);
