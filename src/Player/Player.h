@@ -26,8 +26,8 @@ public:
     Player();
     Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor);
 
-    unsigned int* getStartingRegionID() {return _startingRegionID;}
-    void setStartingRegionID(unsigned int* ID) { _startingRegionID = ID;}
+    unsigned int getStartingRegionID() {return *_startingRegionID;}
+    void setStartingRegionID(unsigned int ID) { *_startingRegionID = ID;}
 
     BidingFacility* getBidingFacility() {return _bidingFacility;}
     void setBidingFacility(BidingFacility* facility) {_bidingFacility = facility;}
@@ -47,11 +47,11 @@ public:
     std::vector<Vertex>* getOwnedRegions() {return _ownedRegions;}
     void setOwnedRegions(std::vector<Vertex>* ownedRegions) {_ownedRegions = ownedRegions;}
 
-    unsigned int* getNumHandCities() {return _numHandCities;}
-    void setHandCities(unsigned int* handCities) {_numHandCities = handCities;}
+    unsigned int getNumHandCities() {return *_numHandCities;}
+    void setNumHandCities(unsigned int handCities) {*_numHandCities = handCities;}
 
-    unsigned int* getNumHandArmies() {return _numHandArmies;}
-    void setHandArmies(unsigned int* handArmies) {_numHandArmies = handArmies;}
+    unsigned int getNumHandArmies() {return *_numHandArmies;}
+    void setNumHandArmies(unsigned int handArmies) {*_numHandArmies = handArmies;}
 
     Cities getCityColor() {return *_cityColor;}
     void setCityColor(Cities color) {*_cityColor = color;}
@@ -63,8 +63,8 @@ public:
     static Player bidingWinner(std::vector<Player>* players);
     static Player youngestPlayer(std::vector<Player>* players);
     static void revealBids(std::vector<Player>* players);
-	static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
-	static int* assignCoinsToPlayers(std::vector<Player>* players);
-	static void displayPlayers(std::vector<Player>* players);
+    static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
+    static int* assignCoinsToPlayers(std::vector<Player>* players);
+    static void displayPlayers(std::vector<Player>* players);
     void PayCoin();
 };
