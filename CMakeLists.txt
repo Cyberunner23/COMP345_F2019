@@ -206,3 +206,10 @@ add_executable(GameStartupDriver
 )
 target_include_directories(GameStartupDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(GameStartupDriver BidingFacility GameState Deck Map MapLoader)
+
+#GameLoop Driver
+add_executable(GameLoopDriver
+  src/Game/GameLoopDriver.cpp
+)
+target_include_directories(GameLoopDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameLoopDriver Deck GameState Player Map BidingFacility)
