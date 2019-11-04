@@ -79,22 +79,43 @@ void Game::PlaceArmiesInCountryStartup(GameState& state)
 
     if (state.Players->size() == 2)
     {
-        // 2 player logic here
-
+		int countryID;
+		PlaceArmiesInCountryStartup(state, startingCountry);
+		Armies newArmy = Armies::WHITE; //thrid non player army
+		for (int i = 0; i < 4; i++) { //Place 4 armies to get to 10 armies on the map
+			Player player = state.Players->at(i%2);
+			std::cout << *player.getName() << ", please enter the country ID where you wanna place the army: ";
+			while (std::cin >> countryID && (countryID < 1 || countryID > state.GameMap->getNumCountries())) {
+				std::cout << "Invalid ID range ..." << std::endl;
+				std::cout << "Please enter a valid country ID: ";
+			}
+			CountryNode* country = state.GameMap->findCountryByID(countryID);
+			country->ArmiesInCountry->push_back(newArmy);
+			std::cout << "\n" << *player.getName() << " just placed a new army." << std::endl;
+		}
     }
+	//More than 3 players
     else
     {
-        // normal thing
-        for (auto& player : *state.Players)
-        {
-            unsigned int numArmies = player.getNumHandArmies();
-            numArmies -= 3;
-            player.setNumHandArmies(numArmies);
-
-            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
-            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
-            startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
-        }
-
+		PlaceArmiesInCountryStartup(state, startingCountry);
     }
+}
+
+void Game::PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCountry)
+{
+	//Each player placing 3 armies on starting region
+	for (auto& player : *state.Players)
+	{
+		unsigned int numArmies = player.getNumHandArmies();
+		numArmies -= 3;
+		player.setNumHandArmies(numArmies);
+
+		startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+		startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+		startingCountry->ArmiesInCountry->push_back(player.getArmyColor());
+
+		std::cout << *player.getName() << " has finished placing his 3 armies on the starting region." << std::endl;
+	}
+
+	std::cout << "The starting region now contains " << startingCountry->ArmiesInCountry->size() << " armies." << std::endl;
 }

@@ -13,4 +13,5 @@ public:
     static void displayFaceUpCards(GameState state);
 
     static void PlaceArmiesInCountryStartup(GameState& state);
+	static void PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCountry);
 };

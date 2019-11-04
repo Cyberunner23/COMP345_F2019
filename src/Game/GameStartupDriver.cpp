@@ -4,11 +4,13 @@
 #include "Game/GameState.hpp"
 #include "Deck/Deck.h"
 #include "Player/BidingFacility.h"
+#include "Game/Game.h"
 
 int main(int argc, char** argv)
 {
 
 	GameState state;
+	GameState state2;
 
 	// Load Map
 	std::string mapPath = "data/map1.map";
@@ -22,6 +24,7 @@ int main(int argc, char** argv)
 	}
 
 	state.GameMap = map;
+	state2.GameMap = map;
 
 	// Create Deck
 	state.GameDeck = new Deck();
@@ -38,39 +41,50 @@ int main(int argc, char** argv)
 	
 	//Initialize Players 
 	state.Players = new std::vector<Player>();
+	state2.Players = new std::vector<Player>();
 
 	std::string* nameP1 = new std::string("Player 1");
 	std::string* nameP2 = new std::string("Player 2");
 	std::string* nameP3 = new std::string("Player 3");
 
-	int* ageP1 = new int(23);
-	int* ageP2 = new int(21);
-	int* ageP3 = new int(22);
+	int* ageP1 = new int(20);
+	int* ageP2 = new int(30);
+	int* ageP3 = new int(40);
 
 	Player p1;
 	p1.setName(nameP1);
 	p1.setage(ageP1);
 	p1.setCityColor(Cities::BLUE);
 	p1.setArmyColor(Armies::BLUE);
+	p1.setNumHandArmies(14);
+	p1.setNumHandCities(3);
 	state.Players->push_back(p1);
+	state2.Players->push_back(p1);
 
 	Player p2;
 	p2.setName(nameP2);
 	p2.setage(ageP2);
 	p2.setCityColor(Cities::GREEN);
 	p2.setArmyColor(Armies::GREEN);
+	p2.setNumHandArmies(14);
+	p2.setNumHandCities(3);
 	state.Players->push_back(p2);
+	state2.Players->push_back(p2);
 
 	Player p3;
 	p3.setName(nameP3);
 	p3.setage(ageP3);
 	p3.setCityColor(Cities::RED);
 	p3.setArmyColor(Armies::RED);
+	p3.setNumHandArmies(14);
+	p3.setNumHandCities(3);
 	state.Players->push_back(p3);
 
-	//Each player places 3 armies on the starting region on the board.If playing with 2 players, each player
+	//Each player places 3 armies on the starting region on the board. If playing with 2 players, each player
 	//takes turns placing one army at a time of a third, non - player color in any region on the
 	//board until ten armies have been placed.
+	Game::PlaceArmiesInCountryStartup(state);
+	//Game::PlaceArmiesInCountryStartup(state2);
 
 	//Assign coins to each players
 	int* maxCoins = Player::assignCoinsToPlayers(state.Players);
