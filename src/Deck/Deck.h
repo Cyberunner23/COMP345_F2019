@@ -46,6 +46,7 @@ public:
 	void shuffleDeck();
 
     std::map<Cards, std::string>* DeckMap;
+    std::map<Cards, std::string>* GoodsMap;
     std::vector<Cards>* CardList; // List of cards in the deck
 
     std::map<Cities, std::string>* CitiesMap;
