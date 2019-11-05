@@ -17,6 +17,54 @@ Deck::Deck()
             cr1, cr2, cr3, cr4, cr5
     };
 
+    GoodsMap = new std::map<Cards, std::string>
+    {
+            //These are the forest cards
+            {f1, "Forest"},
+            {f2, "Forest"},
+            {f3, "Forest"},
+            {f4, "Forest"},
+            {f5, "Forest"},
+            {f6, "Forest"},
+            {f7, "Forest"},
+            {f8, "Forest"},
+            //Carrot cards
+            {c1, "Carrots"},
+            {c2, "Carrots"},
+            {c3, "Carrots"},
+            {c4, "Carrots"},
+            {c5, "Carrots"},
+            {c6, "Carrots"},
+            {c7, "Carrots"},
+            {c8, "Carrots"},
+            {c9, "Carrots"},
+            {c10,"Carrots"},
+            //Anvil Cards
+            {a1, "Anvils"},
+            {a2, "Anvils"},
+            {a3, "Anvils"},
+            {a4, "Anvils"},
+            {a5, "Anvils"},
+            {a6, "Anvils"},
+            {a7, "Anvils"},
+            {a8, "Anvils"},
+            {a9, "Anvils"},
+            //List of Ore cards
+            {o1, "Ore"},
+            {o2, "Ore"},
+            {o3, "Ore"},
+            {o4, "Ore"},
+            {o5, "Ore"},
+            {o6, "Ore"},
+            {o7, "Ore"},
+            //List of Crystal card
+            {cr1, "Crystals"},
+            {cr2, "Crystals"},
+            {cr3, "Crystals"},
+            {cr4, "Crystals"},
+            {cr5, "Crystals"},
+
+          };
     DeckMap = new std::map<Cards, std::string> {
             {f1, "Move 3 Armies"},
             {f2, "Add 3 Armies"},
