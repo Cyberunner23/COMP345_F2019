@@ -4,8 +4,8 @@
 ScoreCalculator::ScoreCalculator(GameState* s)
 {
   State = s;
-  Scores = new std::vector<int>();
   currentHand = new std::vector<Cards>();
+  regionScores = new std::vector<Armies>();
 
 
   *Forests = 0;
@@ -18,6 +18,8 @@ ScoreCalculator::ScoreCalculator(GameState* s)
 
 void CalculateScores
 {
+
+  //Calculating Scores based on Goods
   *Forests = 0;
   *Carrots = 0;
   *Anvils = 0;
@@ -27,7 +29,8 @@ void CalculateScores
 
   for(int i = 0; i < state.Players->size(); i++)
   {
-      currentHand = state.Players -> at(i).getHand();
+      currentHand = state->Players -> at(i)->getHand();
+      curretScore = state->Players -> at(i)->getScore();
 
       for(int j = 0; j < currentHand->size(); j++)
       {
@@ -85,7 +88,49 @@ void CalculateScores
       else if(*Crystals == 2){currentScore += 2}
       else if(*Crystals == 1){currentScore += 1}
 
-      Scores -> push_back(currentScore);
+      state->Players->at(i) ->setScore(currentScore);
+
   }
+  //Calculate Scores based on countries owned
+regionScores = state->Map->getCountryOwners();
+for(int i = 0; i < state->Players->size(); i++)
+{
+  curretScore = state->Players -> at(i)->getScore();
+  for(int j = 0; j < regionScores->size(); j++)
+  {
+    if(state->GameDeck->ArmiesMap->at(state->Players -> at(i)) == state->GameDeck->ArmiesMap->at(regionScores -> at(j)))
+    {
+      curentScore ++;
+    }
+    state -> Players -> at(i) ->setScore(currentScore);
+  }
+}
+
+//Calculating scores based on continents owned
+regionScores = state->Map->getContinentOwners();
+for(int i = 0; i < state->Players->size(); i++)
+{
+  curretScore = state->Players -> at(i)->getScore();
+  for(int j = 0; j < regionScores->size(); j++)
+  {
+    if(state->GameDeck->ArmiesMap->at(state->Players -> at(i)) == state->GameDeck->ArmiesMap->at(regionScores -> at(j)))
+    {
+      curentScore ++;
+    }
+    state -> Players -> at(i) ->setScore(currentScore);
+  }
+}
+
+//Calculating highest score
+*currentScore = 0;
+for(int i = 0; i < state->Players->size(); i++)
+{
+  if(currentScore < state->Players -> at(i)->getScore())
+  {
+    currentScore = state->Players -> at(i)->getScore();
+  }
+  std::cout << "Player " << i+1 << " your score is " << Players -> at(i)->getScore() << std::endl;
+}
+std::cout << "The winning score is: " << currentScore << std::endl;
 
 }
