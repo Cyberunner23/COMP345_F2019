@@ -14,7 +14,7 @@ public:
   ScoreCalculator(GameState* s);
 
   GameState* State;
-  int* currentScore;
+  /*int* currentScore;
   std::vector<Cards>* currentHand;
   std::vector<Armies>* regionScores;
 
@@ -22,7 +22,7 @@ public:
   int* Carrots;
   int* Anvils;
   int* Ores;
-  int* Crystals;
+  int* Crystals;*/
 
   void CalculateScores();
-}
+};
