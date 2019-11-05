@@ -110,7 +110,7 @@ std::vector<Armies> Map::getContinentOwners()
     {
         auto countryIterators = boost::vertices(*it);
         std::vector<CountryNode*> countries;
-        for (auto it2 = countryIterators.first; it2 != countryIterators.second; ++it)
+        for (auto it2 = countryIterators.first; it2 != countryIterators.second; ++it2)
         {
             countries.push_back(&dataMap[*it2]);
         }

@@ -235,7 +235,7 @@ add_executable(GameScoreDriver
   src/Game/GameScoreDriver.cpp
 )
 target_include_directories(GameScoreDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(GameScoreDriver Deck GameState)
+target_link_libraries(GameScoreDriver Deck GameState ScoreCalculator)
 
 # ScoreCalculator
 add_library(ScoreCalculator
@@ -243,4 +243,4 @@ add_library(ScoreCalculator
     src/ScoreCalculator/ScoreCalculator.cpp
 )
 target_include_directories(ScoreCalculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(ScoreCalculator Deck GameState)
+target_link_libraries(ScoreCalculator Deck GameState MapLoader Game)

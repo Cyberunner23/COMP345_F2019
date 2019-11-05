@@ -88,14 +88,13 @@ void ScoreCalculator::CalculateScores()
 regionScores = State->GameMap->getCountryOwners();
 for(int i = 0; i < State->Players->size(); i++)
 {
-  currentScore = *State->Players->at(i).getScore();
   for(int j = 0; j < regionScores.size(); j++)
   {
     if(State->GameDeck->ArmiesMap->at(State->Players->at(i).getArmyColor()) == State->GameDeck->ArmiesMap->at(regionScores.at(j)))
     {
-        currentScore++;
+        (*State->Players->at(i).getScore())++;
     }
-    State -> Players -> at(i).setScore(&currentScore);
+    //State -> Players -> at(i).setScore(&currentScore);
   }
 }
 
@@ -103,14 +102,14 @@ for(int i = 0; i < State->Players->size(); i++)
 regionScores = State->GameMap->getContinentOwners();
 for(int i = 0; i < State->Players->size(); i++)
 {
-  currentScore = *State->Players -> at(i).getScore();
+  //currentScore = ;
   for(int j = 0; j < regionScores.size(); j++)
   {
     if(State->GameDeck->ArmiesMap->at(State->Players->at(i).getArmyColor()) == State->GameDeck->ArmiesMap->at(regionScores.at(j)))
     {
-        currentScore++;
+        (*State->Players->at(i).getScore())++;
     }
-    State -> Players -> at(i).setScore(&currentScore);
+    //State -> Players -> at(i).setScore(&currentScore);
   }
 }
 
@@ -122,7 +121,7 @@ for(int i = 0; i < State->Players->size(); i++)
   {
     currentScore = *State->Players -> at(i).getScore();
   }
-  std::cout << "Player " << i+1 << " your score is " << State->Players->at(i).getScore() << std::endl;
+  std::cout << "Player " << i+1 << " your score is " << *State->Players->at(i).getScore() << std::endl;
 }
 std::cout << "The winning score is: " << currentScore << std::endl;
 

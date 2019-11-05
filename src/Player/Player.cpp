@@ -9,6 +9,7 @@ Player::Player(std::string playerName, int playerAge, int playerCoins, Cities ci
     _name = new std::string(playerName);
     _age = new int(playerAge);
     _coins = new int(playerCoins);
+	_score = new int(0);
     _bidingFacility = new BidingFacility();
     _hand = new Hand();
     _ownedRegions = new std::vector<Vertex>();

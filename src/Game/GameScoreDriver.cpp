@@ -1,13 +1,27 @@
 
 #include "Deck/Deck.h"
 #include "GameState.hpp"
+#include "ScoreCalculator/ScoreCalculator.h"
+#include <Map/MapLoader.h>
+#include <Game/Game.h>
 
 
 int main(int argc, char** argv)
 {
 	GameState state;
-	int maxCardsShown = 6;
-	int* cardCost = new int();
+	MapLoader loader;
+	std::string mapPath;
+
+	mapPath = Game::selectMap();
+
+	Map* map = loader.loadMap(mapPath);
+	if (map == nullptr)
+	{
+		std::cout << "Failed to open map!" << std::endl;
+	}
+
+	std::cout << "Generating the game..." << std::endl;
+	state.GameMap = map;
 
 	state.GameDeck = new Deck(); //Instantiating the Deck
 	state.GameDeck->shuffleDeck();//Shuffling the deck
@@ -33,7 +47,7 @@ int main(int argc, char** argv)
 	p1.setCityColor(Cities::BLUE);
 	p1.setArmyColor(Armies::BLUE);
 	p1.setCoins(coinP1);
-	for (int i = 0; i < 6; i++) { //Gives 6 cards to Player 1
+	for (int i = 0; i < 10; i++) { //Gives 6 cards to Player 1
 		Cards c = state.GameDeck->draw();
 		p1.getHand()->HandList->push_back(c);
 	}
@@ -44,7 +58,7 @@ int main(int argc, char** argv)
 	p2.setCityColor(Cities::GREEN);
 	p2.setArmyColor(Armies::GREEN);
 	p2.setCoins(coinP2);
-	for (int i = 0; i < 9; i++) { //Gives 9 cards to Player 2
+	for (int i = 0; i < 13; i++) { //Gives 9 cards to Player 2
 		Cards c = state.GameDeck->draw();
 		p2.getHand()->HandList->push_back(c);
 	}
@@ -55,7 +69,7 @@ int main(int argc, char** argv)
 	p3.setCityColor(Cities::RED);
 	p3.setArmyColor(Armies::RED);
 	p3.setCoins(coinP3);
-	for (int i = 0; i < 4; i++) { //Give 4 cards to Player 3
+	for (int i = 0; i < 11; i++) { //Give 4 cards to Player 3
 		Cards c = state.GameDeck->draw();
 		p3.getHand()->HandList->push_back(c);
 	}
@@ -81,6 +95,9 @@ int main(int argc, char** argv)
 	country4->ArmiesInCountry->push_back(p1.getArmyColor());
 	country4->ArmiesInCountry->push_back(p3.getArmyColor());
 	country4->ArmiesInCountry->push_back(p2.getArmyColor());
+
+	ScoreCalculator sc(&state);
+	sc.CalculateScores();
 
 	return 0;
 }
