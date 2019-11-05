@@ -14,6 +14,7 @@ private:
     Hand* _hand;
     int* _age;
     int* _coins;
+    int* _score;
 
     unsigned int* _startingRegionID;
     std::vector<Vertex>* _ownedRegions;
@@ -43,6 +44,9 @@ public:
 
     int* getCoins() {return _coins;}
     void setCoins(int* coins) {_coins = coins;}
+
+    int* getScore(){return _score;}
+    void setScore(int* score){_score = score; }
 
     std::vector<Vertex>* getOwnedRegions() {return _ownedRegions;}
     void setOwnedRegions(std::vector<Vertex>* ownedRegions) {_ownedRegions = ownedRegions;}

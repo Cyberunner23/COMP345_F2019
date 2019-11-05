@@ -6,6 +6,7 @@
 #include <Deck/Deck.h>
 #include <Game/GameState.hpp>
 
+
 class ScoreCalculator
 {
 public:
@@ -13,15 +14,15 @@ public:
   ScoreCalculator(GameState* s);
 
   GameState* State;
-  std::vector<int>* Scores;
-  int* currentScore;
+  /*int* currentScore;
   std::vector<Cards>* currentHand;
+  std::vector<Armies>* regionScores;
 
   int* Forests;
   int* Carrots;
   int* Anvils;
   int* Ores;
-  int* Crystals;
+  int* Crystals;*/
 
   void CalculateScores();
-}
+};

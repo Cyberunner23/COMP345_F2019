@@ -236,3 +236,11 @@ add_executable(GameScoreDriver
 )
 target_include_directories(GameScoreDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(GameScoreDriver Deck GameState)
+
+# ScoreCalculator
+add_library(ScoreCalculator
+    src/ScoreCalculator/ScoreCalculator.h
+    src/ScoreCalculator/ScoreCalculator.cpp
+)
+target_include_directories(ScoreCalculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(ScoreCalculator Deck GameState)
