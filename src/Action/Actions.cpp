@@ -13,10 +13,10 @@ bool Actions::RunAction(Cards card)
     switch (card)
     {
         case f1: //Move 3 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case f2: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies();
             break;
         case f3: //Destroy 1 Army or Build City
 			std::cout << "Do you wanna destroy 1 Army (press 1) or build a City (press 2): ";
@@ -39,24 +39,24 @@ bool Actions::RunAction(Cards card)
 			}
 			if (choice == 1) {
 				std::cout << "You chose to add 2 Armies.. " << std::endl;
-				return PlaceNewArmies();
+				return PlaceNewArmies() && PlaceNewArmies();
 			}
 			else {
-				std::cout << "You chose to build a City.. " << std::endl;
-				return MoveArmies();
+				std::cout << "You chose to move 3 armies.. " << std::endl;
+				return MoveArmies() && MoveArmies() && MoveArmies();
 			}
             break;
         case f5: //Move 4 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case f6: //Build City
 			return BuildCity();
             break;
         case f7: //Move 3 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case f8: //Move 6 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case c1: //Build City
 			return BuildCity();
@@ -76,22 +76,22 @@ bool Actions::RunAction(Cards card)
 			}
             break;
         case c3: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case c4: //Move 4 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case c5: //Move 5 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case c6: //Add 3 Armies (DOUBLE)
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case c7: //Move 3 Armies via Ship
-			return MoveOverLandOrWater();
+			return (MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater());
             break;
         case c8: //Move 4 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case c9: //Build City
 			return BuildCity();
@@ -103,15 +103,15 @@ bool Actions::RunAction(Cards card)
 			}
 			if (choice == 1) {
 				std::cout << "You chose to add 4 Armies.. " << std::endl;
-				return PlaceNewArmies();
+				return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
 			}
 			else {
 				std::cout << "You chose to move 2 Armies.. " << std::endl;
-				return MoveArmies();
+				return MoveArmies() && MoveArmies();
 			}
             break;
         case a1: //Move 4 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case a2: //Add 3 Armies or Move 4 Armies
 			std::cout << "Do you wanna add 3 Armies (press 1) or move 4 Armies (press 2): ";
@@ -120,24 +120,24 @@ bool Actions::RunAction(Cards card)
 			}
 			if (choice == 1) {
 				std::cout << "You chose to add 3 Armies.. " << std::endl;
-				return PlaceNewArmies();
+				return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
 			}
 			else {
 				std::cout << "You chose to move 4 Armies.. " << std::endl;
-				return MoveArmies();
+				return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
 			}
             break;
         case a3: //Move 5 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case a4: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case a5: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case a6: //Move 3 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case a7: //Build City
 			return BuildCity();
@@ -149,51 +149,51 @@ bool Actions::RunAction(Cards card)
 			}
 			if (choice == 1) {
 				std::cout << "You chose to add 4 Armies.. " << std::endl;
-				return PlaceNewArmies();
+				return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
 			}
 			else {
 				std::cout << "You chose to move 3 Armies.. " << std::endl;
-				return MoveArmies();
+				return MoveArmies() && MoveArmies() && MoveArmies();
 			}
             break;
         case a9: //Move 4 Armies (DOUBLE)
-			return MoveArmies();
+			return MoveArmies() && MoveArmies() && MoveArmies() && MoveArmies();
             break;
         case o1: //Move 2 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies();
             break;
         case o2: //Move 3 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case o3: //Move 2 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case o4: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case o5: //Add 3 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies() && PlaceNewArmies();
             break;
         case o6: //Add 2 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies();
             break;
         case o7: //Move 2 Armies via Ship
-			return MoveOverLandOrWater();
+			return MoveOverLandOrWater() && MoveOverLandOrWater();
             break;
         case cr1: //Add 2 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies();
             break;
         case cr2: //Add 2 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies();
             break;
         case cr3: //Move 2 Armies
-			return MoveArmies();
+			return MoveArmies() && MoveArmies();
             break;
         case cr4: //Add 1 Army
 			return PlaceNewArmies();
             break;
         case cr5: //Add 2 Armies
-			return PlaceNewArmies();
+			return PlaceNewArmies() && PlaceNewArmies();
             break;
     }
 }

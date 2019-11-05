@@ -23,6 +23,7 @@ int main(int argc, char** argv)
 
     // Create Deck
     state.GameDeck = new Deck();
+	state.GameDeck->shuffleDeck();
 
     // Create players
     state.Players = new std::vector<Player>();
@@ -83,13 +84,17 @@ int main(int argc, char** argv)
     //Loop through players, make a player do the action for the card
     for (auto& player : *state.Players) {
         int i = 0;
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < 2; j++) {
             Cards c = player.getHand()->HandList->at(j);
             std::cout << *player.getName() << " is playing: '" << state.GameDeck->DeckMap->at(c) << "' from his hand." <<std::endl;
-            playerActions.at(i).RunAction(c);
+			bool actionRun = playerActions.at(i).RunAction(c);
+			std::cout << "Did action run? " << actionRun << std::endl;
+			player.getHand()->HandList->erase(player.getHand()->HandList->begin() + j);
         }
         i++;
     }
+
+	Player::displayPlayers(state.Players);
 
     return 0;
 }

@@ -111,7 +111,8 @@ void Player::displayPlayers(std::vector<Player>* players)
 		std::cout << "Age: " <<  *player.getage() << std::endl;
 		std::cout << "Coins: " << *player.getCoins() << std::endl;
 		std::cout << "Cards in hand: " << player.getHand()->HandList->size() << " cards" << std::endl;
-		//std::cout << "Color (Army & City): " <<  << "\n" << std::endl;
+		std::cout << "Num of armies in hand: " << player.getNumHandArmies() << std::endl;
+		std::cout << "Num of cities in hand: " << player.getNumHandCities() << std::endl;
 		std::cout << "-----------------------------" << std::endl;
 	}
 }

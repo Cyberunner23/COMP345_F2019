@@ -45,24 +45,33 @@ int main(int argc, char** argv)
 	int* ageP3 = new int(22);
 
 	Player p1;
+	p1.setStartingRegionID(map->getStartingCountryID());
 	p1.setName(nameP1);
 	p1.setage(ageP1);
 	p1.setCityColor(Cities::BLUE);
 	p1.setArmyColor(Armies::BLUE);
+	p1.setNumHandArmies(14);
+	p1.setNumHandCities(3);
 	state.Players->push_back(p1);
 
 	Player p2;
+	p2.setStartingRegionID(map->getStartingCountryID());
 	p2.setName(nameP2);
 	p2.setage(ageP2);
 	p2.setCityColor(Cities::GREEN);
 	p2.setArmyColor(Armies::GREEN);
+	p2.setNumHandArmies(14);
+	p2.setNumHandCities(3);
 	state.Players->push_back(p2);
 
 	Player p3;
+	p3.setStartingRegionID(map->getStartingCountryID());
 	p3.setName(nameP3);
 	p3.setage(ageP3);
 	p3.setCityColor(Cities::RED);
 	p3.setArmyColor(Armies::RED);
+	p3.setNumHandArmies(14);
+	p3.setNumHandCities(3);
 	state.Players->push_back(p3);
 
 
@@ -76,8 +85,8 @@ int main(int argc, char** argv)
 	int turn = 0;
 	int cardPosition;
 
-	//Will execute game loop 10 times 
-	for (int i = 0; i < 10; i++) {
+	//Will execute game loop 3 times 
+	for (int i = 0; i < 3; i++) {
 
 		//Player selects card position
 		std::cout << "Please select a card by entering its position (1 to 6): ";
@@ -99,6 +108,10 @@ int main(int argc, char** argv)
 		//Next player turn
 		turn++;
 	}
+
+	Player::displayPlayers(state.Players);
+
+	map->dump();
 
 	return 0;
 }
