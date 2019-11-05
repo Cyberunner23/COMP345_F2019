@@ -61,8 +61,6 @@ int main(int argc, char** argv)
 
 	}
 
-
-
 	//The loop of players picking a card to add to their hand
 	for (int i = 0; i < state.Players->size(); i++)
 	{
