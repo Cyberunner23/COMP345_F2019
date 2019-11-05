@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -29,6 +30,8 @@ struct CountryNode
     void destroyArmy(Armies armyToDestroy);
 
     unsigned int* CountryID;
+
+    std::optional<Armies> getCountryOwner();
 
     std::vector<Cities>* CitiesInCountry;
     std::vector<Armies>* ArmiesInCountry;

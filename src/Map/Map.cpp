@@ -19,6 +19,54 @@ void CountryNode::destroyArmy(Armies armyToDestroy)
     ArmiesInCountry->erase(it);
 }
 
+std::optional<Armies> CountryNode::getCountryOwner()
+{
+    std::map<Armies, unsigned int> map;
+
+    Armies maxColor = Armies::YELLOW;
+    unsigned int maxCount = 0;
+
+    if (ArmiesInCountry->empty())
+    {
+        return std::nullopt;
+    }
+
+    for (auto color : *ArmiesInCountry)
+    {
+        map[color]++;
+    }
+
+    for (auto pair : map)
+    {
+        if (pair.second > maxCount)
+        {
+            maxCount = pair.second;
+            maxColor = pair.first;
+        }
+    }
+
+    unsigned int numFoundMax = 0;
+    for (auto pair : map)
+    {
+        if (pair.second == maxCount)
+        {
+            numFoundMax++;
+        }
+    }
+
+    if (numFoundMax > 1)
+    {
+        return std::nullopt;
+    }
+
+    if (maxCount != 0)
+    {
+        return maxColor;
+    }
+
+    return std::nullopt;
+}
+
 void Map::dump()
 {
     auto iterators = getVertexIterators();
