@@ -99,6 +99,88 @@ void Map::dump()
     }
 }
 
+std::vector<Armies> Map::getContinentOwners()
+{
+    std::vector<Armies> owners;
+
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+
+    auto continentIterators = getContinentIterators();
+    for (auto it = continentIterators.first; it != continentIterators.second; ++it)
+    {
+        auto countryIterators = boost::vertices(*it);
+        std::vector<CountryNode*> countries;
+        for (auto it2 = countryIterators.first; it2 != countryIterators.second; ++it)
+        {
+            countries.push_back(&dataMap[*it2]);
+        }
+
+        std::map<Armies, unsigned int> ownerMapping;
+
+        Armies maxColor = Armies::YELLOW;
+        unsigned int maxCount = 0;
+
+        for (auto color : countries)
+        {
+            auto owner = color->getCountryOwner();
+            if (owner)
+            {
+                ownerMapping[*owner]++;
+            }
+        }
+
+        for (auto pair : ownerMapping)
+        {
+            if (pair.second > maxCount)
+            {
+                maxCount = pair.second;
+                maxColor = pair.first;
+            }
+        }
+
+        unsigned int numFoundMax = 0;
+        for (auto pair : ownerMapping)
+        {
+            if (pair.second == maxCount)
+            {
+                numFoundMax++;
+            }
+        }
+
+        if (numFoundMax > 1)
+        {
+            continue;
+        }
+
+        if (maxCount != 0)
+        {
+            owners.push_back(maxColor);
+        }
+    }
+
+    return owners;
+}
+
+std::vector<Armies> Map::getCountryOwners()
+{
+    std::vector<Armies> countryOwners;
+    VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+
+    auto vertexIterator = getVertexIterators();
+
+    for (auto it = vertexIterator.first; it != vertexIterator.second; ++it)
+    {
+        CountryNode* node = &dataMap[*it];
+        auto countryOwner = node->getCountryOwner();
+        if (countryOwner)
+        {
+            countryOwners.push_back(*countryOwner);
+        }
+    }
+
+    return countryOwners;
+}
+
 SGraph& Map::createContinent()
 {
     return _mainGraph->create_subgraph();

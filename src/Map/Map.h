@@ -143,6 +143,9 @@ public:
     std::pair<VertexIterator, VertexIterator> getVertexIterators();
     unsigned int getNumCountries();
 
+    std::vector<Armies> getContinentOwners();
+    std::vector<Armies> getCountryOwners();
+
     unsigned int getStartingCountryID();
     void setStartingCountryID(unsigned int ID);
 
