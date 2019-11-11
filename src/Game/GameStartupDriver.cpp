@@ -83,21 +83,21 @@ int main(int argc, char** argv)
 	//Each player places 3 armies on the starting region on the board. If playing with 2 players, each player
 	//takes turns placing one army at a time of a third, non - player color in any region on the
 	//board until ten armies have been placed.
-	Game::PlaceArmiesInCountryStartup(state);
-	//Game::PlaceArmiesInCountryStartup(state2);
+	//Game::PlaceArmiesInCountryStartup(state);
+	Game::PlaceArmiesInCountryStartup(state2);
 
 	//Assign coins to each players
-	int* maxCoins = Player::assignCoinsToPlayers(state.Players);
+	int* maxCoins = Player::assignCoinsToPlayers(state2.Players);
 
-	for (auto& player : *state.Players) {
+	for (auto& player : *state2.Players) {
 		player.getBidingFacility()->startBiding(maxCoins);
 	}
 
-	Player::revealBids(state.Players);
+	Player::revealBids(state2.Players);
 
 	//Dertermining who won the bid
 	Player bidingWinner;
-	bidingWinner = Player::bidingWinner(state.Players);
+	bidingWinner = Player::bidingWinner(state2.Players);
 	std::cout << "\n" << *bidingWinner.getName() << " has won the bid. " << *bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
 	
 	//Computing remaining coins of winner
@@ -107,22 +107,22 @@ int main(int argc, char** argv)
 	std::cout << "\n" << *bidingWinner.getName() << " has now " << *bidingWinner.getCoins() << " coins.";
 
 	//Putting the coins in supply
-	state.supply = new int();
-	*state.supply += *bidingWinner.getBidingFacility()->bid;
-	std::cout << "\nThe supply contains now: " << *state.supply << " coins." << std::endl;
+	state2.supply = new int();
+	*state2.supply += *bidingWinner.getBidingFacility()->bid;
+	std::cout << "\nThe supply contains now: " << *state2.supply << " coins." << std::endl;
 
 	//Retrieve winning player in state.Players to determine who will be the next to play 
 	int playerIndex = 0;
-	for (Player& player : *state.Players) {
+	for (Player& player : *state2.Players) {
 		if (*bidingWinner.getName() == *player.getName()) {
 			break;
 		}
 		playerIndex++;
 	}
-	state.Players->at(playerIndex) = bidingWinner; 
-	std::cout << "The next player to play will be: " << *state.Players->at(++playerIndex%3).getName() << std::endl;
+	state2.Players->at(playerIndex) = bidingWinner; 
+	std::cout << "The next player to play will be: " << *state2.Players->at(++playerIndex%3).getName() << std::endl;
 
-	Player::displayPlayers(state.Players);
+	Player::displayPlayers(state2.Players);
 
 	delete map;
 	delete maxCoins;

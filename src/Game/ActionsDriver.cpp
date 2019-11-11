@@ -1,5 +1,4 @@
 
-#include "Action/Actions.hpp"
 #include "Game/GameState.hpp"
 #include "Map/MapLoader.h"
 
@@ -74,20 +73,13 @@ int main(int argc, char** argv)
         }
     }
 
-    // Create action objects
-    std::vector<Actions> playerActions;
-    for(auto& player : *state.Players)
-    {
-        playerActions.emplace_back(&state, &player);
-    }
-
     //Loop through players, make a player do the action for the card
     for (auto& player : *state.Players) {
         int i = 0;
         for (int j = 0; j < 2; j++) {
             Cards c = player.getHand()->HandList->at(j);
             std::cout << *player.getName() << " is playing: '" << state.GameDeck->DeckMap->at(c) << "' from his hand." <<std::endl;
-			bool actionRun = playerActions.at(i).RunAction(c);
+			bool actionRun = player.RunAction(state.GameMap, state.GameDeck, c);
 			std::cout << "Did action run? " << actionRun << std::endl;
 			player.getHand()->HandList->erase(player.getHand()->HandList->begin() + j);
         }

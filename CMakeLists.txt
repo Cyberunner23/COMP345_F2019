@@ -154,7 +154,7 @@ add_library(Player
     src/Player/Player.cpp
     )
 target_include_directories(Player PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Player Deck BidingFacility)
+target_link_libraries(Player Deck BidingFacility Map)
 
 # BidingFacility
 add_library(BidingFacility
@@ -170,21 +170,12 @@ add_executable(BidingFacilityDriver
 target_include_directories(BidingFacilityDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(BidingFacilityDriver BidingFacility Player)
 
-# Actions
-add_library(Actions
-    src/Action/Actions.hpp
-    src/Action/Actions.cpp
-    src/Utils/MapUtil.hpp
-)
-target_include_directories(Actions PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Actions Player)
-
 # Actions Driver
 add_executable(ActionsDriver
-    src/Action/ActionsDriver.cpp
+    src/Game/ActionsDriver.cpp
 )
 target_include_directories(ActionsDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(ActionsDriver Actions Map MapLoader)
+target_link_libraries(ActionsDriver Map MapLoader GameState)
 
 # Game Start Driver
 add_executable(GameStartDriver
@@ -221,7 +212,7 @@ add_executable(AfterActionDriver
     src/Game/AfterActionDriver.cpp
 )
 target_include_directories(AfterActionDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(AfterActionDriver Actions Map MapLoader Game)
+target_link_libraries(AfterActionDriver Map MapLoader Game)
 
 #GameLoop Driver
 add_executable(GameLoopDriver

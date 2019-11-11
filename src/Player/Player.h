@@ -5,6 +5,8 @@
 #include "BidingFacility.h"
 #include "Deck/Deck.h"
 #include "Map/Map.h"
+#include "Utils/MapUtil.hpp"
+
 
 class Player {
 
@@ -22,6 +24,10 @@ private:
     unsigned int* _numHandArmies;
     Cities* _cityColor; // Color of the cities for the player
     Armies* _armyColor; // Color of the army for the player
+	
+	bool MoveArmies(Map* map, bool canMoveOverWater);
+	bool countryIDUserInput(Map* map, unsigned int& countryID, std::string queryText);
+
 
 public:
     Player();
@@ -71,4 +77,13 @@ public:
     static int* assignCoinsToPlayers(std::vector<Player>* players);
     static void displayPlayers(std::vector<Player>* players);
     void PayCoin();
+
+	bool RunAction(Map* map, Deck* deck, Cards card);
+	bool PlaceNewArmies(Map* map);
+	bool MoveArmies(Map* map);
+	bool MoveOverLandOrWater(Map* map);
+	bool BuildCity(Map* map);
+	bool DestroyArmy(Map* map, Deck* deck);
+	bool AndOrAction();
+	bool Ignore();
 };

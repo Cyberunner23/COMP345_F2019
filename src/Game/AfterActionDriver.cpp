@@ -1,5 +1,4 @@
 
-#include "Action/Actions.hpp"
 #include "Game/GameState.hpp"
 #include "Game/Game.h"
 #include "Map/MapLoader.h"
@@ -74,14 +73,6 @@ int main(int argc, char** argv)
 	p3.setNumHandCities(3);
 	state.Players->push_back(p3);
 
-
-	// Create action objects
-	std::vector<Actions> playerActions;
-	for (auto& player : *state.Players)
-	{
-		playerActions.emplace_back(&state, &player);
-	}
-
 	int turn = 0;
 	int cardPosition;
 
@@ -98,7 +89,7 @@ int main(int argc, char** argv)
 		int cardIndex = cardPosition - 1;
 		Cards c = state.ShownCards->at((cardIndex));
 		std::cout << *state.Players->at(turn % 3).getName() << " has taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-		playerActions.at(turn % 3).RunAction(c);
+		state.Players->at(turn % 3).RunAction(state.GameMap, state.GameDeck, c);
 
 		//Slide remaining cards to left and draw new card placed in rightmost position
 		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
