@@ -190,7 +190,7 @@ add_library(GameState
     src/Game/GameState.cpp
 )
 target_include_directories(GameState PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(GameState Deck Map Player)
+target_link_libraries(GameState Deck Map)
 
 # GameStartup Driver
 add_executable(GameStartupDriver
@@ -205,7 +205,7 @@ add_library(Game
     src/Game/Game.cpp
 )
 target_include_directories(Game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Game GameState)
+target_link_libraries(Game GameState Player)
 
 #AfterAction Driver
 add_executable(AfterActionDriver
@@ -235,3 +235,18 @@ add_library(ScoreCalculator
 )
 target_include_directories(ScoreCalculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(ScoreCalculator Deck GameState MapLoader Game)
+
+#PlayerStrategies
+add_library(PlayerStrategies
+    src/Player/PlayerStrategies.h
+    src/Player/PlayerStrategies.cpp
+)
+target_include_directories(PlayerStrategies PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(PlayerStrategies Game)
+
+#PlayerStrategies Driver
+add_executable(PlayerStrategiesDriver
+    src/Player/PlayerStrategiesDriver.cpp
+)
+target_include_directories(AfterActionDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(PlayerStrategiesDriver Map MapLoader Game)

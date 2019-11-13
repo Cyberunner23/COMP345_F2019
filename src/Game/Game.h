@@ -2,8 +2,8 @@
 
 #include <iostream>
 #include <vector>
+#include "Game/GameState.hpp"
 #include "Player/Player.h"
-#include <Game/GameState.hpp>
 
 class Game {
 

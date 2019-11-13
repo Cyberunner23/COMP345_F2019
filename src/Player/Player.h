@@ -6,11 +6,13 @@
 #include "Deck/Deck.h"
 #include "Map/Map.h"
 #include "Utils/MapUtil.hpp"
+#include "PlayerStrategies.h"
 
 
 class Player {
 
 private:
+	PlayerStrategies* _strategy;
     BidingFacility* _bidingFacility;
     std::string* _name;
     Hand* _hand;
@@ -35,6 +37,9 @@ public:
 
     unsigned int getStartingRegionID() {return *_startingRegionID;}
     void setStartingRegionID(unsigned int ID) { *_startingRegionID = ID;}
+
+	PlayerStrategies* getPlayerStrategies() { return _strategy; }
+	void setPlayerStrategies(PlayerStrategies* strategy) { _strategy = strategy; }
 
     BidingFacility* getBidingFacility() {return _bidingFacility;}
     void setBidingFacility(BidingFacility* facility) {_bidingFacility = facility;}
@@ -86,4 +91,9 @@ public:
 	bool DestroyArmy(Map* map, Deck* deck);
 	bool AndOrAction();
 	bool Ignore();
+
+	bool executeStrategy(GameState state, int turn) {
+		return this->_strategy->execute(state, turn);
+	}
+
 };
