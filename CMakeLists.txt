@@ -175,7 +175,7 @@ add_executable(ActionsDriver
     src/Game/ActionsDriver.cpp
 )
 target_include_directories(ActionsDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(ActionsDriver Map MapLoader GameState)
+target_link_libraries(ActionsDriver Map MapLoader GameState Player)
 
 # Game Start Driver
 add_executable(GameStartDriver
@@ -249,4 +249,4 @@ add_executable(PlayerStrategiesDriver
     src/Player/PlayerStrategiesDriver.cpp
 )
 target_include_directories(AfterActionDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(PlayerStrategiesDriver Map MapLoader Game)
+target_link_libraries(PlayerStrategiesDriver Map MapLoader Game PlayerStrategies)

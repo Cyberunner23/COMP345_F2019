@@ -8,6 +8,8 @@
 #include "Utils/MapUtil.hpp"
 #include "PlayerStrategies.h"
 
+class PlayerStrategies;
+class GameState;
 
 class Player {
 
@@ -92,8 +94,6 @@ public:
 	bool AndOrAction();
 	bool Ignore();
 
-	bool executeStrategy(GameState state, int turn) {
-		return this->_strategy->execute(state, turn);
-	}
+	bool executeStrategy(GameState state, int turn);
 
 };

@@ -124,6 +124,10 @@ void Player::PayCoin()
     _coins -= _bidingFacility->bid;*/
 }
 
+bool Player::executeStrategy(GameState state, int turn) {
+    return this->_strategy->execute(state, turn);
+}
+
 bool Player::RunAction(Map* map, Deck* deck, Cards card)
 {
 	int choice;
