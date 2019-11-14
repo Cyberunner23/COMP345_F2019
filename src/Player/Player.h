@@ -95,5 +95,6 @@ public:
 	bool Ignore();
 
 	bool executeStrategy(GameState state, int turn);
+	void changeStrategy();
 
 };

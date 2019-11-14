@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 
 	Player p2;
 	p2.setStartingRegionID(map->getStartingCountryID());
-	p2.setPlayerStrategies(new HumanPlayer());
+	p2.setPlayerStrategies(new GreedyComputer());
 	p2.setName(nameP2);
 	p2.setage(ageP2);
 	p2.setCityColor(Cities::GREEN);
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
 	Player p3;
 	p3.setStartingRegionID(map->getStartingCountryID());
-	p3.setPlayerStrategies(new HumanPlayer());
+	p3.setPlayerStrategies(new ModerateComputer());
 	p3.setName(nameP3);
 	p3.setage(ageP3);
 	p3.setCityColor(Cities::RED);
@@ -77,12 +77,12 @@ int main(int argc, char** argv)
 	state.Players->push_back(p3);
 
 	int turn = 0;
+	int numOfPlayers = state.Players->size();
 
-	p1.executeStrategy(state, turn);
-
-	Player::displayPlayers(state.Players);
-
-	map->dump();
+	for (int i = 0; i < 10; i++) {
+		state.Players->at(turn%numOfPlayers).executeStrategy(state, turn);
+		turn++;
+	}
 
 	return 0;
 }
