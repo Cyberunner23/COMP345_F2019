@@ -6,6 +6,8 @@
 #include "Map/Map.h"
 #include "Player/Player.h"
 
+class Player;
+
 struct GameState
 {
     Map* GameMap;
@@ -14,3 +16,4 @@ struct GameState
     std::vector<Player>* Players;
 	int* supply;
 };
+

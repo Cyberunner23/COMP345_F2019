@@ -124,6 +124,39 @@ void Player::PayCoin()
     _coins -= _bidingFacility->bid;*/
 }
 
+bool Player::executeStrategy(GameState state, int turn) {
+    return this->_strategy->execute(state, turn);
+}
+
+void Player::changeStrategy()
+{
+	std::string changeStrategy;
+	int chooseStrategy;
+	std::cout << "Do you wanna change your strategy? (y/n): ";
+	while (std::cin >> changeStrategy && (changeStrategy != "y" && changeStrategy != "n"))
+		std::cout << "\nPlease select a valid choice (y/n): ";
+	if (changeStrategy == "y") {
+		std::cout << "Press one of the following to select your new strategy: \n1. Human Player\n2. Greedy Computer\n3. Moderate Computer\nEnter your choice: ";
+		while (std::cin >> chooseStrategy && (chooseStrategy < 1 || chooseStrategy > 3))
+			std::cout << "\nPlease select a valid option (1,2,3): ";
+		switch (chooseStrategy)
+		{
+		case 1:
+			this->setPlayerStrategies(new HumanPlayer());
+			break;
+		case 2:
+			this->setPlayerStrategies(new GreedyComputer());
+			break;
+		case 3:
+			this->setPlayerStrategies(new ModerateComputer());
+			break;
+		}
+	}
+	else
+		std::cout << "You chose to not change your strategy.. " << std::endl;
+
+}
+
 bool Player::RunAction(Map* map, Deck* deck, Cards card)
 {
 	int choice;
@@ -134,7 +167,7 @@ bool Player::RunAction(Map* map, Deck* deck, Cards card)
 		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
 		break;
 	case f2: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
 		break;
 	case f3: //Destroy 1 Army or Build City
 		std::cout << "Do you wanna destroy 1 Army (press 1) or build a City (press 2): ";
@@ -180,18 +213,7 @@ bool Player::RunAction(Map* map, Deck* deck, Cards card)
 		return BuildCity(map);
 		break;
 	case c2: //Destroy 1 Army and Add 1 Army
-		std::cout << "Do you wanna destroy 1 Army (press 1) or add 1 Army (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: ";
-		}
-		if (choice == 1) {
-			std::cout << "You chose to destroy an Army.. " << std::endl;
-			return DestroyArmy(map, deck);
-		}
-		else {
-			std::cout << "You chose to add an Army.. " << std::endl;
-			return PlaceNewArmies(map);
-		}
+		return DestroyArmy(map, deck) && PlaceNewArmies(map);
 		break;
 	case c3: //Add 3 Armies
 		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);

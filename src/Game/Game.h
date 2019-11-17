@@ -2,8 +2,11 @@
 
 #include <iostream>
 #include <vector>
-#include "Player/Player.h"
-#include <Game/GameState.hpp>
+#include <Player/Player.h>
+#include "Game/GameState.hpp"
+
+class Player;
+struct GameState;
 
 class Game {
 
