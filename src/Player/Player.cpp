@@ -117,7 +117,7 @@ void Player::displayPlayers(std::vector<Player>* players)
 	}
 }
 
-//When Player wins a bid he has to pay coins and 
+//When Player wins a bid he has to pay coins and
 void Player::PayCoin()
 {
     /*_bidingFacility->supply += _bidingFacility->bid;
@@ -592,4 +592,15 @@ bool Player::Ignore()
 {
 	std::cout << "Card ignored" << std::endl;
 	return true;
+}
+
+void Update()
+{
+  DisplayPlayer();
+}
+void DisplayPlayer(GameState gs, int cardCost)
+{
+  std::cout<< "Name: " << this.getName(); << std::endl;
+  std::cout <<"They've chosen " << gs.GameDeck->DeckMap->at(*(this.getHand()->end() - 1)) << std::endl;
+  std::cout <<"It costs:  " << cardCost << std::endl;
 }

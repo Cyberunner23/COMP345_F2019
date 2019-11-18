@@ -7,11 +7,11 @@
 #include "Map/Map.h"
 #include "Utils/MapUtil.hpp"
 #include "PlayerStrategies.h"
-
+#include "ObserverBase.h"
 class PlayerStrategies;
 class GameState;
 
-class Player {
+class Player:public ObserverBase {
 
 private:
 	PlayerStrategies* _strategy;
@@ -28,7 +28,7 @@ private:
     unsigned int* _numHandArmies;
     Cities* _cityColor; // Color of the cities for the player
     Armies* _armyColor; // Color of the army for the player
-	
+
 	bool MoveArmies(Map* map, bool canMoveOverWater);
 	bool countryIDUserInput(Map* map, unsigned int& countryID, std::string queryText);
 
@@ -93,6 +93,10 @@ public:
 	bool DestroyArmy(Map* map, Deck* deck);
 	bool AndOrAction();
 	bool Ignore();
+
+	void Update();
+	void DisplayPlayer();
+
 
 	bool executeStrategy(GameState state, int turn);
 	void changeStrategy();
