@@ -7,11 +7,12 @@
 #include "Map/Map.h"
 #include "Utils/MapUtil.hpp"
 #include "PlayerStrategies.h"
-#include "ObserverBase.h"
+#include "Observer/ObserverBase.h" 
+
 class PlayerStrategies;
 class GameState;
 
-class Player:public ObserverBase {
+class Player : public ObserverBase {
 
 private:
 	PlayerStrategies* _strategy;
@@ -21,6 +22,7 @@ private:
     int* _age;
     int* _coins;
     int* _score;
+	GameState* _subject;
 
     unsigned int* _startingRegionID;
     std::vector<Vertex>* _ownedRegions;
@@ -35,7 +37,7 @@ private:
 
 public:
     Player();
-    Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor);
+    Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor, GameState* state);
 
     unsigned int getStartingRegionID() {return *_startingRegionID;}
     void setStartingRegionID(unsigned int ID) { *_startingRegionID = ID;}
@@ -94,7 +96,7 @@ public:
 	bool AndOrAction();
 	bool Ignore();
 
-	void Update();
+	void Update() override;
 	void DisplayPlayer();
 
 

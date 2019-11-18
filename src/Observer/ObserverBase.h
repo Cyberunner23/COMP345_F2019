@@ -1,11 +1,11 @@
 #pragma once
 
-class Observer{
+class ObserverBase {
 public:
-  ~Observer();
-  virtual void Update() = 0;
+	~ObserverBase();
+	virtual void Update() = 0;
 
 protected:
-  Observer();
+	ObserverBase();
 
-}
+};

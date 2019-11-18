@@ -5,10 +5,11 @@
 #include "Deck/Deck.h"
 #include "Map/Map.h"
 #include "Player/Player.h"
+#include "Observer/Subject.h"
 
 class Player;
 
-struct GameState
+struct GameState : public Subject
 {
     Deck* GameDeck;
     std::vector<Cards>* ShownCards;

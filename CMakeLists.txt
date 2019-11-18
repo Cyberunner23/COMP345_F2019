@@ -154,7 +154,7 @@ add_library(Player
     src/Player/Player.cpp
     )
 target_include_directories(Player PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Player Deck BidingFacility Map PlayerStrategies)
+target_link_libraries(Player Deck BidingFacility Map PlayerStrategies ObserverBase)
 
 # BidingFacility
 add_library(BidingFacility
@@ -190,7 +190,7 @@ add_library(GameState
     src/Game/GameState.cpp
 )
 target_include_directories(GameState PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(GameState Deck Map)
+target_link_libraries(GameState Deck Map Subject)
 
 # GameStartup Driver
 add_executable(GameStartupDriver
@@ -250,3 +250,18 @@ add_executable(PlayerStrategiesDriver
 )
 target_include_directories(AfterActionDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(PlayerStrategiesDriver Map MapLoader Game PlayerStrategies)
+
+#ObserverBase
+add_library(ObserverBase
+    src/Observer/ObserverBase.h
+    src/Observer/ObserverBase.cpp
+)
+target_include_directories(ObserverBase PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+#Subject
+add_library(Subject
+    src/Observer/Subject.h
+    src/Observer/Subject.cpp
+)
+target_include_directories(Subject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(Subject ObserverBase)

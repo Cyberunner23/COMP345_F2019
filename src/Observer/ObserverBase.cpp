@@ -1,4 +1,4 @@
-#include "Observer.h"
+#include "ObserverBase.h"
 
-Observer::Observer(){};
-Observer::~Observer(){};
+ObserverBase::ObserverBase(){};
+ObserverBase::~ObserverBase(){};

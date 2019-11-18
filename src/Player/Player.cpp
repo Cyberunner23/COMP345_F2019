@@ -2,9 +2,9 @@
 #include <vector>
 #include <iostream>
 
-Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE) {}
+Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE, nullptr) {}
 
-Player::Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor)
+Player::Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor, GameState* state)
 {
     _name = new std::string(playerName);
     _age = new int(playerAge);
@@ -18,6 +18,8 @@ Player::Player(std::string playerName, int playerAge, int playerCoins, Cities ci
     _cityColor = new Cities(cityColor);
     _armyColor = new Armies(armyColor);
     _startingRegionID = new unsigned int(0);
+	_strategy = nullptr;
+	_subject = state;
 }
 
 Player Player::youngestPlayer(std::vector<Player>* players)
@@ -594,13 +596,14 @@ bool Player::Ignore()
 	return true;
 }
 
-void Update()
+void Player::Update()
 {
   DisplayPlayer();
 }
-void DisplayPlayer(GameState gs, int cardCost)
+
+void Player::DisplayPlayer()
 {
-  std::cout<< "Name: " << this.getName(); << std::endl;
-  std::cout <<"They've chosen " << gs.GameDeck->DeckMap->at(*(this.getHand()->end() - 1)) << std::endl;
-  std::cout <<"It costs:  " << cardCost << std::endl;
+  std::cout << "Name: " << *this->getName() << std::endl;
+  //std::cout << "They've chosen " << gs.GameDeck->DeckMap->at(*(this->getHand()->HandList->end() - 1)) << std::endl;
+  //std::cout << "It costs:  " << cardCost << std::endl;
 }
