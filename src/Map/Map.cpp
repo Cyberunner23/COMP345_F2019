@@ -67,6 +67,8 @@ std::optional<Armies> CountryNode::getCountryOwner()
     return std::nullopt;
 }
 
+Map* Map::map_instance = nullptr;
+
 void Map::dump()
 {
     auto iterators = getVertexIterators();

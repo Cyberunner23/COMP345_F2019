@@ -15,16 +15,12 @@ int main(int argc, char** argv)
 	// Load Map
 	std::string mapPath = "data/map1.map";
 	MapLoader loader;
-	Map* map = loader.loadMap(mapPath);
 
-	if (map == nullptr)
+	if (!loader.loadMap(mapPath))
 	{
 		std::cout << "Failed to open map!" << std::endl;
 		return 1;
 	}
-
-	state.GameMap = map;
-	state2.GameMap = map;
 
 	// Create Deck
 	state.GameDeck = new Deck();
@@ -124,7 +120,6 @@ int main(int argc, char** argv)
 
 	Player::displayPlayers(state2.Players);
 
-	delete map;
 	delete maxCoins;
 	delete remainingCoins;
 

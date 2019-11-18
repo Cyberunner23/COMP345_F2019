@@ -115,10 +115,26 @@ class Map
 {
 
 public:
-    Map()
+
+    static Map& GetInstance()
     {
-        _mainGraph = new SGraph;
+        if (map_instance == nullptr)
+        {
+            map_instance = new Map();
+        }
+
+        return *map_instance;
     }
+
+    static void ResetInstance()
+    {
+        delete map_instance;
+        map_instance = nullptr;
+    }
+
+    Map(Map const&) = delete;
+    void operator=(Map const&) = delete;
+
 
     SGraph* getGraph()
     {
@@ -184,5 +200,12 @@ public:
 
 private:
 
+    static Map* map_instance;
+
     SGraph* _mainGraph;
+
+    Map()
+    {
+        _mainGraph = new SGraph;
+    }
 };

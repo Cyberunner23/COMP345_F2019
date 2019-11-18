@@ -11,15 +11,12 @@ int main(int argc, char** argv)
 	// Load Map
 	std::string mapPath = "data/map1.map";
 	MapLoader loader;
-	Map* map = loader.loadMap(mapPath);
 
-	if (map == nullptr)
+	if (!loader.loadMap(mapPath))
 	{
 		std::cout << "Failed to open map!" << std::endl;
 		return 1;
 	}
-
-	state.GameMap = map;
 
 	// Create Deck
 	state.GameDeck = new Deck();
@@ -44,7 +41,7 @@ int main(int argc, char** argv)
 	int* ageP3 = new int(22);
 
 	Player p1;
-	p1.setStartingRegionID(map->getStartingCountryID());
+	p1.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p1.setName(nameP1);
 	p1.setage(ageP1);
 	p1.setCityColor(Cities::BLUE);
@@ -54,7 +51,7 @@ int main(int argc, char** argv)
 	state.Players->push_back(p1);
 
 	Player p2;
-	p2.setStartingRegionID(map->getStartingCountryID());
+	p2.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p2.setName(nameP2);
 	p2.setage(ageP2);
 	p2.setCityColor(Cities::GREEN);
@@ -64,7 +61,7 @@ int main(int argc, char** argv)
 	state.Players->push_back(p2);
 
 	Player p3;
-	p3.setStartingRegionID(map->getStartingCountryID());
+	p3.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p3.setName(nameP3);
 	p3.setage(ageP3);
 	p3.setCityColor(Cities::RED);
@@ -89,7 +86,7 @@ int main(int argc, char** argv)
 		int cardIndex = cardPosition - 1;
 		Cards c = state.ShownCards->at((cardIndex));
 		std::cout << *state.Players->at(turn % 3).getName() << " has taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-		state.Players->at(turn % 3).RunAction(state.GameMap, state.GameDeck, c);
+		state.Players->at(turn % 3).RunAction(&Map::GetInstance(), state.GameDeck, c);
 
 		//Slide remaining cards to left and draw new card placed in rightmost position
 		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
@@ -102,7 +99,7 @@ int main(int argc, char** argv)
 
 	Player::displayPlayers(state.Players);
 
-	map->dump();
+        Map::GetInstance().dump();
 
 	return 0;
 }

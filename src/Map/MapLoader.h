@@ -69,6 +69,6 @@ SERIALIZE_IMPLEMENT_STREAM(SerializedMap);
 class MapLoader
 {
 public:
-    Map* loadMap(std::string const& filePath);
+    bool loadMap(std::string const& filePath);
     void saveMap(std::string const& filePath, SerializedMap& map);
 };

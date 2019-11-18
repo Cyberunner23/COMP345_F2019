@@ -32,22 +32,25 @@ void runTests()
     // Test 1, Loads valid map, PASS
     {
         MapLoader ml;
-        Map* m = ml.loadMap("data/map1.map");
-        std::cout << "Test 1: Check that loader can load a map, should PASS, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
+        bool result = ml.loadMap("data/map1.map");
+        std::cout << "Test 1: Check that loader can load a map, should PASS, is: " << (result ? "PASS" : "FAIL") << std::endl;
+        Map::ResetInstance();
     }
 
     // Test 2, Refuses to load invalid map, corrupted xml, FAIL
     {
         MapLoader ml;
-        Map* m = ml.loadMap("data/map_invalid1.map");
-        std::cout << "Test 2: Check that loader can load a corrupted map, should FAIL, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
+        bool result = ml.loadMap("data/map_invalid1.map");
+        std::cout << "Test 2: Check that loader can load a corrupted map, should FAIL, is: " << (result ? "PASS" : "FAIL") << std::endl;
+        Map::ResetInstance();
     }
 
     // Test 3, Refuses to load invalid map, invalid graph structure, FAIL
     {
         MapLoader ml;
-        Map* m = ml.loadMap("data/map_invalid2.map");
-        std::cout << "Test 2: Check that loader can load a badly structured map, should FAIL, is: " << (m != nullptr ? "PASS" : "FAIL") << std::endl;
+        bool result = ml.loadMap("data/map_invalid2.map");
+        std::cout << "Test 2: Check that loader can load a badly structured map, should FAIL, is: " << (result ? "PASS" : "FAIL") << std::endl;
+        Map::ResetInstance();
     }
 }
 

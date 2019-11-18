@@ -105,7 +105,7 @@ void ScoreCalculator::CalculateScores()
     }
 
     //Calculate Scores based on countries owned
-    regionScores = State->GameMap->getCountryOwners();
+    regionScores = Map::GetInstance().getCountryOwners();
     for (int i = 0; i < State->Players->size(); i++)
     {
         for (int j = 0; j < regionScores.size(); j++)
@@ -119,7 +119,7 @@ void ScoreCalculator::CalculateScores()
     }
 
     //Calculating scores based on continents owned
-    regionScores = State->GameMap->getContinentOwners();
+    regionScores = Map::GetInstance().getContinentOwners();
     for (int i = 0; i < State->Players->size(); i++)
     {
         for (int j = 0; j < regionScores.size(); j++)

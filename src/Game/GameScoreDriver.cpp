@@ -14,14 +14,12 @@ int main(int argc, char** argv)
 
     mapPath = Game::selectMap();
 
-    Map *map = loader.loadMap(mapPath);
-    if (map == nullptr)
+    if (!loader.loadMap(mapPath))
     {
         std::cout << "Failed to open map!" << std::endl;
     }
 
     std::cout << "Generating the game..." << std::endl;
-    state.GameMap = map;
 
     state.GameDeck = new Deck(); //Instantiating the Deck
     state.GameDeck->shuffleDeck();//Shuffling the deck
@@ -95,10 +93,10 @@ int main(int argc, char** argv)
     state.Players->push_back(p3);
 
     //Retrieving 4 countries
-    CountryNode *country1 = state.GameMap->findCountryByID(3);
-    CountryNode *country2 = state.GameMap->findCountryByID(6);
-    CountryNode *country3 = state.GameMap->findCountryByID(5);
-    CountryNode *country4 = state.GameMap->findCountryByID(1);
+    CountryNode *country1 = Map::GetInstance().findCountryByID(3);
+    CountryNode *country2 = Map::GetInstance().findCountryByID(6);
+    CountryNode *country3 = Map::GetInstance().findCountryByID(5);
+    CountryNode *country4 = Map::GetInstance().findCountryByID(1);
 
     //Adding armies to countries
     country1->ArmiesInCountry->push_back(p1.getArmyColor());

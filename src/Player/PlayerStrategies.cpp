@@ -18,7 +18,7 @@ bool HumanPlayer::execute(GameState state, int turn)
         Cards c = state.ShownCards->at((cardIndex));
         std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Human Player) has taken the card at position " << cardPosition
                   << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-        bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(state.GameMap, state.GameDeck, c);
+        bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), state.GameDeck, c);
 
         //Slide remaining cards to left and draw new card placed in rightmost position
         state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
@@ -41,7 +41,7 @@ bool GreedyComputer::execute(GameState state, int turn)
 	Cards c = state.ShownCards->at((cardIndex));
 	std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Greedy Computer) has taken the card at position " << cardPosition
 		<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(state.GameMap, state.GameDeck, c);
+	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), state.GameDeck, c);
 
 	//Slide remaining cards to left and draw new card placed in rightmost position
 	state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
@@ -64,7 +64,7 @@ bool ModerateComputer::execute(GameState state, int turn)
 	Cards c = state.ShownCards->at((cardIndex));
 	std::cout << *state.Players->at(turn%state.Players->size()).getName() << " (Moderate Computer) has taken the card at position " << cardPosition
 		<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(state.GameMap, state.GameDeck, c);
+	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), state.GameDeck, c);
 
 	//Slide remaining cards to left and draw new card placed in rightmost position
 	state.ShownCards->erase(state.ShownCards->begin() + cardIndex);

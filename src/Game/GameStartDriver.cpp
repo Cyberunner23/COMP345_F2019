@@ -12,8 +12,7 @@ int main(int argc, char** argv)
 
 	mapPath = Game::selectMap();
 
-	Map* map = loader.loadMap(mapPath);
-	if (map == nullptr)
+	if (!loader.loadMap(mapPath))
 	{
 		std::cout << "Failed to open map!" << std::endl;
 	}
@@ -22,12 +21,9 @@ int main(int argc, char** argv)
 	state.Players = Game::createPlayers();
 
 	std::cout<<"Generating the game..."<<std::endl;
-	state.GameMap = map;
 	state.GameDeck = new Deck();
 
 	std::cout << "Number of players: " << state.Players->size()<<std::endl;
-
-	delete map;
 
 	return 0;
 }
