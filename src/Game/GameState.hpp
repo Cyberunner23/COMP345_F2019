@@ -10,7 +10,6 @@ class Player;
 
 struct GameState
 {
-    Map* GameMap;
     Deck* GameDeck;
     std::vector<Cards>* ShownCards;
     std::vector<Player>* Players;

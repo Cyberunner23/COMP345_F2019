@@ -11,15 +11,13 @@ int main(int argc, char** argv)
 	// Load Map
 	std::string mapPath = "data/map1.map";
 	MapLoader loader;
-	Map* map = loader.loadMap(mapPath);
 
-	if (map == nullptr)
+
+	if (!loader.loadMap(mapPath))
 	{
 		std::cout << "Failed to open map!" << std::endl;
 		return 1;
 	}
-
-	state.GameMap = map;
 
 	// Create Deck
 	state.GameDeck = new Deck();
@@ -44,7 +42,7 @@ int main(int argc, char** argv)
 	int* ageP3 = new int(22);
 
 	Player p1;
-	p1.setStartingRegionID(map->getStartingCountryID());
+	p1.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p1.setPlayerStrategies(new HumanPlayer());
 	p1.setName(nameP1);
 	p1.setage(ageP1);
@@ -55,7 +53,7 @@ int main(int argc, char** argv)
 	state.Players->push_back(p1);
 
 	Player p2;
-	p2.setStartingRegionID(map->getStartingCountryID());
+	p2.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p2.setPlayerStrategies(new GreedyComputer());
 	p2.setName(nameP2);
 	p2.setage(ageP2);
@@ -66,7 +64,7 @@ int main(int argc, char** argv)
 	state.Players->push_back(p2);
 
 	Player p3;
-	p3.setStartingRegionID(map->getStartingCountryID());
+	p3.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 	p3.setPlayerStrategies(new ModerateComputer());
 	p3.setName(nameP3);
 	p3.setage(ageP3);

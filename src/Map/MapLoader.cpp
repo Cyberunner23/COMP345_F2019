@@ -1,12 +1,12 @@
 #include "MapLoader.h"
 
-Map* MapLoader::loadMap(std::string const& filePath)
+bool MapLoader::loadMap(std::string const& filePath)
 {
     std::ifstream f(filePath);
 
     if (f.fail())
     {
-        return nullptr;
+        return false;
     }
 
     SerializedMap serializedMap;
@@ -16,47 +16,44 @@ Map* MapLoader::loadMap(std::string const& filePath)
         f >> serializedMap;
     } catch (std::exception& e)
     {
-        return nullptr;
+        return false;
     }
 
-
-    Map* map = new Map();
-
-    map->setStartingCountryID(*serializedMap.StartingCountryID);
+    Map::GetInstance().setStartingCountryID(*serializedMap.StartingCountryID);
 
     std::map<std::string, SGraph*> continents;
     for (std::string& continent : *serializedMap.Continents)
     {
-        continents.emplace(continent, &map->createContinent());
+        continents.emplace(continent, &Map::GetInstance().createContinent());
     }
 
     std::map<std::string, Vertex> countries;
     for (std::string& country : *serializedMap.Countries)
     {
         CountryNode c((unsigned int)std::stoi(country));
-        countries.emplace(country, map->addCountry(c));
+        countries.emplace(country, Map::GetInstance().addCountry(c));
     }
 
     for (auto& mapping : *serializedMap.CountryContinentMapping)
     {
         Vertex country = countries[mapping.first];
         SGraph* continent = continents[mapping.second];
-        map->addCountry(country, *continent);
+        Map::GetInstance().addCountry(country, *continent);
     }
 
     for (auto& connection : *serializedMap.CountryConnections)
     {
         Vertex c1 = countries[*connection.C1];
         Vertex c2 = countries[*connection.C2];
-        map->connectRegion(c1, c2, *connection.IsWaterConnection);
+        Map::GetInstance().connectRegion(c1, c2, *connection.IsWaterConnection);
     }
 
-    if (map->validate())
+    if (Map::GetInstance().validate())
     {
-        return nullptr;
+        return false;
     }
 
-    return map;
+    return true;
 }
 
 void MapLoader::saveMap(std::string const &filePath, SerializedMap &map)

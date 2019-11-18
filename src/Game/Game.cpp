@@ -74,8 +74,8 @@ void Game::displayFaceUpCards(GameState state)
 
 void Game::PlaceArmiesInCountryStartup(GameState& state)
 {
-    unsigned int startingCountryID = state.GameMap->getStartingCountryID();
-    CountryNode* startingCountry = state.GameMap->findCountryByID(startingCountryID);
+    unsigned int startingCountryID = Map::GetInstance().getStartingCountryID();
+    CountryNode* startingCountry = Map::GetInstance().findCountryByID(startingCountryID);
 
     if (state.Players->size() == 2)
     {
@@ -85,11 +85,11 @@ void Game::PlaceArmiesInCountryStartup(GameState& state)
 		for (int i = 0; i < 4; i++) { //Place 4 armies to get to 10 armies on the map
 			Player player = state.Players->at(i%2);
 			std::cout << *player.getName() << ", please enter the country ID where you wanna place the army: ";
-			while (std::cin >> countryID && (countryID < 1 || countryID > state.GameMap->getNumCountries())) {
+			while (std::cin >> countryID && (countryID < 1 || countryID > Map::GetInstance().getNumCountries())) {
 				std::cout << "Invalid ID range ..." << std::endl;
 				std::cout << "Please enter a valid country ID: ";
 			}
-			CountryNode* country = state.GameMap->findCountryByID(countryID);
+			CountryNode* country = Map::GetInstance().findCountryByID(countryID);
 			country->ArmiesInCountry->push_back(newArmy);
 			std::cout << "\n" << *player.getName() << " just placed a new army." << std::endl;
 		}
