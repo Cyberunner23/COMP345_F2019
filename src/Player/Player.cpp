@@ -387,7 +387,7 @@ bool Player::PlaceNewArmies(Map* map)
 			std::cout << "You cant place an army here..." << std::endl;
 		}
 	}
-    Update();
+    //Update();
 	return true;
 }
 
@@ -603,10 +603,12 @@ void Player::Update(int id)
 {
   DisplayPlayer(id);
 }
+
 void Player::Update()
 {
     CalculateScore();
 }
+
 void Player::DisplayPlayer(int id)
 {
 	if (id == *this->getId())
