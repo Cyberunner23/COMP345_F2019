@@ -265,3 +265,10 @@ add_library(Subject
 )
 target_include_directories(Subject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(Subject ObserverBase)
+
+#GameObserversDriver
+add_executable(GameObserversDriver
+    src/Game/GameObserversDriver.cpp
+)
+target_include_directories(GameObserversDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameObserversDriver Map MapLoader Game)

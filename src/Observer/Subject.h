@@ -10,7 +10,7 @@ class Subject {
 public:
 	virtual void Attach(ObserverBase* o);
 	virtual void Detach(ObserverBase* o);
-	virtual void Notify();
+	virtual void Notify(int id);
 	Subject();
 	~Subject();
 

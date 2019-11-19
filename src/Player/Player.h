@@ -19,6 +19,7 @@ private:
     BidingFacility* _bidingFacility;
     std::string* _name;
     Hand* _hand;
+	int* _id;
     int* _age;
     int* _coins;
     int* _score;
@@ -37,6 +38,7 @@ private:
 
 public:
     Player();
+	Player(GameState* state);
     Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor, GameState* state);
 
     unsigned int getStartingRegionID() {return *_startingRegionID;}
@@ -47,6 +49,9 @@ public:
 
     BidingFacility* getBidingFacility() {return _bidingFacility;}
     void setBidingFacility(BidingFacility* facility) {_bidingFacility = facility;}
+
+	int* getId() { return _id; }
+	void setId(int* id) { _id = id; }
 
     std::string* getName() {return _name;}
     void setName(std::string* name) { _name = name;}
@@ -96,8 +101,8 @@ public:
 	bool AndOrAction();
 	bool Ignore();
 
-	void Update() override;
-	void DisplayPlayer();
+	void Update(int id) override;
+	void DisplayPlayer(int id);
 
 
 	bool executeStrategy(GameState state, int turn);

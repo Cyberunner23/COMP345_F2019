@@ -6,7 +6,7 @@ Subject::Subject() {
 }
 
 Subject::~Subject() {
-	delete _observers;
+	//delete _observers;
 }
 
 void Subject::Attach(ObserverBase* o) {
@@ -17,8 +17,8 @@ void Subject::Detach(ObserverBase* o) {
 	_observers->remove(o);
 };
 
-void Subject::Notify() {
+void Subject::Notify(int id) {
 	list<ObserverBase*>::iterator i = _observers->begin();
 	for (; i != _observers->end(); ++i)
-		(*i)->Update();
+		(*i)->Update(id);
 };

@@ -4,6 +4,8 @@
 
 Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE, nullptr) {}
 
+Player::Player(GameState* state) : Player("", 0, 0, Cities::BLUE, Armies::BLUE, state) {}
+
 Player::Player(std::string playerName, int playerAge, int playerCoins, Cities cityColor, Armies armyColor, GameState* state)
 {
     _name = new std::string(playerName);
@@ -18,8 +20,8 @@ Player::Player(std::string playerName, int playerAge, int playerCoins, Cities ci
     _cityColor = new Cities(cityColor);
     _armyColor = new Armies(armyColor);
     _startingRegionID = new unsigned int(0);
-	_strategy = nullptr;
 	_subject = state;
+	_subject->Attach(this);
 }
 
 Player Player::youngestPlayer(std::vector<Player>* players)
@@ -596,14 +598,13 @@ bool Player::Ignore()
 	return true;
 }
 
-void Player::Update()
+void Player::Update(int id)
 {
-  DisplayPlayer();
+  DisplayPlayer(id);
 }
 
-void Player::DisplayPlayer()
+void Player::DisplayPlayer(int id)
 {
-  std::cout << "Name: " << *this->getName() << std::endl;
-  //std::cout << "They've chosen " << gs.GameDeck->DeckMap->at(*(this->getHand()->HandList->end() - 1)) << std::endl;
-  //std::cout << "It costs:  " << cardCost << std::endl;
+	if (id == *this->getId())
+		std::cout << *this->getName() << ": has selected '" << _subject->GameDeck->DeckMap->at(*(this->getHand()->HandList->end() - 1)) << "'" << std::endl;
 }

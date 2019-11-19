@@ -15,5 +15,7 @@ struct GameState : public Subject
     std::vector<Cards>* ShownCards;
     std::vector<Player>* Players;
 	int* supply;
+
+	void NotifyObservers(int turn);
 };
 
