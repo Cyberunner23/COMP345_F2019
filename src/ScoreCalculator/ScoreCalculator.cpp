@@ -25,6 +25,7 @@ void ScoreCalculator::CalculateScores()
     for (int i = 0; i < State->Players->size(); i++)
     {
         currentHand = *State->Players->at(i).getHand()->HandList;
+        *State->Players->at(i).getScore() = 0;
         //currentScore = 0;
 
         for (int j = 0; j < currentHand.size(); j++)
