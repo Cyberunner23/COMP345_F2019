@@ -22,3 +22,10 @@ void Subject::Notify(int id) {
 	for (; i != _observers->end(); ++i)
 		(*i)->Update(id);
 };
+
+void Subject::Notify()
+{
+    list<ObserverBase*>::iterator i = _observers->begin();
+    for (; i != _observers->end(); ++i)
+        (*i)->Update();
+}

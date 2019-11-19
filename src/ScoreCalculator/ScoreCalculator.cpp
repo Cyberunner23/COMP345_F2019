@@ -101,6 +101,7 @@ void ScoreCalculator::CalculateScores()
         else if (Crystals == 1)
         { (*State->Players->at(i).getScore()) += 1; }
 
+        std::cout << *State->Players->at(i).getName() << " has " << *State->Players->at(i).getScore() << " points from Goods" << std::endl;
         //*State->Players->at(i).getScore() = currentScore;
     }
 
@@ -116,6 +117,7 @@ void ScoreCalculator::CalculateScores()
                 (*State->Players->at(i).getScore())++;
             }
         }
+        std::cout << *State->Players->at(i).getName() << " has " << *State->Players->at(i).getScore() << " points after adding regions" << std::endl;
     }
 
     //Calculating scores based on continents owned
@@ -130,6 +132,7 @@ void ScoreCalculator::CalculateScores()
                 (*State->Players->at(i).getScore())++;
             }
         }
+        std::cout << *State->Players->at(i).getName() << " has " << *State->Players->at(i).getScore() << " points after adding continents" << std::endl;
     }
 
     //Calculating highest score

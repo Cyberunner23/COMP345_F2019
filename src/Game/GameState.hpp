@@ -17,5 +17,6 @@ struct GameState : public Subject
 	int* supply;
 
 	void NotifyObservers(int turn);
+	void NotifyObservers();
 };
 

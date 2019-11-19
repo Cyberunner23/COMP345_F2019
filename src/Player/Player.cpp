@@ -387,7 +387,7 @@ bool Player::PlaceNewArmies(Map* map)
 			std::cout << "You cant place an army here..." << std::endl;
 		}
 	}
-
+    Update();
 	return true;
 }
 
@@ -532,6 +532,7 @@ bool Player::BuildCity(Map* map)
 		}
 	}
 
+	Update();
 	return true;
 }
 
@@ -583,7 +584,7 @@ bool Player::DestroyArmy(Map* map, Deck* deck)
 		node->destroyArmy(armyToDestroy);
 		armyDestroyed = true;
 	}
-
+        Update();
 	return true;
 }
 
@@ -602,9 +603,18 @@ void Player::Update(int id)
 {
   DisplayPlayer(id);
 }
-
+void Player::Update()
+{
+    CalculateScore();
+}
 void Player::DisplayPlayer(int id)
 {
 	if (id == *this->getId())
 		std::cout << *this->getName() << ": has selected '" << _subject->GameDeck->DeckMap->at(*(this->getHand()->HandList->end() - 1)) << "'" << std::endl;
+}
+
+void Player::CalculateScore()
+{
+    ScoreCalculator* s = new ScoreCalculator(_subject);
+    s->CalculateScores();
 }

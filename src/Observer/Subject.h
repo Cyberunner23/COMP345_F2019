@@ -11,6 +11,7 @@ public:
 	virtual void Attach(ObserverBase* o);
 	virtual void Detach(ObserverBase* o);
 	virtual void Notify(int id);
+	virtual void Notify();
 	Subject();
 	~Subject();
 

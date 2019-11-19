@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 	int cardPosition;
 
 	//Will execute game loop 3 times 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 6; i++) {
 
 		//Player selects card position
 		std::cout << "Please select a card by entering its position (1 to 6): ";
@@ -90,8 +90,10 @@ int main(int argc, char** argv)
 		Cards c = state.ShownCards->at((cardIndex));
 		state.Players->at(turn % 3).getHand()->HandList->push_back(c);
 		state.NotifyObservers(turn%3 + 1); //turn%3 + 1 is equal to the player's id
+                state.Players->at(turn % 3).RunAction(&Map::GetInstance(), state.GameDeck, c);
 
-		//Slide remaining cards to left and draw new card placed in rightmost position
+
+            //Slide remaining cards to left and draw new card placed in rightmost position
 		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
 		state.ShownCards->push_back(state.GameDeck->draw());
 		Game::displayFaceUpCards(state);

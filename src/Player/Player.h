@@ -7,7 +7,8 @@
 #include "Map/Map.h"
 #include "Utils/MapUtil.hpp"
 #include "PlayerStrategies.h"
-#include "Observer/ObserverBase.h" 
+#include "Observer/ObserverBase.h"
+#include "ScoreCalculator/ScoreCalculator.h"
 
 class PlayerStrategies;
 class GameState;
@@ -102,7 +103,9 @@ public:
 	bool Ignore();
 
 	void Update(int id) override;
+	void Update() override;
 	void DisplayPlayer(int id);
+	void CalculateScore();
 
 
 	bool executeStrategy(GameState state, int turn);
