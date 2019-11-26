@@ -31,6 +31,9 @@ struct CountryNode
     bool canDestroyArmy(Armies playerArmyColor);
     void destroyArmy(Armies armyToDestroy);
 
+	bool hasCityColor(Cities cityColor);
+	bool hasArmyColor(Armies armyColor);
+
     unsigned int* CountryID;
 
     std::optional<Armies> getCountryOwner();
@@ -177,9 +180,13 @@ public:
     void setCountryNode(Vertex& regionVertex, CountryNode& country);
 
     bool findVertexByCountryID(unsigned int ID, Vertex& v);
-    CountryNode* findCountryByID(unsigned int ID);
+	Vertex* getVertexByCountryID(unsigned int ID, Vertex& v);
+	CountryNode* findCountryByID(unsigned int ID);
     bool areCountriesConnectedByWater(unsigned int id1, unsigned int id2);
     bool areCountriesConnected(unsigned int id1, unsigned int id2);
+	std::vector<int>* findAdjacentCountryIDs(unsigned int countryID);
+	std::vector<int>* findCityColorCountryIDs(Cities cityColor);
+	std::vector<int>* findArmyColorCountryIDs(Armies armyColor);
 
     // Creates an edge between the provided region vertices from the main graph.
     // Used when generating maps from code.
@@ -212,3 +219,6 @@ private:
 
 
 };
+
+void removeDuplicates(std::vector<int>& vec);
+

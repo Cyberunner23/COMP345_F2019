@@ -86,7 +86,7 @@ int main(int argc, char** argv)
 		int cardIndex = cardPosition - 1;
 		Cards c = state.ShownCards->at((cardIndex));
 		std::cout << *state.Players->at(turn % 3).getName() << " has taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-		state.Players->at(turn % 3).RunAction(&Map::GetInstance(), state.GameDeck, c);
+		state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);
 
 		//Slide remaining cards to left and draw new card placed in rightmost position
 		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
@@ -99,7 +99,7 @@ int main(int argc, char** argv)
 
 	Player::displayPlayers(state.Players);
 
-        Map::GetInstance().dump();
+    Map::GetInstance().dump();
 
 	return 0;
 }

@@ -1,8 +1,10 @@
 #include "Player.h"
 #include <vector>
 #include <iostream>
+#include <random>
 
-Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE, nullptr) {}
+
+Player::Player() : Player("", 0, 0, Cities::BLUE, Armies::BLUE, new GameState()) {}
 
 Player::Player(GameState* state) : Player("", 0, 0, Cities::BLUE, Armies::BLUE, state) {}
 
@@ -20,6 +22,7 @@ Player::Player(std::string playerName, int playerAge, int playerCoins, Cities ci
     _cityColor = new Cities(cityColor);
     _armyColor = new Armies(armyColor);
     _startingRegionID = new unsigned int(0);
+	_strategy = nullptr;
 	_subject = state;
 	_subject->Attach(this);
 }
@@ -122,10 +125,10 @@ void Player::displayPlayers(std::vector<Player>* players)
 }
 
 //When Player wins a bid he has to pay coins and
-void Player::PayCoin()
+void Player::PayCoin(GameState* state)
 {
-    /*_bidingFacility->supply += _bidingFacility->bid;
-    _coins -= _bidingFacility->bid;*/
+    *state->supply += *getBidingFacility()->bid;
+    setCoins(getCoins() - *getBidingFacility()->bid);
 }
 
 bool Player::executeStrategy(GameState state, int turn) {
@@ -161,189 +164,222 @@ void Player::changeStrategy()
 
 }
 
-bool Player::RunAction(Map* map, Deck* deck, Cards card)
+bool Player::RunAction(Map* map, GameState* state, Cards card)
 {
 	int choice;
 
 	switch (card)
 	{
 	case f1: //Move 3 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case f2: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case f3: //Destroy 1 Army or Build City
-		std::cout << "Do you wanna destroy 1 Army (press 1) or build a City (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: ";
+		if (getPlayerStrategies() != nullptr)
+			choice = getRandomIndex(1) + 1;
+		else {
+			std::cout << "Do you wanna destroy 1 Army (press 1) or build a City (press 2): ";
+			while (std::cin >> choice && (choice != 1 && choice != 2)) {
+				std::cout << "\nPlease press 1 or 2 to choose your action: ";
+			}
 		}
 		if (choice == 1) {
 			std::cout << "You chose to destroy an army.. " << std::endl;
-			return DestroyArmy(map, deck);
+			return DestroyArmy(map, state);
 		}
 		else {
 			std::cout << "You chose to build a city.. " << std::endl;
-			return BuildCity(map);
+			return BuildCity(map, state);
 		}
 		break;
 	case f4: //Add 2 Armies or Move 3 Armies
-		std::cout << "Do you wanna add 2 Armies (press 1) or move 3 Armies (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: " << std::endl;
+		if (getPlayerStrategies() != nullptr)
+			choice = getRandomIndex(1) + 1;
+		else {
+			std::cout << "Do you wanna add 2 Armies (press 1) or move 3 Armies (press 2): ";
+			while (std::cin >> choice && (choice != 1 && choice != 2)) {
+				std::cout << "\nPlease press 1 or 2 to choose your action: " << std::endl;
+			}
 		}
+
 		if (choice == 1) {
 			std::cout << "You chose to add 2 Armies.. " << std::endl;
-			return PlaceNewArmies(map) && PlaceNewArmies(map);
+			return PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		}
 		else {
 			std::cout << "You chose to move 3 armies.. " << std::endl;
-			return MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+			return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		}
 		break;
 	case f5: //Move 4 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case f6: //Build City
-		return BuildCity(map);
+		return BuildCity(map, state);
 		break;
 	case f7: //Move 3 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case f8: //Move 6 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case c1: //Build City
-		return BuildCity(map);
+		return BuildCity(map, state);
 		break;
 	case c2: //Destroy 1 Army and Add 1 Army
-		return DestroyArmy(map, deck) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && DestroyArmy(map, state);
 		break;
 	case c3: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case c4: //Move 4 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case c5: //Move 5 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case c6: //Add 3 Armies (DOUBLE)
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case c7: //Move 3 Armies via Ship
-		return (MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map));
+		return (MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state));
 		break;
 	case c8: //Move 4 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case c9: //Build City
-		return BuildCity(map);
+		return BuildCity(map, state);
 		break;
 	case c10: //Add 4 Armies or Move 2 Armies*
-		std::cout << "Do you wanna add 4 Armies (press 1) or move 2 Armies (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: ";
+		if (getPlayerStrategies() != nullptr)
+			choice = getRandomIndex(1) + 1;
+		else {
+			std::cout << "Do you wanna add 4 Armies (press 1) or move 2 Armies (press 2): ";
+			while (std::cin >> choice && (choice != 1 && choice != 2)) {
+				std::cout << "\nPlease press 1 or 2 to choose your action: ";
+			}
 		}
 		if (choice == 1) {
 			std::cout << "You chose to add 4 Armies.. " << std::endl;
-			return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+			return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		}
 		else {
 			std::cout << "You chose to move 2 Armies.. " << std::endl;
-			return MoveArmies(map) && MoveArmies(map);
+			return MoveArmies(map, state) && MoveArmies(map, state);
 		}
 		break;
 	case a1: //Move 4 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case a2: //Add 3 Armies or Move 4 Armies
-		std::cout << "Do you wanna add 3 Armies (press 1) or move 4 Armies (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: ";
+		if (getPlayerStrategies() != nullptr)
+			choice = getRandomIndex(1) + 1;
+		else {
+			std::cout << "Do you wanna add 3 Armies (press 1) or move 4 Armies (press 2): ";
+			while (std::cin >> choice && (choice != 1 && choice != 2)) {
+				std::cout << "\nPlease press 1 or 2 to choose your action: ";
+			}
 		}
+
 		if (choice == 1) {
 			std::cout << "You chose to add 3 Armies.. " << std::endl;
-			return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+			return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		}
 		else {
 			std::cout << "You chose to move 4 Armies.. " << std::endl;
-			return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+			return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		}
 		break;
 	case a3: //Move 5 Armies
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case a4: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case a5: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case a6: //Move 3 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case a7: //Build City
-		return BuildCity(map);
+		return BuildCity(map, state);
 		break;
 	case a8: //Add 4 Armies or Move 3 Armies
-		std::cout << "Do you wanna add 4 Armies (press 1) or move 3 Armies (press 2): ";
-		while (std::cin >> choice && (choice != 1 && choice != 2)) {
-			std::cout << "\nPlease press 1 or 2 to choose your action: ";
+		if (getPlayerStrategies() != nullptr)
+			choice = getRandomIndex(2) + 1;
+		else {
+			std::cout << "Do you wanna add 4 Armies (press 1) or move 3 Armies (press 2): ";
+			while (std::cin >> choice && (choice != 1 && choice != 2)) {
+				std::cout << "\nPlease press 1 or 2 to choose your action: ";
+			}
 		}
+
 		if (choice == 1) {
 			std::cout << "You chose to add 4 Armies.. " << std::endl;
-			return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+			return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		}
 		else {
 			std::cout << "You chose to move 3 Armies.. " << std::endl;
-			return MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+			return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		}
 		break;
 	case a9: //Move 4 Armies (DOUBLE)
-		return MoveArmies(map) && MoveArmies(map) && MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case o1: //Move 2 Armies
-		return MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case o2: //Move 3 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case o3: //Move 2 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case o4: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case o5: //Add 3 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case o6: //Add 2 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case o7: //Move 2 Armies via Ship
-		return MoveOverLandOrWater(map) && MoveOverLandOrWater(map);
+		return MoveOverLandOrWater(map, state) && MoveOverLandOrWater(map, state);
 		break;
 	case cr1: //Add 2 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case cr2: //Add 2 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	case cr3: //Move 2 Armies
-		return MoveArmies(map) && MoveArmies(map);
+		return MoveArmies(map, state) && MoveArmies(map, state);
 		break;
 	case cr4: //Add 1 Army
-		return PlaceNewArmies(map);
+		return PlaceNewArmies(map, state);
 		break;
 	case cr5: //Add 2 Armies
-		return PlaceNewArmies(map) && PlaceNewArmies(map);
+		return PlaceNewArmies(map, state) && PlaceNewArmies(map, state);
 		break;
 	}
 }
 
+//returns vector of int representing country IDs where player placed cities
+std::vector<int>* Player::findPlayerCitiesCountryIDs(Map* map) {
+	return map->findCityColorCountryIDs(getCityColor());
+}
+
+//returns vector of int representing country IDs where player placed cities
+std::vector<int>* Player::findPlayerArmiesCountryIDs(Map* map) {
+	return map->findArmyColorCountryIDs(getArmyColor());
+}
+
 // Place 1 army
-bool Player::PlaceNewArmies(Map* map)
+bool Player::PlaceNewArmies(Map* map, GameState* state)
 {
 	// Check if player has armies to place
 	if (getNumHandArmies() == 0)
@@ -356,9 +392,21 @@ bool Player::PlaceNewArmies(Map* map)
 	while (!armyPlaced)
 	{
 		unsigned int countryID = 0;
-		if (!countryIDUserInput(map, countryID, "\"Please enter the Country ID"))
-		{
-			return false;
+		std::vector<int>* countryIDs = findPlayerCitiesCountryIDs(map);
+
+		//if player has no cities, we place armies in the starting region
+		if (countryIDs->empty()) {
+			countryID = map->getStartingCountryID();
+		}
+		else {
+			//If not Human Player then we randomly place army where player has a City
+			if (getPlayerStrategies() != nullptr) {
+				countryID = countryIDs->at(getRandomIndex(countryIDs->size()));
+			}
+			else {
+				if (!countryIDUserInput(map, countryID, "\"Please enter the Country ID"))
+					return false;
+			}
 		}
 
 		auto isStartingCountry = [this](unsigned int countryID) { return countryID == getStartingRegionID(); };
@@ -373,6 +421,7 @@ bool Player::PlaceNewArmies(Map* map)
 			|| playerHasCityInCountry(node))
 			/*&& !playerAlreadyHasArmyInCountry(node)*/)
 		{
+			std::cout << "Placing one " << state->GameDeck->ArmiesMap->at(getArmyColor()) << " army in countryID " << countryID << " ..." << std::endl;
 			// decrement num armies in hand
 			int numArmies = getNumHandArmies();
 			numArmies--;
@@ -387,35 +436,48 @@ bool Player::PlaceNewArmies(Map* map)
 			std::cout << "You cant place an army here..." << std::endl;
 		}
 	}
-    //Update();
 	return true;
 }
 
-bool Player::MoveArmies(Map* map, bool canMoveOverWater)
+bool Player::MoveArmies(Map* map, GameState* state, bool canMoveOverWater)
 {
 
 	bool armyMoved = false;
 	while (!armyMoved)
 	{
-
+		std::cout << "Moving an army" << std::endl;
+		//If not Human player, we randomly move from one of country where player has armies to an another adjacent
+		//country
 		unsigned int countryIDSrc = 0;
 		unsigned int countryIDDest = 0;
 
-		std::cout << "Moving an army" << std::endl;
-		if (!countryIDUserInput(map, countryIDSrc, "Input the starting country ID"))
-		{
+		//Can't move armies if player has no armies on map
+		std::vector<int>* countryIDSrcList = findPlayerArmiesCountryIDs(map);
+		if (countryIDSrcList->empty()) {
+			std::cout << *getName() << " has no " << state->GameDeck->ArmiesMap->at(getArmyColor()) << " armies to move... " << std::endl;
 			return false;
 		}
 
-		if (!countryIDUserInput(map, countryIDDest, "Input the destination country ID"))
-		{
-			return false;
+		if (getPlayerStrategies() != nullptr) {
+			countryIDSrc = countryIDSrcList->at(getRandomIndex(countryIDSrcList->size()));
+			std::vector<int>* countryIDDestList = map->findAdjacentCountryIDs(countryIDSrc);
+			countryIDDest = countryIDDestList->at(getRandomIndex(countryIDDestList->size()));
+		}
+		else {
+			if (!countryIDUserInput(map, countryIDSrc, "Input the starting country ID"))
+			{
+				return false;
+			}
+
+			if (!countryIDUserInput(map, countryIDDest, "Input the destination country ID"))
+			{
+				return false;
+			}
 		}
 
 		if ((canMoveOverWater && map->areCountriesConnectedByWater(countryIDSrc, countryIDDest)) || map->areCountriesConnected(countryIDSrc, countryIDDest))
 		{
 			// Can do move
-
 			CountryNode* srcCountry = map->findCountryByID(countryIDSrc);
 			CountryNode* destCountry = map->findCountryByID(countryIDDest);
 
@@ -423,9 +485,10 @@ bool Player::MoveArmies(Map* map, bool canMoveOverWater)
 			if (it == srcCountry->ArmiesInCountry->end())
 			{
 				std::cout << "You dont have an army in the starting country..." << std::endl;
-				continue;
+				return false;
 			}
 
+			std::cout << "Moving one " << state->GameDeck->ArmiesMap->at(getArmyColor()) << " army from countryID " << countryIDSrc << " to coutryID " << countryIDDest << std::endl;
 			srcCountry->ArmiesInCountry->erase(it);
 			destCountry->ArmiesInCountry->push_back(getArmyColor());
 
@@ -480,18 +543,18 @@ bool Player::countryIDUserInput(Map* map, unsigned int& countryID, std::string q
 }
 
 // Does 1 army, 1 move, card logic will handle the 3 moves
-bool Player::MoveArmies(Map* map)
+bool Player::MoveArmies(Map* map, GameState* state)
 {
-	return MoveArmies(map, false);
+	return MoveArmies(map, state, false);
 }
 
 // Does 1 army, 1 move, card logic will handle the 3 moves
-bool Player::MoveOverLandOrWater(Map* map)
+bool Player::MoveOverLandOrWater(Map* map, GameState* state)
 {
-	return MoveArmies(map, true);
+	return MoveArmies(map, state, true);
 }
 
-bool Player::BuildCity(Map* map)
+bool Player::BuildCity(Map* map, GameState* state)
 {
 	// Check if player has cities to place
 	if (getNumHandCities() == 0)
@@ -504,9 +567,23 @@ bool Player::BuildCity(Map* map)
 	while (!cityPlaced)
 	{
 		unsigned int countryID = 0;
-		if (!countryIDUserInput(map, countryID, "\"Please enter the Country ID"))
-		{
+		std::vector<int>* armyCountryIDs = map->findArmyColorCountryIDs(getArmyColor());
+
+		//Return false if player has no armies on the map
+		if (armyCountryIDs->empty()) {
+			std::cout << *getName() << " has no armies on the map and therefore can't build a city ..." << std::endl;
 			return false;
+		}
+
+		//If not human player, we randomly choose where to build the city
+		if (getPlayerStrategies() != nullptr) {
+			countryID = armyCountryIDs->at(getRandomIndex(armyCountryIDs->size()));
+		}
+		else {
+			if (!countryIDUserInput(map, countryID, "\"Please enter the Country ID"))
+			{
+				return false;
+			}
 		}
 
 		auto playerHasArmyInCountry = [this](CountryNode* node)
@@ -536,55 +613,90 @@ bool Player::BuildCity(Map* map)
 	return true;
 }
 
-bool Player::DestroyArmy(Map* map, Deck* deck)
+bool Player::DestroyArmy(Map* map, GameState* state)
 {
 	bool armyDestroyed = false;
+	int attempts = 0;
 	while (!armyDestroyed)
 	{
 		unsigned int countryID = 0;
-		if (!countryIDUserInput(map, countryID, "Please enter the Country ID"))
-		{
-			return false;
-		}
-
-		CountryNode* node = map->findCountryByID(countryID);
 		Armies armyToDestroy;
-		if (!node->canDestroyArmy(getArmyColor()))
-		{
-			std::cout << "There are no armies to be destroyed in this country." << std::endl;
-		}
-		else
-		{
-			bool armyChosen = false;
-			do
-			{
-				std::string input;
-				std::cout << "Enter the army color to destroy (q/Q to cancel): " << std::endl;
-				std::cin >> input;
+		CountryNode* node;
 
-				if (input == "q" || input == "Q")
-				{
-					std::cout << "Destroy Army canceled" << std::endl;
+		//If not human player, we randomly choose army color to destroy amd the we randomly choose the countryID
+		//in which chosen army will be destroyed
+		if (getPlayerStrategies() != nullptr) {
+			armyToDestroy = state->Players->at(getRandomIndex(state->Players->size())).getArmyColor();
+			std::vector<int>* armyToDestroyCountryIDs = map->findArmyColorCountryIDs(armyToDestroy);
+
+			if (armyToDestroyCountryIDs->empty()) {
+				std::cout << "There are no " << state->GameDeck->ArmiesMap->at(armyToDestroy) << " Armies to destroy on the map ... " << std::endl;
+				attempts++;
+
+				if (attempts > 10)
 					return false;
-				}
 
-				if (findByValue(armyToDestroy, *deck->ArmiesMap, input))
-				{
-					armyChosen = true;
-				}
-				else
-				{
-					std::cout << "Army not found..." << std::endl;
-					continue;
-				}
+				continue;
+			}
 
-			} while (!armyChosen);
+			countryID = armyToDestroyCountryIDs->at(getRandomIndex(armyToDestroyCountryIDs->size()));
+
+			std::cout << *getName() << " chose to destroy a " << state->GameDeck->ArmiesMap->at(armyToDestroy) << " Army in countryID " << countryID << " ..." << std::endl;
+
+			node = map->findCountryByID(countryID);
+
+			if (!node->canDestroyArmy(getArmyColor()))
+			{
+				std::cout << "There are no armies to be destroyed in this country." << std::endl;
+			}
+
+		}
+		else {
+
+			if (!countryIDUserInput(map, countryID, "Please enter the Country ID"))
+			{
+				return false;
+			}
+
+			node = map->findCountryByID(countryID);
+			if (!node->canDestroyArmy(getArmyColor()))
+			{
+				std::cout << "There are no armies to be destroyed in this country." << std::endl;
+			}
+			else
+			{
+				bool armyChosen = false;
+				do
+				{
+					std::string input;
+					std::cout << "Enter the army color to destroy (q/Q to cancel): " << std::endl;
+					std::cin >> input;
+
+					if (input == "q" || input == "Q")
+					{
+						std::cout << "Destroy Army canceled" << std::endl;
+						return false;
+					}
+
+					if (findByValue(armyToDestroy, *state->GameDeck->ArmiesMap, input))
+					{
+						armyChosen = true;
+					}
+					else
+					{
+						std::cout << "Army not found..." << std::endl;
+						continue;
+					}
+
+				} while (!armyChosen);
+			}
+
 		}
 
 		node->destroyArmy(armyToDestroy);
 		armyDestroyed = true;
 	}
-        Update();
+    Update();
 	return true;
 }
 
@@ -619,4 +731,11 @@ void Player::CalculateScore()
 {
     ScoreCalculator* s = new ScoreCalculator(_subject);
     s->CalculateScores();
+}
+
+int getRandomIndex(int size) {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(0, size-1); // distribution in range [0, size]
+	return dist(rng);
 }

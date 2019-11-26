@@ -33,7 +33,7 @@ private:
     Cities* _cityColor; // Color of the cities for the player
     Armies* _armyColor; // Color of the army for the player
 
-	bool MoveArmies(Map* map, bool canMoveOverWater);
+	bool MoveArmies(Map* map, GameState* state, bool canMoveOverWater);
 	bool countryIDUserInput(Map* map, unsigned int& countryID, std::string queryText);
 
 
@@ -91,14 +91,16 @@ public:
     static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
     static int* assignCoinsToPlayers(std::vector<Player>* players);
     static void displayPlayers(std::vector<Player>* players);
-    void PayCoin();
+    void PayCoin(GameState* state);
 
-	bool RunAction(Map* map, Deck* deck, Cards card);
-	bool PlaceNewArmies(Map* map);
-	bool MoveArmies(Map* map);
-	bool MoveOverLandOrWater(Map* map);
-	bool BuildCity(Map* map);
-	bool DestroyArmy(Map* map, Deck* deck);
+	bool RunAction(Map* map, GameState* state, Cards card);
+	std::vector<int>* findPlayerCitiesCountryIDs(Map* map);
+	std::vector<int>* findPlayerArmiesCountryIDs(Map* map);
+	bool PlaceNewArmies(Map* map, GameState* state);
+	bool MoveArmies(Map* map, GameState* state);
+	bool MoveOverLandOrWater(Map* map, GameState* state);
+	bool BuildCity(Map* map, GameState* state);
+	bool DestroyArmy(Map* map, GameState* state);
 	bool AndOrAction();
 	bool Ignore();
 
@@ -112,3 +114,5 @@ public:
 	void changeStrategy();
 
 };
+
+int getRandomIndex(int size);

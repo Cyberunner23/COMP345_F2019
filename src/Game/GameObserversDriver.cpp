@@ -90,7 +90,7 @@ int main(int argc, char** argv)
 		Cards c = state.ShownCards->at((cardIndex));
 		state.Players->at(turn % 3).getHand()->HandList->push_back(c);
 		state.NotifyObservers(turn%3 + 1); //turn%3 + 1 is equal to the player's id
-        state.Players->at(turn % 3).RunAction(&Map::GetInstance(), state.GameDeck, c);
+        state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);
 
         //Slide remaining cards to left and draw new card placed in rightmost position
 		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);

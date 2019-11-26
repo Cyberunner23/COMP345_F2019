@@ -76,7 +76,7 @@ int main(int argc, char** argv)
         for (int j = 0; j < 2; j++) {
             Cards c = player.getHand()->HandList->at(j);
             std::cout << *player.getName() << " is playing: '" << state.GameDeck->DeckMap->at(c) << "' from his hand." <<std::endl;
-			bool actionRun = player.RunAction(&Map::GetInstance(), state.GameDeck, c);
+			bool actionRun = player.RunAction(&Map::GetInstance(), &state, c);
 			std::cout << "Did action run? " << actionRun << std::endl;
 			player.getHand()->HandList->erase(player.getHand()->HandList->begin() + j);
         }
