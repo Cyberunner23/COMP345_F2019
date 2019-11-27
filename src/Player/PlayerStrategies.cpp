@@ -13,16 +13,22 @@ bool HumanPlayer::execute(GameState state, int turn)
             std::cout << "\nPlease enter a valid position: ";
         }
 
-        //Player take face up card and execute action
-        int cardIndex = cardPosition - 1;
-        Cards c = state.ShownCards->at((cardIndex));
-        std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Human Player) has taken the card at position " << cardPosition
-                  << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-        bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+		bool didActionRun = false;
 
-        //Slide remaining cards to left and draw new card placed in rightmost position
-        state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
-        state.ShownCards->push_back(state.GameDeck->draw());
+		if (state.Players->at(turn % state.Players->size()).PayCoin(&state, cardPosition))
+		{
+			//Player take face up card and execute action
+			int cardIndex = cardPosition - 1;
+			Cards c = state.ShownCards->at((cardIndex));
+			std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Human Player) has taken the card at position " << cardPosition
+				<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+			state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
+			didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+
+			//Slide remaining cards to left and draw new card placed in rightmost position
+			state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
+			state.ShownCards->push_back(state.GameDeck->draw());
+		}
 
 		//state.Players->at(turn % state.Players->size()).changeStrategy();
         Game::displayFaceUpCards(state);
@@ -38,14 +44,22 @@ bool GreedyComputer::execute(GameState state, int turn)
 	int cardIndex = findBuildCityOrDestroyArmies(state);
 	int cardPosition = cardIndex + 1;
 
-	Cards c = state.ShownCards->at((cardIndex));
-	std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Greedy Computer) has taken the card at position " << cardPosition
-		<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+	bool didActionRun = false;
 
-	//Slide remaining cards to left and draw new card placed in rightmost position
-	state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
-	state.ShownCards->push_back(state.GameDeck->draw());
+	if (state.Players->at(turn % state.Players->size()).PayCoin(&state, cardPosition))
+	{
+		//Player take face up card and execute action
+		int cardIndex = cardPosition - 1;
+		Cards c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Greedy Computer) has taken the card at position " << cardPosition
+			<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
+		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+
+		//Slide remaining cards to left and draw new card placed in rightmost position
+		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
+		state.ShownCards->push_back(state.GameDeck->draw());
+	}
 	
 	//state.Players->at(turn % state.Players->size()).changeStrategy();
 	Game::displayFaceUpCards(state);
@@ -61,14 +75,22 @@ bool ModerateComputer::execute(GameState state, int turn)
 	int cardIndex = findAddArmies(state);
 	int cardPosition = cardIndex + 1;
 
-	Cards c = state.ShownCards->at((cardIndex));
-	std::cout << *state.Players->at(turn%state.Players->size()).getName() << " (Moderate Computer) has taken the card at position " << cardPosition
-		<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+	bool didActionRun = false;
 
-	//Slide remaining cards to left and draw new card placed in rightmost position
-	state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
-	state.ShownCards->push_back(state.GameDeck->draw());
+	if (state.Players->at(turn % state.Players->size()).PayCoin(&state, cardPosition))
+	{
+		//Player take face up card and execute action
+		int cardIndex = cardPosition - 1;
+		Cards c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Moderate Computer) has taken the card at position " << cardPosition
+			<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
+		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+
+		//Slide remaining cards to left and draw new card placed in rightmost position
+		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
+		state.ShownCards->push_back(state.GameDeck->draw());
+	}
 	
 	//state.Players->at(turn % state.Players->size()).changeStrategy();
 	Game::displayFaceUpCards(state);
@@ -84,14 +106,22 @@ bool RandomComputer::execute(GameState state, int turn)
 	int cardIndex = getRandomCardIndex();
 	int cardPosition = cardIndex + 1;
 
-	Cards c = state.ShownCards->at((cardIndex));
-	std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Random Computer) has taken the card at position " << cardPosition
-		<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
-	bool didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+	bool didActionRun = false;
 
-	//Slide remaining cards to left and draw new card placed in rightmost position
-	state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
-	state.ShownCards->push_back(state.GameDeck->draw());
+	if (state.Players->at(turn % state.Players->size()).PayCoin(&state, cardPosition))
+	{
+		//Player take face up card and execute action
+		int cardIndex = cardPosition - 1;
+		Cards c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Random Computer) has taken the card at position " << cardPosition
+			<< ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
+		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
+
+		//Slide remaining cards to left and draw new card placed in rightmost position
+		state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
+		state.ShownCards->push_back(state.GameDeck->draw());
+	}
 
 	//state.Players->at(turn % state.Players->size()).changeStrategy();
 	Game::displayFaceUpCards(state);

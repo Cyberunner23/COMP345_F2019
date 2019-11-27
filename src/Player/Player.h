@@ -92,6 +92,7 @@ public:
     static int* assignCoinsToPlayers(std::vector<Player>* players);
     static void displayPlayers(std::vector<Player>* players);
     void PayCoin(GameState* state);
+	bool PayCoin(GameState* state, int cardPosition);
 
 	bool RunAction(Map* map, GameState* state, Cards card);
 	std::vector<int>* findPlayerCitiesCountryIDs(Map* map);

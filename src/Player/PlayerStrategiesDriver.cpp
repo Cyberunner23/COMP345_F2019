@@ -104,12 +104,18 @@ int main(int argc, char** argv)
 	int turn = 0;
 	int numOfPlayers = state.Players->size();
 
+	int* assignedCoins = Player::assignCoinsToPlayers(state.Players);
+
+	state.supply = new int(44 - *assignedCoins * numOfPlayers);
+
 	for (int i = 0; i < 30; i++) {
 		state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
 		turn++;
 	}
 
 	Player::displayPlayers(state.Players);
+
+	Game::displayGameState(state);
 
 	Map::GetInstance().dump();
 

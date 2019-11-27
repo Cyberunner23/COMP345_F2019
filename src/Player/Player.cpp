@@ -116,6 +116,7 @@ void Player::displayPlayers(std::vector<Player>* players)
 	for (auto& player : *players) {
 		std::cout << "Name: " << *player.getName() << std::endl;
 		std::cout << "Age: " <<  *player.getage() << std::endl;
+		std::cout << "Victory points: " << *player.getScore() << std::endl;
 		std::cout << "Coins: " << *player.getCoins() << std::endl;
 		std::cout << "Cards in hand: " << player.getHand()->HandList->size() << " cards" << std::endl;
 		std::cout << "Num of armies in hand: " << player.getNumHandArmies() << std::endl;
@@ -128,7 +129,55 @@ void Player::displayPlayers(std::vector<Player>* players)
 void Player::PayCoin(GameState* state)
 {
     *state->supply += *getBidingFacility()->bid;
-    setCoins(getCoins() - *getBidingFacility()->bid);
+    setCoins(new int(*getCoins() - *getBidingFacility()->bid));
+}
+
+//Player pays card position price
+bool Player::PayCoin(GameState* state, int cardPosition)
+{
+	int* cost = new int();
+
+	switch (cardPosition) {
+	case 1:
+		*cost = 0;
+		break;
+	case 2:
+	case 3:
+		*cost = 1;
+		break;
+	case 4:
+	case 5:
+		*cost = 2;
+		break;
+	case 6:
+		*cost = 3;
+		break;
+	}
+
+	std::cout << "Card cost is " << *cost << (*cost > 1 ? " coins" : " coin") << std::endl;
+
+	if (*cost > * getCoins()) {
+		std::cout << *getName() << " does not have enough coins to pay the card at position " << cardPosition << " ..." << std::endl;
+		if (*state->supply > 0) {
+			std::cout << *getName() << " is taking one coin from supply ..." << std::endl;
+			setCoins(new int(*getCoins() + 1));
+			--*state->supply;
+		}
+		std::cout << *getName() << " has now " << *getCoins() << (*getCoins() > 1 ? " coins ..." : " coin ...") << std::endl;
+		std::cout << "Supply has now " << *state->supply << (*state->supply > 1 ? " coins ..." : " coin ...") << std::endl;
+
+		return false;
+	}
+
+	*state->supply += *cost;
+	setCoins(new int(*getCoins() - *cost));
+
+	std::cout << *getName() << " has now " << *getCoins() << (*getCoins() > 1 ? " coins ..." : " coin ...") << std::endl;
+
+	delete cost;
+	cost = nullptr;
+
+	return true;
 }
 
 bool Player::executeStrategy(GameState state, int turn) {

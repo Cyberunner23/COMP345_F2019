@@ -14,6 +14,7 @@ public:
     static std::string selectMap();
     static std::vector<Player>* createPlayers();
     static void displayFaceUpCards(GameState state);
+	static void displayGameState(GameState state);
 
     static void PlaceArmiesInCountryStartup(GameState& state);
 	static void PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCountry);

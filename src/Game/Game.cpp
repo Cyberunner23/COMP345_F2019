@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game.h"
 
 std::string Game::selectMap()
 {
@@ -70,6 +71,15 @@ void Game::displayFaceUpCards(GameState state)
 		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card) << std::endl;
 		position++;
 	}
+}
+
+void Game::displayGameState(GameState state)
+{
+	std::cout << "\n------- Displaying Game information -------" << std::endl;
+	std::cout << "Players: " << state.Players->size() << std::endl;
+	std::cout << "Deck: " << state.GameDeck->CardList->size() << " cards" << std::endl;
+	std::cout << "supply: " << *state.supply << " coins" << std::endl;
+	std::cout << "-----------------------------" << std::endl;
 }
 
 void Game::PlaceArmiesInCountryStartup(GameState& state)
