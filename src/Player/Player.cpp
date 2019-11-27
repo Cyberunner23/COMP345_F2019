@@ -110,15 +110,16 @@ int* Player::assignCoinsToPlayers(std::vector<Player>* players)
 	}
 }
 
-void Player::displayPlayers(std::vector<Player>* players)
+void Player::displayPlayers(GameState* state)
 {
 	std::cout << "\n------- Displaying players information -------" << std::endl;
-	for (auto& player : *players) {
+	for (auto& player : *state->Players) {
 		std::cout << "Name: " << *player.getName() << std::endl;
 		std::cout << "Age: " <<  *player.getage() << std::endl;
 		std::cout << "Victory points: " << *player.getScore() << std::endl;
 		std::cout << "Coins: " << *player.getCoins() << std::endl;
 		std::cout << "Cards in hand: " << player.getHand()->HandList->size() << " cards" << std::endl;
+		std::cout << "Cities/Armies color: " << state->GameDeck->ArmiesMap->at(player.getArmyColor()) << std::endl;
 		std::cout << "Num of armies in hand: " << player.getNumHandArmies() << std::endl;
 		std::cout << "Num of cities in hand: " << player.getNumHandCities() << std::endl;
 		std::cout << "-----------------------------" << std::endl;
@@ -783,6 +784,39 @@ void Player::CalculateScore()
 {
     ScoreCalculator* s = new ScoreCalculator(_subject);
     s->CalculateScores();
+}
+
+bool playerReachedMaxNumOfCards(GameState* state)
+{
+	if (state->Players->size() == 2) 
+		for(auto p : *state->Players)
+			if (p.getHand()->HandList->size() == 13) {
+				std::cout << *p.getName() << " has reached the maximum number of cards!" << std::endl;
+				return true;
+			}
+
+	if (state->Players->size() == 3)
+		for (auto p : *state->Players)
+			if (p.getHand()->HandList->size() == 10) {
+				std::cout << *p.getName() << " has reached the maximum number of cards!" << std::endl;
+				return true;
+			}
+
+	if (state->Players->size() == 4)
+		for (auto p : *state->Players)
+			if (p.getHand()->HandList->size() == 8) {
+				std::cout << *p.getName() << " has reached the maximum number of cards!" << std::endl;
+				return true;
+			}
+
+	if (state->Players->size() == 5)
+		for (auto p : *state->Players)
+			if (p.getHand()->HandList->size() == 7) {
+				std::cout << *p.getName() << " has reached the maximum number of cards!" << std::endl;
+				return true;
+			}
+
+	return false;
 }
 
 int getRandomIndex(int size) {

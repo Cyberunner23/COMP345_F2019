@@ -83,7 +83,7 @@ int main(int argc, char** argv)
         i++;
     }
 
-	Player::displayPlayers(state.Players);
+	Player::displayPlayers(&state);
 
     return 0;
 }

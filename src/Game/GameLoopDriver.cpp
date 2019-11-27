@@ -141,7 +141,7 @@ int main(int argc, char** argv)
 		std::cout << state.GameDeck->DeckMap->at(state.ShownCards->at(i)) << std::endl;
 	}
 
-	Player::displayPlayers(state.Players);
+	Player::displayPlayers(&state);
 
 	return 0;
 }

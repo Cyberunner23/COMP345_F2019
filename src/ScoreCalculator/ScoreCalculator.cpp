@@ -6,7 +6,7 @@ ScoreCalculator::ScoreCalculator(GameState* s)
   State = s;
 }
 
-void ScoreCalculator::CalculateScores()
+Player ScoreCalculator::CalculateScores()
 {
 
     //int currentScore;
@@ -138,14 +138,18 @@ void ScoreCalculator::CalculateScores()
 
     //Calculating highest score
     int currentScore = 0;
+	Player winningPlayer;
     for (int i = 0; i < State->Players->size(); i++)
     {
         if (currentScore < *State->Players->at(i).getScore())
         {
             currentScore = *State->Players->at(i).getScore();
-        }
-        std::cout << "Player " << i + 1 << " your score is " << *State->Players->at(i).getScore() << std::endl;
-    }
-    std::cout << "The winning score is: " << currentScore << std::endl;
+			winningPlayer = State->Players->at(i);
 
+        }
+        std::cout << *State->Players->at(i).getName() << " score is " << *State->Players->at(i).getScore() << std::endl;
+    }
+    std::cout << "The winning player is: " << *winningPlayer.getName() << " with " << currentScore << " victory points!!"  << std::endl;
+
+	return winningPlayer;
 }

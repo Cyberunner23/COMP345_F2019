@@ -118,7 +118,7 @@ int main(int argc, char** argv)
 	state2.Players->at(playerIndex) = bidingWinner; 
 	std::cout << "The next player to play will be: " << *state2.Players->at(++playerIndex%3).getName() << std::endl;
 
-	Player::displayPlayers(state2.Players);
+	Player::displayPlayers(&state2);
 
 	delete maxCoins;
 	delete remainingCoins;
