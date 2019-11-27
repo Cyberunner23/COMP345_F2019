@@ -651,6 +651,9 @@ bool Player::BuildCity(Map* map, GameState* state)
 			node->CitiesInCountry->push_back(getCityColor());
 
 			cityPlaced = true;
+
+			std::cout << getName() << " has built " << state->GameDeck->CitiesMap->at(getCityColor()) << " City in CountryID: " << countryID << "." << std::endl;
+
 		}
 		else
 		{

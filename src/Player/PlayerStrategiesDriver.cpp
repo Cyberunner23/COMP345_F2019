@@ -108,7 +108,7 @@ int main(int argc, char** argv)
 
 	state.supply = new int(44 - *assignedCoins * numOfPlayers);
 
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 10; i++) {
 		state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
 		turn++;
 	}
