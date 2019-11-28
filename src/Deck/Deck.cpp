@@ -9,7 +9,54 @@
 
 Deck::Deck()
 {
-    CardList = new std::vector<Cards> {
+
+  CardList = new std::vector<Cards>
+  {
+    Cards("Move 3 Armies", "Forest", 1);
+    Cards("Add 3 Armies", "Forest", 2);
+    Cards("Destroy 1 Army or Build City", "Forest", 3);
+    Cards("Add 2 Armies or Move 3 Armies", "Forest", 4);
+    Cards("Move 4 Armies via Ship", 5);
+    Cards("Build City", "Forest", 6);
+    Cards("Move 3 Armies via Ship", "Forest", 7);
+    Cards("Move 6 Armies*", "Forest", 8);
+
+    Cards("Build City", "Carrots", 9);
+    Cards("Destroy 1 Army and Add 1 Army", "Carrots", 10);
+    Cards("Add 3 Armies", "Carrots", 11);
+    Cards("Move 4 Armies", "Carrots", 12);
+    Cards("Move 5 Armies", "Carrots", 13);
+    Cards("Add 3 Armies", "Carrots", 14);
+    Cards("Move 3 Armies via Ship", "Carrots", 15);
+    Cards("Move 4 Armies", "Carrots", 16);
+    Cards("Build City", "Carrots", 17);
+    Cards("Add 4 Armies or Move 2 Armies*", "Carrots", 18);
+
+    Cards("Move 4 Armies", "Anvils", 19);
+    Cards("Add 3 Armies or Move 4 Armies", "Anvils", 20);
+    Cards("Move 5 Armies", "Anvils", 21);
+    Cards("Add 3 Armies", "Anvils", 22);
+    Cards("Add 3 Armies", "Anvils", 23);
+    Cards("Move 3 Armies via Ship", "Anvils", 24);
+    Cards("Build City", "Anvils", 25);
+    Cards("Add 4 Armies or Move 3 Armies", "Anvils", 26);
+    Cards("Move 4 Armies", "Anvils", 27);
+
+    Cards("Move 2 Armies", "Ore", 28);
+    Cards("Move 3 Armies via Ship", "Ore", 29);
+    Cards("Move 2 Armies via Ship", "Ore", 30);
+    Cards("Add 3 Armies", "Ore", 31);
+    Cards("Add 3 Armies", "Ore", 32);
+    Cards("Add 2 Armies", "Ore", 33);
+    Cards("Move 2 Armies via Ship*", "Ore", 34);
+
+    Cards("Add 2 Armies", "Crystals", 35);
+    Cards("Add 2 Armies", "Crystals", 36);
+    Cards("Move 2 Armies", "Crystals", 37);
+    Cards("Add 1 Army", "Crystals", 38);
+    Cards("Add 2 Armies", "Crystals", 39);
+  };
+  /*  CardList = new std::vector<Cards> {
             f1,f2,f3,f4,f5,f6,f7,f8,
             c1, c2, c3 ,c4, c5, c6, c7, c8, c9 ,c10,
             a1, a2, a3, a4, a5, a6, a7, a8, a9,
@@ -123,7 +170,7 @@ Deck::Deck()
             {cr3, "Move 2 Armies"},
             {cr4, "Add 1 Army"},
             {cr5, "Add 2 Armies"},
-    };
+    };*/
 
     CitiesMap = new std::map<Cities, std::string>
     {
