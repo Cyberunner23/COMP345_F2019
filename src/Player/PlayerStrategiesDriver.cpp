@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 
 	Player p4(&state);
 	p4.setStartingRegionID(Map::GetInstance().getStartingCountryID());
-	p4.setPlayerStrategies(new HumanPlayer());
+	p4.setPlayerStrategies(new GreedyComputer());
 	p4.setName(nameP4);
 	p4.setage(ageP4);
 	p4.setCityColor(Cities::WHITE);
@@ -108,16 +108,17 @@ int main(int argc, char** argv)
 
 	state.supply = new int(44 - *assignedCoins * numOfPlayers);
 
-	for (int i = 0; i < 10; i++) {
+	while (!playerReachedMaxNumOfCards(&state)) {
 		state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
 		turn++;
 	}
 
-	Player::displayPlayers(state.Players);
+	Player::displayPlayers(&state);
 
 	Game::displayGameState(state);
 
-	Map::GetInstance().dump();
+	Game::tournamentResults(&state);
+	//Map::GetInstance().dump();
 
 	return 0;
 }

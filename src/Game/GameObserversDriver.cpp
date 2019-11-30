@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 		turn++;
 	}
 
-	Player::displayPlayers(state.Players);
+	Player::displayPlayers(&state);
 
 	//Map::GetInstance().dump();
 

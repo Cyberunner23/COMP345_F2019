@@ -205,7 +205,7 @@ add_library(Game
     src/Game/Game.cpp
 )
 target_include_directories(Game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(Game GameState Player)
+target_link_libraries(Game GameState Player MapLoader)
 
 #AfterAction Driver
 add_executable(AfterActionDriver
@@ -272,3 +272,10 @@ add_executable(GameObserversDriver
 )
 target_include_directories(GameObserversDriver PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(GameObserversDriver Map MapLoader Game)
+
+# GameEngine
+add_executable(GameEngine
+    src/Game/GameEngine.cpp
+)
+target_include_directories(GameEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(GameEngine GameState MapLoader Player)

@@ -90,7 +90,7 @@ public:
     static void revealBids(std::vector<Player>* players);
     static int* assignCoinsToPlayers(std::vector<Player>* players, int* coins);
     static int* assignCoinsToPlayers(std::vector<Player>* players);
-    static void displayPlayers(std::vector<Player>* players);
+    static void displayPlayers(GameState* state);
     void PayCoin(GameState* state);
 	bool PayCoin(GameState* state, int cardPosition);
 
@@ -110,10 +110,10 @@ public:
 	void DisplayPlayer(int id);
 	void CalculateScore();
 
-
 	bool executeStrategy(GameState state, int turn);
 	void changeStrategy();
 
 };
 
+bool playerReachedMaxNumOfCards(GameState* state);
 int getRandomIndex(int size);

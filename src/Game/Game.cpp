@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "Game.h"
+#include "Game.h"
+#include "Game.h"
 
 std::string Game::selectMap()
 {
@@ -7,7 +9,10 @@ std::string Game::selectMap()
 	std::string mapPath;
 
 	std::cout << "Which map do you want to use: 1, 2, 3 (invalid) or 4 (invalid): ";
-	std::cin >> mapSelection;
+	while (std::cin >> mapSelection && (mapSelection < 1 || mapSelection > 2)) {
+		std::cout << "\nYou cannot choose an invalid map!!";
+		std::cout << "\nPlease enter a valid map: ";
+	}
 
 	switch (mapSelection)
 	{
@@ -26,15 +31,15 @@ std::string Game::selectMap()
 	}
 }
 
-std::vector<Player>* Game::createPlayers()
+std::vector<Player>* Game::createPlayers(GameState* state)
 {
 	int playerNum;
 	std::vector<Player>* players = new std::vector<Player>();
 
 	std::cout << "How many players? ";
-	while (std::cin >> playerNum && (playerNum < 2 || playerNum > 5)) {
-		if (playerNum > 5)
-			std::cout << "\nYou cannot play with more than 5 players.";
+	while (std::cin >> playerNum && (playerNum < 2 || playerNum > 4)) {
+		if (playerNum > 4)
+			std::cout << "\nYou cannot play with more than 4 players.";
 		else
 			std::cout << "\nYou cannot play with less than 2 players.";
 
@@ -44,17 +49,19 @@ std::vector<Player>* Game::createPlayers()
 	//Creating the players
 	for (int i = 0; i < playerNum; i++)
 	{
-		Player p;
+		Player p(state);
 
 		std::string* name = new std::string("Player " + std::to_string(i + 1));
-		int* age = new int();
-		std::cout << "Please enter your age: ";
-		while (std::cin >> *age && (*age < 0)) {
-			std::cout << "\nPlease enter a valid age: ";
-		}
+		//int* age = new int();
+		//std::cout << "Please enter age for " << *name << ": ";
+		//while (std::cin >> *age && (*age < 0)) {
+		//	std::cout << "\nPlease enter a valid age: ";
+		//}
 
 		p.setName(name);
-		p.setage(age);
+		p.setage(new int(25));
+		p.setStartingRegionID(Map::GetInstance().getStartingCountryID());
+		selectStrategy(&p);
 
 		std::cout << "Adding " << *p.getName() << std::endl;
 		players->push_back(p);
@@ -82,6 +89,125 @@ void Game::displayGameState(GameState state)
 	std::cout << "-----------------------------" << std::endl;
 }
 
+void Game::selectStrategy(Player* p)
+{
+	int chooseStrategy;
+	std::cout << "Please enter strategy for " << *p->getName() << ": " << std::endl;
+	std::cout << "Press one of the following to select a strategy: \n1. Human Player\n2. Greedy Computer\n3. Moderate Computer\n4. Random Computer\nEnter your choice: ";
+	
+	while (std::cin >> chooseStrategy && (chooseStrategy < 1 || chooseStrategy > 4))
+		std::cout << "\nPlease select a valid option (1,2,3,4): ";
+
+	switch (chooseStrategy)
+	{
+	case 1:
+		p->setPlayerStrategies(new HumanPlayer());
+		break;
+	case 2:
+		p->setPlayerStrategies(new GreedyComputer());
+		break;
+	case 3:
+		p->setPlayerStrategies(new ModerateComputer());
+		break;
+	case 4:
+		p->setPlayerStrategies(new RandomComputer());
+		break;
+	}
+}
+
+
+bool Game::isArmyAndCityColorAvailable(GameState* state, Armies armyColor, Cities cityColor)
+{
+	for (auto p : *state->Players)
+		if (p.getArmyColor() == armyColor && p.getCityColor() == cityColor)
+			return false;
+
+	return true;
+}
+
+Armies Game::getArmyColorWithUserInput(int colorChoosen)
+{
+
+	switch (colorChoosen)
+	{
+	case 1:
+		return Armies::RED;
+		break;
+	case 2:
+		return Armies::WHITE;
+		break;
+	case 3:
+		return Armies::BLUE;
+		break;
+	case 4:
+		return Armies::YELLOW;
+		break;
+	case 5:
+		return Armies::GREEN;
+		break;
+	}
+}
+
+Cities Game::getCityColorWithUserInput(int colorChoosen)
+{
+
+	switch (colorChoosen)
+	{
+	case 1:
+		return Cities::RED;
+		break;
+	case 2:
+		return Cities::WHITE;
+		break;
+	case 3:
+		return Cities::BLUE;
+		break;
+	case 4:
+		return Cities::YELLOW;
+		break;
+	case 5:
+		return Cities::GREEN;
+		break;
+	}
+}
+
+void Game::chooseArmiesAndCitiesColor(GameState* state)
+{
+	int chooseColor;
+
+	for (auto p : *state->Players) {
+		std::cout << "Please enter army/city color for " << *p.getName() << ": " << std::endl;
+		std::cout << "Press one of the following to select an army/city color: \n1. Red\n2. White\n3. Blue(invalid)\n4. Yellow\n5. Green\nEnter your choice: ";
+
+		while (std::cin >> chooseColor && (chooseColor < 1 || chooseColor > 5 || (state->Players->size() == 2 && chooseColor == 2) 
+			|| !isArmyAndCityColorAvailable(state, getArmyColorWithUserInput(chooseColor), getCityColorWithUserInput(chooseColor)))) {
+			if(chooseColor < 1 || chooseColor > 5)
+				std::cout << "\nPlease select a valid option (1,2,3,4,5): ";
+			else if (state->Players->size() == 2 && chooseColor == 2) {
+				std::cout << "\nThis is the third non player army/city color!!!";
+				std::cout << "\nPlease select another color: ";
+				continue;
+			}
+			else if (!isArmyAndCityColorAvailable(state, getArmyColorWithUserInput(chooseColor), getCityColorWithUserInput(chooseColor))) {
+				std::cout << "\nColor '" << state->GameDeck->ArmiesMap->at(getArmyColorWithUserInput(chooseColor)) << "' has already been choosen!!" << std::endl;
+				std::cout << "Please select another color: ";
+				continue;
+			}
+		}
+
+		Armies armyColor = getArmyColorWithUserInput(chooseColor);
+		Cities cityColor = getCityColorWithUserInput(chooseColor);
+
+		p.setCityColor(cityColor);
+		p.setArmyColor(armyColor);
+		p.setNumHandArmies(14);
+		p.setNumHandCities(3);
+
+		std::cout << *p.getName() << " has choosen the '" << state->GameDeck->ArmiesMap->at(armyColor) << "' set of color for cities/armies" << std::endl;
+
+	}
+}
+
 void Game::PlaceArmiesInCountryStartup(GameState& state)
 {
     unsigned int startingCountryID = Map::GetInstance().getStartingCountryID();
@@ -92,7 +218,7 @@ void Game::PlaceArmiesInCountryStartup(GameState& state)
 		int countryID;
 		PlaceArmiesInCountryStartup(state, startingCountry);
 		Armies newArmy = Armies::WHITE; //thrid non player army
-		for (int i = 0; i < 4; i++) { //Place 4 armies to get to 10 armies on the map
+		for (int i = 0; i < 10; i++) { //Place 10 armies on the map
 			Player player = state.Players->at(i%2);
 			std::cout << *player.getName() << ", please enter the country ID where you wanna place the army: ";
 			while (std::cin >> countryID && (countryID < 1 || countryID > Map::GetInstance().getNumCountries())) {
@@ -128,4 +254,23 @@ void Game::PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCo
 	}
 
 	std::cout << "The starting region now contains " << startingCountry->ArmiesInCountry->size() << " armies." << std::endl;
+}
+
+void Game::tournamentResults(GameState* state) {
+	ScoreCalculator* s = new ScoreCalculator(state);
+	Player winningPlayer = s->CalculateScores();
+
+	std::cout << "\n------- Displaying Tournament results -------";
+	std::cout << "\n";
+	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << "| Player # | Cards | Victory Points | Coins |" << std::endl;;
+
+	for (auto player : *state->Players) {
+		std::cout << "---------------------------------------------" << std::endl;;
+		std::cout << "| " << *player.getName() << " |   " << player.getHand()->HandList->size() << (player.getHand()->HandList->size() < 10? "   |       " : "  |       ") << *player.getScore() << (*player.getScore() < 10? "        |   " : "       |   ") << *player.getCoins() << "   |" << std::endl;;
+	}
+	std::cout << "---------------------------------------------" << std::endl;;
+
+	std::cout << "\nCongratulations " << *winningPlayer.getName() << "!! You have won this tournament!!!" << std::endl;
+
 }

@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	}
 
 	//Creating the players
-	state.Players = Game::createPlayers();
+	state.Players = Game::createPlayers(&state);
 
 	std::cout<<"Generating the game..."<<std::endl;
 	state.GameDeck = new Deck();

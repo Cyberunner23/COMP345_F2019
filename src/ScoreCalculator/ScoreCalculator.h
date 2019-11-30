@@ -24,5 +24,5 @@ public:
   int* Ores;
   int* Crystals;*/
 
-  void CalculateScores();
+  Player CalculateScores();
 };
