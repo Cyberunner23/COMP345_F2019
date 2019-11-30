@@ -33,6 +33,13 @@ public:
 	bool execute(GameState state, int turn) override;
 };
 
+class RandomComputer : public PlayerStrategies {
+
+public:
+	RandomComputer() = default;
+	bool execute(GameState state, int turn) override;
+};
+
 int findBuildCityOrDestroyArmies(GameState state);
 int findAddArmies(GameState state);
 int findMoveArmies(GameState state);

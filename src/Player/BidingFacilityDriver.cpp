@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 	bidingWinner = Player::bidingWinner(playersList);
 
 	//Winner puts the _coins he bid in supply
-	bidingWinner.PayCoin();
+	//bidingWinner.PayCoin();
 
 	std::cout << "\n" << *bidingWinner.getName() << " has won the bid. " << *bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
 	std::cout << "\nThe supply contains now: " << BidingFacility::supply << " coins." << std::endl;

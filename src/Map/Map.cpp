@@ -19,6 +19,26 @@ void CountryNode::destroyArmy(Armies armyToDestroy)
     ArmiesInCountry->erase(it);
 }
 
+bool CountryNode::hasCityColor(Cities cityColor) 
+{
+	for (auto& color : *CitiesInCountry) {
+		if (color == cityColor)
+			return true;
+	}
+
+	return false;
+}
+
+bool CountryNode::hasArmyColor(Armies armyColor)
+{
+	for (auto& color : *ArmiesInCountry) {
+		if (color == armyColor)
+			return true;
+	}
+
+	return false;
+}
+
 std::optional<Armies> CountryNode::getCountryOwner()
 {
     std::map<Armies, unsigned int> map;
@@ -242,6 +262,22 @@ bool Map::findVertexByCountryID(unsigned int ID, Vertex& v)
     return false;
 }
 
+Vertex* Map::getVertexByCountryID(unsigned int ID, Vertex& v)
+{
+	auto iterPair = getVertexIterators();
+	VertexDataPropertyMap dataMap = boost::get(vertex_data, *_mainGraph);
+	for (; iterPair.first != iterPair.second; ++iterPair.first)
+	{
+		if (*dataMap[*iterPair.first].CountryID == ID)
+		{
+			v = *iterPair.first;
+			return &v;
+		}
+	}
+
+	return nullptr;
+}
+
 CountryNode* Map::findCountryByID(unsigned int ID)
 {
     Vertex v;
@@ -297,6 +333,76 @@ bool Map::areCountriesConnected(unsigned int id1, unsigned int id2)
 
     auto result = boost::edge(v1, v2, *_mainGraph);
     return result.second;
+}
+
+std::vector<int>* Map::findAdjacentCountryIDs(unsigned int countryID)
+{
+	std::vector<int>* countryIDs = new std::vector<int>();
+    VertexDataPropertyMap map = boost::get(vertex_data, *_mainGraph);
+
+	//std::cout << "Countries connected to countryID '" << countryID << "': ";
+	Vertex v;
+	Vertex* v2 = getVertexByCountryID(countryID, v);
+	auto adjacent_vertices = boost::adjacent_vertices(*v2, *_mainGraph);
+	for (auto it = adjacent_vertices.first; it != adjacent_vertices.second; ++it)
+	{
+		CountryNode* adjacentNode = &map[*it];
+		countryIDs->push_back(*adjacentNode->CountryID);
+		//std::cout << *adjacentNode->CountryID << " ";
+	}
+	//std::cout << std::endl;
+
+	return countryIDs;
+}
+
+//returns vector of int representing country IDs where there is city color
+std::vector<int>* Map::findCityColorCountryIDs(Cities cityColor)
+{
+	auto iterators = getVertexIterators();
+	VertexDataPropertyMap map = boost::get(vertex_data, *_mainGraph);
+	Deck d;
+	std::vector<int>* countryIDs = new std::vector<int>();
+
+	for (auto it = iterators.first; it != iterators.second; ++it)
+	{
+		CountryNode* node = &map[*it];
+		for (auto city : *node->CitiesInCountry)
+		{
+			if (node->hasCityColor(cityColor)) {
+				//std::cout << "Found " << d.CitiesMap->at(cityColor) << " City in Country ID: " << *node->CountryID << std::endl;
+				countryIDs->push_back(*node->CountryID);
+			}
+		}
+	}
+
+	removeDuplicates(*countryIDs);
+
+	return countryIDs;
+}
+
+//returns vector of int representing country IDs where there is army color
+std::vector<int>* Map::findArmyColorCountryIDs(Armies armyColor)
+{
+	auto iterators = getVertexIterators();
+	VertexDataPropertyMap map = boost::get(vertex_data, *_mainGraph);
+	Deck d;
+	std::vector<int>* countryIDs = new std::vector<int>();
+
+	for (auto it = iterators.first; it != iterators.second; ++it)
+	{
+		CountryNode* node = &map[*it];
+		for (auto army : *node->ArmiesInCountry)
+		{
+			if (node->hasArmyColor(armyColor)) {
+				//std::cout << "Found " << d.ArmiesMap->at(armyColor) << " Army in Country ID: " << *node->CountryID << std::endl;
+				countryIDs->push_back(*node->CountryID);
+			}
+		}
+	}
+
+	removeDuplicates(*countryIDs);
+
+	return countryIDs;
 }
 
 Vertex Map::addCountry(const Vertex& regionVertex, SGraph& subGraph)
@@ -387,5 +493,11 @@ int Map::validate()
     }
 
     return 0;
+}
+
+void removeDuplicates(std::vector<int>& vec)
+{
+	std::sort(vec.begin(), vec.end());
+	vec.erase(std::unique(vec.begin(), vec.end()), vec.end());
 }
 
