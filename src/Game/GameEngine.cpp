@@ -53,6 +53,12 @@ int main(int argc, char** argv)
 	while (!playerReachedMaxNumOfCards(&state)) {
 		state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
 		turn++;
+		
+		rounds++;
+		if (rounds == 30) {
+			std::cout << "Max turns reached!!" << std::endl;
+			break;
+		}
 	}
 
 	Game::displayGameState(state);
