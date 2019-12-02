@@ -19,6 +19,8 @@ private:
 public:
     static std::string selectMap();
     static std::vector<Player>* createPlayers(GameState* state);
+	static std::vector<Player>* createComputers(GameState* state);
+	static Player createSinglePlayer(GameState* state);
     static void displayFaceUpCards(GameState state);
 	static void displayGameState(GameState state);
 	static void selectStrategy(Player* p);
@@ -28,6 +30,10 @@ public:
 	static void PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCountry);
 
 	static void tournamentResults(GameState* state);
+
+	static void chooseGameMode();
+	static void playTournament();
+	static void playSingleGame();
 };
 
 int getRandomAge();

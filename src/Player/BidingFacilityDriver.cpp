@@ -89,5 +89,8 @@ int main(int argc, char** argv)
 	delete playersList;
 	delete maxCoins;
 
+	int x;
+	std::cin >> x;
+
 	return 0;
 }

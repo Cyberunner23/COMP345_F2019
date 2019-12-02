@@ -38,8 +38,6 @@ Player Player::youngestPlayer(std::vector<Player>* players)
     	}
     }
 
-	delete youngestAge;
-
     return youngestPlayer;
 }
 
@@ -48,38 +46,35 @@ Player Player::bidingWinner(std::vector<Player>* players)
 {
 	Player bidingWinner;
 	std::vector<Player>* tiedPlayers = new std::vector<Player>(); //keep a list of players who tied their bid
-	int* highestBid = findHighestBid(players);
+	int highestBid = findHighestBid(players);
 
 	for (auto& player : *players) {
-		if (*player.getBidingFacility()->bid == *highestBid)
+		if (*player.getBidingFacility()->bid == highestBid)
 			tiedPlayers->push_back(player);
 	}
 
 	//If more than 2 tiedPlayers than we check for youngest
 	if (tiedPlayers->size() > 1)
-		return bidingWinner = youngestPlayer(tiedPlayers);
+		return youngestPlayer(tiedPlayers);
 
 	//highestBid = 0 means all players bid 0
-	if (*highestBid == 0)
-		return bidingWinner = youngestPlayer(players);
+	if (highestBid == 0)
+		return youngestPlayer(players);
 
-	delete highestBid;
+	bidingWinner = tiedPlayers->at(0);
 
-	return bidingWinner = tiedPlayers->at(0);
+	return bidingWinner;
 }
 
-int* Player::findHighestBid(std::vector<Player>* players)
+int Player::findHighestBid(std::vector<Player>* players)
 {
-	Player bidingWinner;
 	std::vector<Player>* tiedPlayers = new std::vector<Player>(); //keep a list of players who tied their bid
-	int* highestBid = players->at(0).getBidingFacility()->bid;
+	int highestBid = *players->at(0).getBidingFacility()->bid;
 
 	for (auto& player : *players) {
-		if (*player.getBidingFacility()->bid > *highestBid)
-			*highestBid = *player.getBidingFacility()->bid;
+		if (*player.getBidingFacility()->bid > highestBid)
+			highestBid = *player.getBidingFacility()->bid;
 	}
-
-	delete highestBid;
 
 	return highestBid;
 }
@@ -660,7 +655,7 @@ bool Player::BuildCity(Map* map, GameState* state)
 
 			cityPlaced = true;
 
-			std::cout << getName() << " has built " << state->GameDeck->CitiesMap->at(getCityColor()) << " City in CountryID: " << countryID << "." << std::endl;
+			std::cout << *getName() << " has built " << state->GameDeck->CitiesMap->at(getCityColor()) << " City in CountryID: " << countryID << "." << std::endl;
 
 		}
 		else
