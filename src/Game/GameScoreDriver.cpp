@@ -131,10 +131,6 @@ int main(int argc, char** argv)
 	delete coinP1;
 	delete coinP2;
 	delete coinP3;
-	delete country1;
-	delete country2;
-	delete country3;
-	delete country4;
 
     return 0;
 }

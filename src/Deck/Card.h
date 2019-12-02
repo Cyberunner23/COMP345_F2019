@@ -17,7 +17,6 @@ class Card
 public:
     Card() = default;
     explicit Card(Cards c);
-    ~Card();
 
     Cards GetRawCard();
 private:

@@ -5,12 +5,6 @@ Card::Card(Cards c)
     card = new Cards(c);
 }
 
-Card::~Card()
-{
-    if (card)
-        delete card;
-}
-
 Cards Card::GetRawCard()
 {
     return *card;
