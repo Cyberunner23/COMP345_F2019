@@ -143,5 +143,16 @@ int main(int argc, char** argv)
 
 	Player::displayPlayers(&state);
 
+	delete nameP1;
+	delete nameP2;
+	delete nameP3;
+	delete ageP1;
+	delete ageP2;
+	delete ageP3;
+	delete coinP1;
+	delete coinP2;
+	delete coinP3;
+	delete cardCost;
+
 	return 0;
 }

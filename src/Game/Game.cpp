@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Game.h"
 #include "Game.h"
+#include <random>
+
 
 std::string Game::selectMap()
 {
@@ -59,7 +61,7 @@ std::vector<Player>* Game::createPlayers(GameState* state)
 		//}
 
 		p.setName(name);
-		p.setage(new int(25));
+		p.setage(new int(getRandomAge()));
 		p.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 		selectStrategy(&p);
 
@@ -68,6 +70,93 @@ std::vector<Player>* Game::createPlayers(GameState* state)
 	}
 
 	return players;
+}
+
+std::vector<Player>* Game::createComputers(GameState* state)
+{
+
+	Player singlePlayer = createSinglePlayer(state);
+
+	int playerNum = 3;
+	std::vector<Player>* players = new std::vector<Player>();
+
+	players->push_back(singlePlayer);
+
+	std::cout << "Generating 3 computer players with different strategies ..." << std::endl;
+
+	//Creating the computers
+	for (int i = 0; i < playerNum; i++)
+	{
+		Player p(state);
+
+		std::string* name = new std::string("Computer " + std::to_string(i + 1));
+		std::string strategy;
+
+		p.setName(name);
+		p.setage(new int(getRandomAge()));
+		p.setStartingRegionID(Map::GetInstance().getStartingCountryID());
+		p.setNumHandArmies(14);
+		p.setNumHandCities(3);
+		p.setCoins(new int(9));
+		p.getBidingFacility()->bid = new int(getRandomIndex(10));
+		
+		switch (i)
+		{
+		case 0:
+			strategy = "Greedy Computer";
+			p.setCityColor(Cities::GREEN);
+			p.setArmyColor(Armies::GREEN);
+			p.setPlayerStrategies(new GreedyComputer());
+			break;
+		case 1:
+			strategy = "Moderate Computer";
+			p.setCityColor(Cities::WHITE);
+			p.setArmyColor(Armies::WHITE);
+			p.setPlayerStrategies(new ModerateComputer());
+			break;
+		case 2:
+			strategy = "Random Computer";
+			p.setCityColor(Cities::YELLOW);
+			p.setArmyColor(Armies::YELLOW);
+			p.setPlayerStrategies(new RandomComputer());
+			break;
+		}
+
+		std::cout << "Adding " << *p.getName() << " with strategy " << strategy << std::endl;
+		players->push_back(p);
+	}
+
+	return players;
+}
+
+Player Game::createSinglePlayer(GameState* state)
+{
+	std::string* name = new std::string("Single Player");
+
+	int* age = new int();
+	std::cout << "Please enter your age: ";
+	while (std::cin >> *age && (*age < 18)) {
+		if (*age < 0)
+			std::cout << "\nPlease enter a valid age: ";
+		else {
+			std::cout << "\nYou must be at least 18 years old to play this game!!";
+			std::cout << "\nPlease enter a valid age: ";
+		}
+	}
+
+	Player p(state);
+	p.setStartingRegionID(Map::GetInstance().getStartingCountryID());
+	p.setName(name);
+	p.setage(age);
+	p.setCityColor(Cities::RED);
+	p.setArmyColor(Armies::RED);
+	p.setNumHandArmies(14);
+	p.setNumHandCities(3);
+	p.setCoins(new int(9));
+
+	p.getBidingFacility()->startBiding(p.getCoins());
+
+	return p;
 }
 
 void Game::displayFaceUpCards(GameState state)
@@ -273,4 +362,204 @@ void Game::tournamentResults(GameState* state) {
 
 	std::cout << "\nCongratulations " << *winningPlayer.getName() << "!! You have won this tournament!!!" << std::endl;
 
+	delete s;
+}
+
+void Game::chooseGameMode()
+{
+	int gameMode;
+
+	std::cout << "Press one of the following to select a game mode: \n1. Single Game Mode\n2. Tournament Game Mode\nEnter your choice: ";
+	while (std::cin >> gameMode && (gameMode < 1 || gameMode > 2)) {
+		std::cout << "\nPlease enter a valid game mode (1,2): ";
+	}
+
+	if (gameMode == 2) {
+		std::cout << "\nYou have selected Tournament Mode: " << std::endl;
+		playTournament();
+	}
+	else {
+		std::cout << "\nYou have selected Single Game Mode: " << std::endl;
+		playSingleGame();
+	}
+
+}
+
+void Game::playTournament()
+{
+	GameState state;
+	MapLoader loader;
+	std::string mapPath;
+
+	mapPath = Game::selectMap();
+
+	if (!loader.loadMap(mapPath))
+	{
+		std::cout << "Failed to open map!" << std::endl;
+	}
+
+	//Creating the players
+	state.Players = Game::createPlayers(&state);
+	int numOfPlayers = state.Players->size();
+	std::cout << "Number of players: " << numOfPlayers << std::endl;
+
+	// Create Deck
+	state.GameDeck = new Deck();
+
+	//Shuffling deck and drawing 6 cards
+	state.GameDeck->shuffleDeck();
+	state.ShownCards = new std::vector<Cards>();
+	for (int i = 0; i < 6; i++) {
+		Cards c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		state.ShownCards->push_back(c);
+	}
+
+	//Players choose their armies & cities color
+	Game::chooseArmiesAndCitiesColor(&state);
+
+	//Placing armies in starting country
+	Game::PlaceArmiesInCountryStartup(state);
+
+	//Assigning coins to players
+	int* assignedCoins = Player::assignCoinsToPlayers(state.Players);
+	state.supply = new int(44 - *assignedCoins * numOfPlayers);
+
+	std::cout << "Generating the game..." << std::endl;
+	Game::displayGameState(state);
+	Player::displayPlayers(&state);
+
+	int turn = getRandomIndex(numOfPlayers); //Randomly selecting first player
+	std::cout << "\nFirst player is: " << *state.Players->at(turn).getName() << std::endl;
+
+	int rounds = 0;
+	while (!playerReachedMaxNumOfCards(&state)) {
+		state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
+		turn++;
+
+		rounds++;
+		if (rounds == 30) {
+			std::cout << "Max turns reached!!" << std::endl;
+			break;
+		}
+	}
+
+	Game::displayGameState(state);
+	Game::tournamentResults(&state);
+
+	delete assignedCoins;
+}
+
+void Game::playSingleGame()
+{
+	GameState state;
+	MapLoader loader;
+	std::string mapPath;
+
+	mapPath = selectMap();
+
+	if (!loader.loadMap(mapPath))
+	{
+		std::cout << "Failed to open map!" << std::endl;
+	}
+
+	// Create Deck
+	state.GameDeck = new Deck();
+
+	//Creating the players and computers
+	state.Players = createComputers(&state);
+	int numOfPlayers = state.Players->size();
+	std::cout << "Number of players: " << numOfPlayers << std::endl;
+	Player::displayPlayers(&state);
+
+	//Coins in supply
+	state.supply = new int(8);
+
+	//Shuffling deck and drawing 6 cards
+	state.GameDeck->shuffleDeck();
+	state.ShownCards = new std::vector<Cards>();
+	for (int i = 0; i < 6; i++) {
+		Cards c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		state.ShownCards->push_back(c);
+	}
+
+	//Placing armies in starting country
+	Game::PlaceArmiesInCountryStartup(state);
+
+	std::cout << "Generating the game..." << std::endl;
+	Game::displayGameState(state);
+
+	Player::revealBids(state.Players);
+
+	Player bidingWinner = Player::bidingWinner(state.Players);
+	std::cout << "\n" << *bidingWinner.getName() << " has won the bid. " << *bidingWinner.getBidingFacility()->bid << " coins are now going to the supply.";
+
+	//Retrieve winning player in state.Players to determine its index 
+	int playerIndex = 0;
+	for (Player& player : *state.Players) {
+		if (*bidingWinner.getName() == *player.getName()) {
+			break;
+		}
+		playerIndex++;
+	}
+
+	//Computing remaining coins of winner
+	state.Players->at(playerIndex).PayCoin(&state);
+
+	std::cout << "\nThe supply contains now: " << *state.supply << " coins." << std::endl;
+
+	int turn = playerIndex; 
+	std::cout << "\nFirst player is then: " << *state.Players->at(turn).getName() << std::endl;
+
+	int rounds = 0;
+	while (!playerReachedMaxNumOfCards(&state)) {
+		//Single Player has no strategy, he'll choose the card himself and execute the action himself
+		if (state.Players->at(turn % numOfPlayers).getPlayerStrategies() == nullptr) {
+			std::cout << "It's now your turn... " << std::endl;
+			std::cout << "You have " << *state.Players->at(turn % state.Players->size()).getCoins() << " coins." << std::endl;
+
+			//Player selects card position
+			int cardPosition;
+			std::cout << "Please select a card by entering its position (1 to 6): ";
+			while (std::cin >> cardPosition && (cardPosition < 1 || cardPosition > 6)) {
+				std::cout << "\nPlease enter a valid position: ";
+			}
+
+			//Player take face up card and execute action
+			if (state.Players->at(turn % numOfPlayers).PayCoin(&state, cardPosition)) {
+				int cardIndex = cardPosition - 1;
+				Cards c = state.ShownCards->at((cardIndex));
+				std::cout << "You have taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+				state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);
+
+				//Slide remaining cards to left and draw new card placed in rightmost position
+				state.ShownCards->erase(state.ShownCards->begin() + cardIndex);
+				state.ShownCards->push_back(state.GameDeck->draw());
+			}
+
+			Game::displayFaceUpCards(state);
+
+		}
+		else
+			state.Players->at(turn % numOfPlayers).executeStrategy(state, turn);
+		
+		turn++;
+
+		rounds++;
+		if (rounds == 30) {
+			std::cout << "Max turns reached!!" << std::endl;
+			break;
+		}
+	}
+
+	Game::displayGameState(state);
+	Game::tournamentResults(&state);
+}
+
+int getRandomAge() {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(18, 69); // distribution in range [0, size]
+	return dist(rng);
 }

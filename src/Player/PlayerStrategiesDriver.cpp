@@ -39,11 +39,11 @@ int main(int argc, char** argv)
 	std::string* nameP4 = new std::string("Player 4");
 	std::string* nameP5 = new std::string("Player 5");
 
-	int* ageP1 = new int(23);
-	int* ageP2 = new int(21);
-	int* ageP3 = new int(22);
-	int* ageP4 = new int(30);
-	int* ageP5 = new int(50);
+	int* ageP1 = new int(getRandomAge());
+	int* ageP2 = new int(getRandomAge());
+	int* ageP3 = new int(getRandomAge());
+	int* ageP4 = new int(getRandomAge());
+	int* ageP5 = new int(getRandomAge());
 
 
 	Player p1(&state);
@@ -119,6 +119,18 @@ int main(int argc, char** argv)
 
 	Game::tournamentResults(&state);
 	//Map::GetInstance().dump();
+
+	delete nameP1;
+	delete nameP2;
+	delete nameP3;
+	delete nameP4;
+	delete nameP5;
+	delete ageP1;
+	delete ageP2;
+	delete ageP3;
+	delete ageP4;
+	delete ageP5;
+	delete assignedCoins;
 
 	return 0;
 }
