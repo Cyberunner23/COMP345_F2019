@@ -22,8 +22,8 @@ bool HumanPlayer::execute(GameState state, int turn)
 		{
 			//Player take face up card and execute action
 			int cardIndex = cardPosition - 1;
-			Cards c = state.ShownCards->at((cardIndex));
-			std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Human Player) is now executing action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+			Card c = state.ShownCards->at((cardIndex));
+			std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Human Player) is now executing action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 			state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
 			didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
 
@@ -55,8 +55,8 @@ bool GreedyComputer::execute(GameState state, int turn)
 	{
 		//Player take face up card and execute action
 		int cardIndex = cardPosition - 1;
-		Cards c = state.ShownCards->at((cardIndex));
-		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Greedy Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		Card c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Greedy Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
 		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
 
@@ -88,8 +88,8 @@ bool ModerateComputer::execute(GameState state, int turn)
 	{
 		//Player take face up card and execute action
 		int cardIndex = cardPosition - 1;
-		Cards c = state.ShownCards->at((cardIndex));
-		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Moderate Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		Card c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Moderate Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
 		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
 
@@ -121,8 +121,8 @@ bool RandomComputer::execute(GameState state, int turn)
 	{
 		//Player take face up card and execute action
 		int cardIndex = cardPosition - 1;
-		Cards c = state.ShownCards->at((cardIndex));
-		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Random Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		Card c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % state.Players->size()).getName() << " (Random Computer) is now executing action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 		state.Players->at(turn % state.Players->size()).getHand()->HandList->push_back(c);
 		didActionRun = state.Players->at(turn % state.Players->size()).RunAction(&Map::GetInstance(), &state, c);
 
@@ -140,9 +140,9 @@ bool RandomComputer::execute(GameState state, int turn)
 int findBuildCityOrDestroyArmies(GameState state)
 {
 	for (int cardIndex = 0; cardIndex < state.ShownCards->size(); cardIndex++) {
-		Cards c = state.ShownCards->at((cardIndex));
+		Card c = state.ShownCards->at((cardIndex));
 		//Checks if card action contains 'Destroy Army' or 'Build City' 
-		if (state.GameDeck->DeckMap->at(c).find("Destroy 1 Army") != std::string::npos || state.GameDeck->DeckMap->at(c).find("Build City") != std::string::npos)
+		if (state.GameDeck->DeckMap->at(c.GetRawCard()).find("Destroy 1 Army") != std::string::npos || state.GameDeck->DeckMap->at(c.GetRawCard()).find("Build City") != std::string::npos)
 			return cardIndex;
 	}
 
@@ -153,9 +153,9 @@ int findBuildCityOrDestroyArmies(GameState state)
 int findAddArmies(GameState state)
 {
 	for (int cardIndex = 0; cardIndex < state.ShownCards->size(); cardIndex++) {
-		Cards c = state.ShownCards->at((cardIndex));
+		Card c = state.ShownCards->at((cardIndex));
 		//Checks if card action contains 'Add' 
-		if (state.GameDeck->DeckMap->at(c).find("Add") != std::string::npos)
+		if (state.GameDeck->DeckMap->at(c.GetRawCard()).find("Add") != std::string::npos)
 			return cardIndex;
 	}
 
@@ -166,9 +166,9 @@ int findAddArmies(GameState state)
 int findMoveArmies(GameState state)
 {
 	for (int cardIndex = 0; cardIndex < state.ShownCards->size(); cardIndex++) {
-		Cards c = state.ShownCards->at((cardIndex));
+		Card c = state.ShownCards->at((cardIndex));
 		//Checks if card action contains 'Move' 
-		if (state.GameDeck->DeckMap->at(c).find("Move") != std::string::npos)
+		if (state.GameDeck->DeckMap->at(c.GetRawCard()).find("Move") != std::string::npos)
 			return cardIndex;
 	}
 

@@ -164,7 +164,7 @@ void Game::displayFaceUpCards(GameState state)
 	int position = 1;
 	std::cout << "\n------- Displaying Cards -------" << std::endl;
 	for (auto& card : *state.ShownCards) {
-		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card) << std::endl;
+		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card.GetRawCard()) << std::endl;
 		position++;
 	}
 }
@@ -408,10 +408,10 @@ void Game::playTournament()
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < 6; i++) {
-		Cards c = state.GameDeck->draw();
-		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 	}
 
@@ -477,10 +477,10 @@ void Game::playSingleGame()
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < 6; i++) {
-		Cards c = state.GameDeck->draw();
-		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 	}
 
@@ -529,8 +529,8 @@ void Game::playSingleGame()
 			//Player take face up card and execute action
 			if (state.Players->at(turn % numOfPlayers).PayCoin(&state, cardPosition)) {
 				int cardIndex = cardPosition - 1;
-				Cards c = state.ShownCards->at((cardIndex));
-				std::cout << "You have taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+				Card c = state.ShownCards->at((cardIndex));
+				std::cout << "You have taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 				state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);
 
 				//Slide remaining cards to left and draw new card placed in rightmost position

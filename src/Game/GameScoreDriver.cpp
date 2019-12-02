@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     p1.setCityColor(Cities::BLUE);
     p1.setArmyColor(Armies::BLUE);
     p1.setCoins(coinP1);
-    p1.getHand()->HandList->push_back(c6);
+    p1.getHand()->HandList->push_back(CardFactory::CreateCard(c6));
 
     Player p2;
     p2.setName(nameP2);
@@ -54,19 +54,19 @@ int main(int argc, char** argv)
     p2.setArmyColor(Armies::GREEN);
     p2.setCoins(coinP2);
 
-    p2.getHand()->HandList->push_back(cr3);
-    p2.getHand()->HandList->push_back(a1);
-    p2.getHand()->HandList->push_back(o2);
-    p2.getHand()->HandList->push_back(c3);
-    p2.getHand()->HandList->push_back(a6);
-    p2.getHand()->HandList->push_back(a8);
-    p2.getHand()->HandList->push_back(cr5);
-    p2.getHand()->HandList->push_back(a9);
-    p2.getHand()->HandList->push_back(o1);
-    p2.getHand()->HandList->push_back(cr2);
-    p2.getHand()->HandList->push_back(f6);
-    p2.getHand()->HandList->push_back(f7);
-    p2.getHand()->HandList->push_back(o4);
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(cr3));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(a1));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(o2));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(c3));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(a6));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(a8));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(cr5));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(a9));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(o1));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(cr2));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(f6));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(f7));
+    p2.getHand()->HandList->push_back(CardFactory::CreateCard(o4));
 
     Player p3;
     p3.setName(nameP3);
@@ -75,17 +75,17 @@ int main(int argc, char** argv)
     p3.setArmyColor(Armies::RED);
     p3.setCoins(coinP3);
 
-    p3.getHand()->HandList->push_back(c1);
-    p3.getHand()->HandList->push_back(a3);
-    p3.getHand()->HandList->push_back(o3);
-    p3.getHand()->HandList->push_back(a4);
-    p3.getHand()->HandList->push_back(c8);
-    p3.getHand()->HandList->push_back(f5);
-    p3.getHand()->HandList->push_back(f1);
-    p3.getHand()->HandList->push_back(f8);
-    p3.getHand()->HandList->push_back(a2);
-    p3.getHand()->HandList->push_back(c9);
-    p3.getHand()->HandList->push_back(a7);
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(c1));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(a3));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(o3));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(a4));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(c8));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(f5));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(f1));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(f8));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(a2));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(c9));
+    p3.getHand()->HandList->push_back(CardFactory::CreateCard(a7));
 
 
     state.Players->push_back(p1);

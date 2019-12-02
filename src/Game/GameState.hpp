@@ -12,7 +12,7 @@ class Player;
 struct GameState : public Subject
 {
     Deck* GameDeck;
-    std::vector<Cards>* ShownCards;
+    std::vector<Card>* ShownCards;
     std::vector<Player>* Players;
 	int* supply;
 

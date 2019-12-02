@@ -215,11 +215,11 @@ void Player::changeStrategy()
 
 }
 
-bool Player::RunAction(Map* map, GameState* state, Cards card)
+bool Player::RunAction(Map* map, GameState* state, Card card)
 {
 	int choice;
 
-	switch (card)
+	switch (card.GetRawCard())
 	{
 	case f1: //Move 3 Armies
 		return MoveArmies(map, state) && MoveArmies(map, state) && MoveArmies(map, state);
@@ -779,7 +779,7 @@ void Player::Update()
 void Player::DisplayPlayer(int id)
 {
 	if (id == *this->getId())
-		std::cout << *this->getName() << ": has selected '" << _subject->GameDeck->DeckMap->at(*(this->getHand()->HandList->end() - 1)) << "'" << std::endl;
+		std::cout << *this->getName() << ": has selected '" << _subject->GameDeck->DeckMap->at((this->getHand()->HandList->end() - 1)->GetRawCard()) << "'" << std::endl;
 }
 
 void Player::CalculateScore()

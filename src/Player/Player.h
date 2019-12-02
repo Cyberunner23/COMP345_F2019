@@ -94,7 +94,7 @@ public:
     void PayCoin(GameState* state);
 	bool PayCoin(GameState* state, int cardPosition);
 
-	bool RunAction(Map* map, GameState* state, Cards card);
+	bool RunAction(Map* map, GameState* state, Card card);
 	std::vector<int>* findPlayerCitiesCountryIDs(Map* map);
 	std::vector<int>* findPlayerArmiesCountryIDs(Map* map);
 	bool PlaceNewArmies(Map* map, GameState* state);

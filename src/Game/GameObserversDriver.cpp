@@ -23,10 +23,10 @@ int main(int argc, char** argv)
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < 6; i++) {
-		Cards c = state.GameDeck->draw();
-		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 	}
 
@@ -87,7 +87,7 @@ int main(int argc, char** argv)
 
 		//Player take face up card and execute action
 		int cardIndex = cardPosition - 1;
-		Cards c = state.ShownCards->at((cardIndex));
+		Card c = state.ShownCards->at((cardIndex));
 		state.Players->at(turn % 3).getHand()->HandList->push_back(c);
 		state.NotifyObservers(turn%3 + 1); //turn%3 + 1 is equal to the player's id
         state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);

@@ -9,12 +9,47 @@
 
 Deck::Deck()
 {
-    CardList = new std::vector<Cards> {
-            f1,f2,f3,f4,f5,f6,f7,f8,
-            c1, c2, c3 ,c4, c5, c6, c7, c8, c9 ,c10,
-            a1, a2, a3, a4, a5, a6, a7, a8, a9,
-            o1, o2, o3, o4, o5, o6, o7,
-            cr1, cr2, cr3, cr4, cr5
+    CardList = new std::vector<Card>
+    {
+            CardFactory::CreateCard(f1),
+            CardFactory::CreateCard(f2),
+            CardFactory::CreateCard(f3),
+            CardFactory::CreateCard(f4),
+            CardFactory::CreateCard(f5),
+            CardFactory::CreateCard(f6),
+            CardFactory::CreateCard(f7),
+            CardFactory::CreateCard(f8),
+            CardFactory::CreateCard(c1),
+            CardFactory::CreateCard(c2),
+            CardFactory::CreateCard(c3 ),
+            CardFactory::CreateCard(c4),
+            CardFactory::CreateCard(c5),
+            CardFactory::CreateCard(c6),
+            CardFactory::CreateCard(c7),
+            CardFactory::CreateCard(c8),
+            CardFactory::CreateCard(c9 ),
+            CardFactory::CreateCard(c10),
+            CardFactory::CreateCard(a1),
+            CardFactory::CreateCard(a2),
+            CardFactory::CreateCard(a3),
+            CardFactory::CreateCard(a4),
+            CardFactory::CreateCard(a5),
+            CardFactory::CreateCard(a6),
+            CardFactory::CreateCard(a7),
+            CardFactory::CreateCard(a8),
+            CardFactory::CreateCard(a9),
+            CardFactory::CreateCard(o1),
+            CardFactory::CreateCard(o2),
+            CardFactory::CreateCard(o3),
+            CardFactory::CreateCard(o4),
+            CardFactory::CreateCard(o5),
+            CardFactory::CreateCard(o6),
+            CardFactory::CreateCard(o7),
+            CardFactory::CreateCard(cr1),
+            CardFactory::CreateCard(cr2),
+            CardFactory::CreateCard(cr3),
+            CardFactory::CreateCard(cr4),
+            CardFactory::CreateCard(cr5)
     };
 
     GoodsMap = new std::map<Cards, std::string>
@@ -150,9 +185,9 @@ Deck::~Deck()
     delete DeckMap;
 }
 
-Cards Deck::draw()
+Card Deck::draw()
 {
-    Cards c;
+    Card c;
     if(!CardList->empty())
     {
         c = CardList->back();
@@ -171,7 +206,7 @@ void Deck::shuffleDeck()
 
 Hand::Hand()
 {
-  HandList = new std::vector<Cards>();
+  HandList = new std::vector<Card>();
 }
 
 Hand::~Hand()
