@@ -29,3 +29,5 @@ public:
 
 	static void tournamentResults(GameState* state);
 };
+
+int getRandomAge();

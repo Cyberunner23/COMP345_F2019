@@ -38,6 +38,8 @@ Player Player::youngestPlayer(std::vector<Player>* players)
     	}
     }
 
+	delete youngestAge;
+
     return youngestPlayer;
 }
 
@@ -61,6 +63,8 @@ Player Player::bidingWinner(std::vector<Player>* players)
 	if (*highestBid == 0)
 		return bidingWinner = youngestPlayer(players);
 
+	delete highestBid;
+
 	return bidingWinner = tiedPlayers->at(0);
 }
 
@@ -74,6 +78,8 @@ int* Player::findHighestBid(std::vector<Player>* players)
 		if (*player.getBidingFacility()->bid > *highestBid)
 			*highestBid = *player.getBidingFacility()->bid;
 	}
+
+	delete highestBid;
 
 	return highestBid;
 }
@@ -486,6 +492,7 @@ bool Player::PlaceNewArmies(Map* map, GameState* state)
 			std::cout << "You cant place an army here..." << std::endl;
 		}
 	}
+
 	return true;
 }
 

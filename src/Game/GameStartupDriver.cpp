@@ -120,6 +120,13 @@ int main(int argc, char** argv)
 
 	Player::displayPlayers(&state2);
 
+
+	delete nameP1;
+	delete nameP2;
+	delete nameP3;
+	delete ageP1;
+	delete ageP2;
+	delete ageP3;
 	delete maxCoins;
 	delete remainingCoins;
 

@@ -1,7 +1,6 @@
 #include "Game.h"
-#include "Game.h"
-#include "Game.h"
-#include "Game.h"
+#include <random>
+
 
 std::string Game::selectMap()
 {
@@ -59,7 +58,7 @@ std::vector<Player>* Game::createPlayers(GameState* state)
 		//}
 
 		p.setName(name);
-		p.setage(new int(25));
+		p.setage(new int(getRandomAge()));
 		p.setStartingRegionID(Map::GetInstance().getStartingCountryID());
 		selectStrategy(&p);
 
@@ -235,6 +234,8 @@ void Game::PlaceArmiesInCountryStartup(GameState& state)
     {
 		PlaceArmiesInCountryStartup(state, startingCountry);
     }
+
+	delete startingCountry;
 }
 
 void Game::PlaceArmiesInCountryStartup(GameState& state, CountryNode* startingCountry)
@@ -273,4 +274,12 @@ void Game::tournamentResults(GameState* state) {
 
 	std::cout << "\nCongratulations " << *winningPlayer.getName() << "!! You have won this tournament!!!" << std::endl;
 
+	delete s;
+}
+
+int getRandomAge() {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(18, 69); // distribution in range [0, size]
+	return dist(rng);
 }

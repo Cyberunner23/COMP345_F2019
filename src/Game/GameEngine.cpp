@@ -64,5 +64,7 @@ int main(int argc, char** argv)
 	Game::displayGameState(state);
 	Game::tournamentResults(&state);
 
+	delete assignedCoins;
+
 	return 0;
 }

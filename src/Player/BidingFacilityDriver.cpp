@@ -79,5 +79,15 @@ int main(int argc, char** argv)
 	bidingWinner = Player::bidingWinner(playersList);
 	std::cout << "TEST 3: Checking if Youngest player wins the bid if all bids are zero, should PASS, is " << (*bidingWinner.getName() == *nameP2 ? "PASS" : "FAIL") << std::endl;
 
+
+	delete nameP1;
+	delete nameP2;
+	delete nameP3;
+	delete ageP1;
+	delete ageP2;
+	delete ageP3;
+	delete playersList;
+	delete maxCoins;
+
 	return 0;
 }

@@ -25,5 +25,7 @@ int main(int argc, char** argv)
 
 	std::cout << "Number of players: " << state.Players->size()<<std::endl;
 
+	Player::displayPlayers(&state);
+
 	return 0;
 }
