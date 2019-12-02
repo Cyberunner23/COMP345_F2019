@@ -65,7 +65,7 @@ int main(int argc, char** argv)
     for (auto& player : *state.Players) {
         //Each player should have 6 cards in hand after this
         for (int i = 0; i < 6; i++) {
-            Cards c = state.GameDeck->draw();
+            Card c = state.GameDeck->draw();
             player.getHand()->HandList->push_back(c);
         }
     }
@@ -74,8 +74,8 @@ int main(int argc, char** argv)
     for (auto& player : *state.Players) {
         int i = 0;
         for (int j = 0; j < 2; j++) {
-            Cards c = player.getHand()->HandList->at(j);
-            std::cout << *player.getName() << " is playing: '" << state.GameDeck->DeckMap->at(c) << "' from his hand." <<std::endl;
+            Card c = player.getHand()->HandList->at(j);
+            std::cout << *player.getName() << " is playing: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "' from his hand." <<std::endl;
 			bool actionRun = player.RunAction(&Map::GetInstance(), &state, c);
 			std::cout << "Did action run? " << actionRun << std::endl;
 			player.getHand()->HandList->erase(player.getHand()->HandList->begin() + j);

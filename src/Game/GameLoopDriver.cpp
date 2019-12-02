@@ -52,11 +52,11 @@ int main(int argc, char** argv)
 	state.Players->push_back(p3);
 
 	//Drawing cards to show face up.
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < maxCardsShown; i++) {
 
-		Cards c = state.GameDeck->draw();
-		std::cout << "The card in slot: " << i + 1 << " is " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "The card in slot: " << i + 1 << " is " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 
 	}
@@ -105,10 +105,10 @@ int main(int argc, char** argv)
 		//If you can afford the card, purchase it and add it to hand. Otherwise, end turn
 		if (*cardCost <= *playerCoins)
 		{
-			Cards c = state.ShownCards->at(playerChoice - 1);
+			Card c = state.ShownCards->at(playerChoice - 1);
 			Hand* h = state.Players->at(i).getHand();
 			*playerCoins = *playerCoins - *cardCost;
-			std::cout << "You have purchased " << state.GameDeck->DeckMap->at(c) << std::endl;
+			std::cout << "You have purchased " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 			std::cout << "You have " << *playerCoins << " coins remaining" << std::endl;
 			h->HandList->push_back(c);
 			state.Players->at(i).setHand(h);
@@ -129,7 +129,7 @@ int main(int argc, char** argv)
 		std::cout << "Player " << i + 1 << " your hand is:" << std::endl;
 		for (int i = 0; i < currentHand->HandList->size(); i++)
 		{
-			std::cout << state.GameDeck->DeckMap->at(currentHand->HandList->at(i)) << std::endl;
+			std::cout << state.GameDeck->DeckMap->at(currentHand->HandList->at(i).GetRawCard()) << std::endl;
 		}
 		std::cout << "and you have " << *state.Players->at(i).getCoins() << " coins remaining" << std::endl;
 	}
@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 	std::cout << "The cards on the table are: " << std::endl;
 	for (int i = 0; i < state.ShownCards->size(); i++)
 	{
-		std::cout << state.GameDeck->DeckMap->at(state.ShownCards->at(i)) << std::endl;
+		std::cout << state.GameDeck->DeckMap->at(state.ShownCards->at(i).GetRawCard()) << std::endl;
 	}
 
 	Player::displayPlayers(&state);

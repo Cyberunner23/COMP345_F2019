@@ -75,7 +75,7 @@ void Game::displayFaceUpCards(GameState state)
 	int position = 1;
 	std::cout << "\n------- Displaying Cards -------" << std::endl;
 	for (auto& card : *state.ShownCards) {
-		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card) << std::endl;
+		std::cout << "Position: " << position << ", Action: " << state.GameDeck->DeckMap->at(card.GetRawCard()) << std::endl;
 		position++;
 	}
 }

@@ -23,10 +23,10 @@ int main(int argc, char** argv)
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < 6; i++) {
-		Cards c = state.GameDeck->draw();
-		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 	}
 
@@ -84,8 +84,8 @@ int main(int argc, char** argv)
 
 		//Player take face up card and execute action
 		int cardIndex = cardPosition - 1;
-		Cards c = state.ShownCards->at((cardIndex));
-		std::cout << *state.Players->at(turn % 3).getName() << " has taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c) << "'" << std::endl;
+		Card c = state.ShownCards->at((cardIndex));
+		std::cout << *state.Players->at(turn % 3).getName() << " has taken the card at position " << cardPosition << ", with action: '" << state.GameDeck->DeckMap->at(c.GetRawCard()) << "'" << std::endl;
 		state.Players->at(turn % 3).RunAction(&Map::GetInstance(), &state, c);
 
 		//Slide remaining cards to left and draw new card placed in rightmost position

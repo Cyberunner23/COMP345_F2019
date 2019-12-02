@@ -8,9 +8,9 @@ int main() {
 
 	deck.shuffleDeck();
 
-    Cards c = deck.draw();
+    Card c = deck.draw();
     hand.HandList->push_back(c);
-    std::cout <<  "You Have Drawn: " << deck.DeckMap->at(c) << ", Cost: "<< c <<std::endl;
+    std::cout <<  "You Have Drawn: " << deck.DeckMap->at(c.GetRawCard()) << ", Cost: "<< c.GetRawCard() <<std::endl;
     std::cout << "Draw again? Y/N" << std::endl;
     std::cin >> response;
 
@@ -18,7 +18,7 @@ int main() {
     {
         c = deck.draw();
         hand.HandList->push_back(c);
-        std::cout <<  "You Have Drawn: " << deck.DeckMap->at(c) << ", Cost: "<< c << std::endl;
+        std::cout <<  "You Have Drawn: " << deck.DeckMap->at(c.GetRawCard()) << ", Cost: "<< c.GetRawCard() << std::endl;
         std::cout << "Draw again? Y/N" << std::endl;
         std::cin >> response;
     }
@@ -26,7 +26,7 @@ int main() {
     std::cout << "Your _hand is: " << std::endl;
     for(int i = 0; i < hand.HandList->size(); i++)
     {
-        std::cout << deck.DeckMap->at(hand.HandList->at(i)) << ", Cost: "<< hand.HandList->at(i) << std::endl;
+        std::cout << deck.DeckMap->at(hand.HandList->at(i).GetRawCard()) << ", Cost: "<< hand.HandList->at(i).GetRawCard() << std::endl;
     }
 
     return 0;

@@ -24,10 +24,10 @@ int main(int argc, char** argv)
 
 	//Shuffling deck and drawing 6 cards
 	state.GameDeck->shuffleDeck();
-	state.ShownCards = new std::vector<Cards>();
+	state.ShownCards = new std::vector<Card>();
 	for (int i = 0; i < 6; i++) {
-		Cards c = state.GameDeck->draw();
-		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c) << std::endl;
+		Card c = state.GameDeck->draw();
+		std::cout << "You Have Drawn: " << state.GameDeck->DeckMap->at(c.GetRawCard()) << std::endl;
 		state.ShownCards->push_back(c);
 	}
 

@@ -140,7 +140,7 @@ target_link_libraries(MapLoaderDriver MapLoader)
 add_library(Deck
     src/Deck/Deck.h
     src/Deck/Deck.cpp
-    )
+    src/Deck/Card.cpp src/Deck/Card.h)
 target_include_directories(Deck PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_executable(DeckDriver
     src/Deck/DeckDriver.cpp
