@@ -10,7 +10,7 @@ Player ScoreCalculator::CalculateScores()
 {
 
 	//int currentScore;
-	std::vector<Cards> currentHand;
+	std::vector<Card> currentHand;
 	std::vector<Armies> regionScores;
 
 	//Calculating Scores based on Goods
@@ -29,7 +29,7 @@ Player ScoreCalculator::CalculateScores()
 
 		for (int j = 0; j < currentHand.size(); j++)
 		{
-			std::string currentGood = State->GameDeck->GoodsMap->at(currentHand.at(j));
+			std::string currentGood = State->GameDeck->GoodsMap->at(currentHand.at(j).GetRawCard());
 
 			if (currentGood == "Forest")
 			{
