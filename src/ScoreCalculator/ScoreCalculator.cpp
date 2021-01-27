@@ -187,6 +187,14 @@ Player ScoreCalculator::CalculateScores()
 
 		}
 		std::cout << *State->Players->at(i).getName() << " score is " << *State->Players->at(i).getScore() << std::endl;
+
+		int barSize = *(State->Players->at(i).getScore())/2;
+		string bar[barSize];
+		for (int i = 0; i < barSize; i++)
+		{
+				std::cout << "⣿";
+		}
+		std::cout<<std::endl;
 	}
 	std::cout << "The winning player is: " << *winningPlayer.getName() << " with " << currentScore << " victory points!!" << std::endl;
 

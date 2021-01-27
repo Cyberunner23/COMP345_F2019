@@ -76,7 +76,7 @@ int main(int argc, char** argv)
 	int turn = 0;
 	int cardPosition;
 
-	//Will execute game loop 3 times 
+	//Will execute game loop 3 times
 	for (int i = 0; i < 6; i++) {
 
 		//Player selects card position
